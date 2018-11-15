@@ -38,8 +38,71 @@ public class AdminController extends Controller{
 	* @throws
 	 */
 	public void getnavs() {
-		Object object=NavsModel.getList();
+		Object object=NavsModel.getListForLeft();
 		renderJson(object);
+	}
+	/**
+	 * 显示菜单列表
+	 */
+	public void navsinfo() {
+		render("sys/navsinfo.html");
+	}
+	/**
+	 * 
+	* @Title: getnavs
+	* @Description: 获取侧菜单数据列表
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void getNavsList() {
+		//获取页面查询的关键字
+		String key=getPara("key");
+		Page<NavsModel> list=NavsModel.getList(1,100,key);
+		setAttr("infos", list);
+		renderJson();
+	}
+	/**
+	 * 打开菜单添加页面
+	 */
+	public void openNavsAdd() {
+		render("sys/navsAdd.html");
+	}
+	/**
+	 * 添加保存菜单信息
+	 */
+	public void saveNavs() {
+		String title=getPara("title");
+		String href=getPara("href");
+		String icon=getPara("icon");
+		String fid=getPara("fid");
+		boolean result=NavsModel.saveModel(title, href, icon, fid);
+		setAttr("result", result);
+		renderJson();
+		
+	}
+	/**
+	 * 打开菜单修改页面
+	 */
+	public void openNavsEdit() {
+		//接收页面数据
+		String id=getPara("id");
+		setAttr("id", id);
+		renderFreeMarker("sys/navsEdit.html");
+	}
+	/**
+	 * 更新保存菜单信息
+	 */
+	public void updatenavs() {
+		String id=getPara("id");
+		String title=getPara("title");
+		String href=getPara("href");
+		String icon=getPara("icon");
+		String fid=getPara("fid");
+		boolean result=NavsModel.updateModel(id,title, href, icon, fid);
+		setAttr("result", result);
+		renderJson();
+		
 	}
 	/**
 	* @Title: students

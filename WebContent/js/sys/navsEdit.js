@@ -10,7 +10,7 @@ layui.config({
 		//加载页面数据
 		$.get("getstudent?no="+no, function(data){
 			var d=data.m;
-	        	//执行加载数据的方法
+	        	//执行加载数据的方法erter
 	        	$("input[name='name']").val(d.name);
 	        	$("input[name='cls']").val(d.cls);
 	        	$("input[name='sex']").val(d.sex);

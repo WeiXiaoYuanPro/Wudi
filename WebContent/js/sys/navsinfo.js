@@ -8,7 +8,7 @@ layui.config({
 
 	//加载页面数据
 	var newsData = '';
-	$.get("queryStudents", function(d){
+	$.get("getNavsList", function(d){
 		var data=d.infos.list;
         	//执行加载数据的方法
         	newsList(data);
@@ -43,9 +43,9 @@ layui.config({
 	$(window).one("resize",function(){
 		$(".newsAdd_btn").click(function(){
 			var index = layui.layer.open({
-				title : "添加学生信息",
+				title : "添加菜单信息",
 				type : 2,
-				content : "openStudentAdd",
+				content : "openNavsAdd",
 				success : function(layero, index){
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -109,11 +109,11 @@ layui.config({
 	$("body").on("click",".news_edit",function(){  //编辑
 		//修改
 		var _this = $(this);
-		var no=_this.attr("data-id")
+		var id=_this.attr("data-id")
 			var index = layui.layer.open({
-				title : "修改学生信息",
+				title : "修改菜单信息",
 				type : 2,
-				content : "openStudentEdit?no="+no,
+				content : "openNavsEdit?id="+id,
 				success : function(layero, index){
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -175,17 +175,13 @@ layui.config({
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
-			    	+'<td>'+currData[i].no+'</td>'
-			    	+'<td>'+currData[i].name+'</td>';
-			    	if(currData[i].sex == 1){
-			    		dataHtml += '<td style="color:#f00">男</td>';
-			    	}else{
-			    		dataHtml += '<td>女</td>';
-			    	}
-			    	dataHtml += '<td>'+currData[i].cls+'</td>'
+			    	+'<td>'+currData[i].id+'</td>'
+			    	+'<td>'+currData[i].title+'</td>'
+			    	+'<td>'+currData[i].icon+'</td>'
+					+'<td>'+currData[i].href+'</td>'
+			    	+'<td>'+currData[i].fid+'</td>'			    	
 			    	+'<td>'
 					+  '<a class="layui-btn layui-btn-mini news_edit" data-id="'+data[i].id+'"><i class="iconfont icon-edit" ></i> 编辑</a>'
-					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';
 				}
