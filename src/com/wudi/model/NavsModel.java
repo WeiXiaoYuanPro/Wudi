@@ -93,4 +93,6 @@ public class NavsModel extends Model<NavsModel> {
 		return list;
 	}
 	
+	
+	
 }
