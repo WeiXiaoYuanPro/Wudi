@@ -8,6 +8,7 @@ import com.wudi.model.NavsModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.DormitoryModel;
+import com.wudi.model.admin.StuinfoModel;
 /**
  * 
 * @ClassName: AdminController
@@ -497,4 +498,73 @@ public class AdminController extends Controller{
 		setAttr("result", result);
 		renderJson();
 	}
+	
+	
+	/**
+	 * 
+	 * Stu_info
+	 * 
+	 */
+		public void stuinfos() {
+			render("stu_info/stuinfoinfo.html");
+		}
+		public void queryStuinfos() {
+			//获取页面查询的关键字
+			String key=getPara("key");
+			//开始查询
+			Page<StuinfoModel> s=StuinfoModel.getList(1, 10,key);
+			//将查到的学生信息列表放到infos，给页面
+			setAttr("infos", s);
+			//返回格式是json
+			renderJson();
+		}
+		public void openStuinfoAdd() {
+			render("stu_info/stuinfoAdd.html");
+		}
+		public void getstuinfo() {
+			//接收页面数据
+			String no=getPara("no");
+			//根据条件查询数据库的数据
+			StuinfoModel student=StuinfoModel.getByNo(no);
+			//放到编辑页面上去
+			setAttr("m", student);
+			//返回格式是json
+			renderJson();
+		}
+		public void openStuinfoEdit() {
+			//接收页面数据
+			String no=getPara("no");
+			setAttr("no", no);
+			renderFreeMarker("stu_info/stuinfoEdit.html");
+		}
+		public void saveStuinfo() {
+			String no=getPara("no");
+			String name=getPara("name");
+			int sex=getParaToInt("sex");
+			String birth=getPara("birth");
+			String img=getPara("img");
+			//保存数据
+			boolean result=StuinfoModel.save(no,name,sex,birth,img);
+			setAttr("result", result);
+			renderJson();
+		}
+		public void updateStuinfo() {
+			String no=getPara("no");
+			String name=getPara("name");
+			int sex=getParaToInt("sex");
+			String birth=getPara("birth");
+			String img=getPara("img");
+			//更新数据
+			boolean result=StuinfoModel.update(no,name,sex,birth,img);
+			setAttr("result", result);
+			renderJson();
+		}
+		public void delStuinfo() {
+			String no=getPara("no");
+			//删除
+			boolean result=StuinfoModel.delStuinfoByNO(no);
+			//返回结果
+			setAttr("result", result);
+			renderJson();
+		}
 }
