@@ -12,6 +12,7 @@ public class Start {
 		JFinal.start("WebContent", 8086, "/", 5);
 
 		//李洋修改测试
+		//jiang测试
 
 	}
 }
