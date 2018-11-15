@@ -6,6 +6,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.wudi.model.NavsModel;
 import com.wudi.model.StudentModel;
+import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.DormitoryModel;
 /**
  * 
@@ -177,8 +178,8 @@ public class AdminController extends Controller{
 		render("dor/dormitoryinfo.html");
 	}
 	/**
-	* @Title: queryStudents
-	* @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
+	* @Title: queryDormitory
+	* @Description: 获取学生宿舍信息列表信息（查询），在这里，我们是用异步加载方式，
 	* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
 	* @param     参数
 	* @return void    返回类型
@@ -195,7 +196,7 @@ public class AdminController extends Controller{
 		renderJson();
 	}
 	/**
-	* @Title: openStudentAdd
+	* @Title: openDormitoryAdd
 	* @Description:打开添加信息页面
 	* @param     参数
 	* @return void    返回类型
@@ -206,8 +207,8 @@ public class AdminController extends Controller{
 	}
 	
 	/**
-	* @Title: getstudent
-	* @Description:获取需要修改的学生信息
+	* @Title: getdormitory
+	* @Description:获取需要修改的学生宿舍信息
 	* @param     参数
 	* @return void    返回类型
 	* @throws
@@ -264,7 +265,7 @@ public class AdminController extends Controller{
 	}
 	/**
 	 * 
-	* @Title: updateStudent
+	* @Title: updateDormitory
 	* @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情
 	* @param     参数
 	* @return void    返回类型
@@ -291,7 +292,7 @@ public class AdminController extends Controller{
 	}
 	/**
 	 * 
-	* @Title: delStudent
+	* @Title: delDormitory
 	* @Description:删除信息，这个我们是根据唯一主键id来删除的。
 	* @param     参数
 	* @return void    返回类型
@@ -301,6 +302,134 @@ public class AdminController extends Controller{
 		String id=getPara("id");
 		//删除
 		boolean result=DormitoryModel.delDormitoryByID(id);
+		//返回结果
+		setAttr("result", result);
+		renderJson();
+	}
+	
+	
+	
+	/**
+	* @Title: building
+	* @Description: 打开学校楼房信息列表页面
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void building() {
+		render("bui/buildinginfo.html");
+	}
+	/**
+	* @Title: queryBuilding
+	* @Description: 获取学校楼房信息列表信息（查询），在这里，我们是用异步加载方式，
+	* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void queryBuilding() {
+		//获取页面查询的关键字
+		String key=getPara("key");
+		//开始查询
+		Page<BuildingModel> Building=BuildingModel.getList(1, 10,key);
+		//将查到的学生信息列表放到infos，给页面
+		setAttr("infos", Building);
+		//返回格式是json
+		renderJson();
+	}
+	/**
+	* @Title: openBuilding
+	* @Description:打开添加信息页面
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void openBuildingAdd() {
+		render("bui/buildingAdd.html");
+	}
+	
+	/**
+	* @Title: getbuilding
+	* @Description:获取需要修改的学校楼房信息
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void getbuilding() {
+		//接收页面数据
+		String id=getPara("id");
+		//根据条件查询数据库的数据
+		BuildingModel Building=BuildingModel.getById(id);
+		//放到编辑页面上去
+		setAttr("m", Building);
+		//返回格式是json
+		renderJson();
+	}
+	/**
+	* @Title: opeBuildingEdit
+	* @Description:打开修改信息页面
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void openBuildingEdit() {
+		//接收页面数据
+		String id=getPara("id");
+		setAttr("id", id);
+		renderFreeMarker("bui/buildingEdit.html");
+	}
+	/**
+	* @Title: saveBuilding
+	* @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void saveBuilding() {
+		String id=getPara("id");
+		String name=getPara("name");
+		String school_id=getPara("school_id");
+		String addr=getPara("addr");
+		String remark=getPara("remark");
+		
+		//保存数据
+		boolean result=BuildingModel.save(id,name,school_id,addr,remark);
+		
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 * 
+	* @Title: updateBuildingt
+	* @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void updateBuilding() {
+		String id=getPara("id");
+		String name=getPara("name");
+		String school_id=getPara("school_id");
+		String addr=getPara("addr");
+		String remark=getPara("remark");
+		
+		boolean result=BuildingModel.update(id,name,school_id,addr,remark);
+		
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 * 
+	* @Title: delBuilding
+	* @Description:删除信息，这个我们是根据唯一主键id来删除的。
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void delBuilding() {
+		String id=getPara("id");
+		//删除
+		boolean result=BuildingModel.delBuildingByID(id);
 		//返回结果
 		setAttr("result", result);
 		renderJson();
