@@ -43,7 +43,7 @@ layui.config({
 	$(window).one("resize",function(){
 		$(".newsAdd_btn").click(function(){
 			var index = layui.layer.open({
-				title : "添加学生信息",
+				title : "添加宿舍信息",
 				type : 2,
 				content : "openDormitoryAdd",
 				success : function(layero, index){
@@ -109,9 +109,9 @@ layui.config({
 	$("body").on("click",".news_edit",function(){  //编辑
 		//修改
 		var _this = $(this);
-		var no=_this.attr("data-id")
+		var id=_this.attr("data-id")
 			var index = layui.layer.open({
-				title : "修改学生信息",
+				title : "修改宿舍信息",
 				type : 2,
 				content : "openDormitoryEdit?id="+id,
 				success : function(layero, index){
@@ -175,6 +175,7 @@ layui.config({
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
+			    	+'<td>'+currData[i].id+'</td>'
 			    	+'<td>'+currData[i].name+'</td>'
 			    	+'<td>'+currData[i].building_id+'</td>'
 			    	+'<td>'+currData[i].capacity+'</td>'

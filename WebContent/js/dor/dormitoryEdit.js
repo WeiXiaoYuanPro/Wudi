@@ -6,7 +6,7 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-		var no=$("input[name='id']").val();
+		var id=$("input[name='id']").val();
 		//加载页面数据
 		$.get("getdormitory?id="+id, function(data){
 			var d=data.m;

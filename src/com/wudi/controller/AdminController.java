@@ -202,7 +202,7 @@ public class AdminController extends Controller{
 	* @throws
 	 */
 	public void openDormitoryAdd() {
-		render("dor/dormitorytAdd.html");
+		render("dor/dormitoryAdd.html");
 	}
 	
 	/**
@@ -223,7 +223,7 @@ public class AdminController extends Controller{
 		renderJson();
 	}
 	/**
-	* @Title: openStudentEdit
+	* @Title: openDormitoryEdit
 	* @Description:打开修改信息页面
 	* @param     参数
 	* @return void    返回类型
@@ -236,7 +236,7 @@ public class AdminController extends Controller{
 		renderFreeMarker("dor/dormitoryEdit.html");
 	}
 	/**
-	* @Title: saveStudent
+	* @Title: saveDormitory
 	* @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情
 	* @param     参数
 	* @return void    返回类型
@@ -254,7 +254,7 @@ public class AdminController extends Controller{
 		latitude=latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
 		String longitud=getPara("longitude");
 		BigDecimal longitude=new BigDecimal(longitud); 
-		latitude=longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
+		longitude=longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
 		
 		//保存数据
 		boolean result=DormitoryModel.save(id,name,building_id,capacity,type,status,latitude,longitude);
@@ -282,7 +282,7 @@ public class AdminController extends Controller{
 		latitude=latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
 		String longitud=getPara("longitude");
 		BigDecimal longitude=new BigDecimal(longitud); 
-		latitude=longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
+		longitude=longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
 		
 		boolean result=DormitoryModel.update(id,name,building_id,capacity,type,status,latitude,longitude);
 		
