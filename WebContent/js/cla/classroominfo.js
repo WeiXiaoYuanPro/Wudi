@@ -43,7 +43,7 @@ layui.config({
 	$(window).one("resize",function(){
 		$(".newsAdd_btn").click(function(){
 			var index = layui.layer.open({
-				title : "添加宿舍信息",
+				title : "添加教室信息",
 				type : 2,
 				content : "openClassroomAdd",
 				success : function(layero, index){
@@ -111,7 +111,7 @@ layui.config({
 		var _this = $(this);
 		var id=_this.attr("data-id")
 			var index = layui.layer.open({
-				title : "修改宿舍信息",
+				title : "修改教室信息",
 				type : 2,
 				content : "openClassroomEdit?id="+id,
 				success : function(layero, index){

@@ -570,8 +570,8 @@ public class AdminController extends Controller{
 		}
 
 		/**
-		* @Title: dormitory
-		* @Description: 打开学生宿舍信息列表页面
+		* @Title: classroom
+		* @Description: 打开教室信息列表页面
 		* @param     参数
 		* @return void    返回类型
 		* @throws
@@ -580,7 +580,7 @@ public class AdminController extends Controller{
 			render("cla/classroominfo.html");
 		}
 		/**
-		* @Title: queryDormitory
+		* @Title: queryClass
 		* @Description: 获取学生宿舍信息列表信息（查询），在这里，我们是用异步加载方式，
 		* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
 		* @param     参数

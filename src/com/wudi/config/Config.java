@@ -16,6 +16,7 @@ import com.wudi.interceptor.WeixinIntercepter;
 import com.wudi.model.NavsModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
+import com.wudi.model.admin.ClassroomModel;
 import com.wudi.model.admin.DormitoryModel;
 /**
  * 	系统配置类
@@ -68,6 +69,7 @@ public class Config extends JFinalConfig {
 			arpMysql.addMapping("student", StudentModel.class);//学生表
 			arpMysql.addMapping("dormitory", DormitoryModel.class);//宿舍表
 			arpMysql.addMapping("building", BuildingModel.class);//学校楼房信息表
+			arpMysql.addMapping("classroom", ClassroomModel.class);//教室信息表
 		}
 		//添加插件
 		me.add(dsMysql);
