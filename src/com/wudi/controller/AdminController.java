@@ -161,28 +161,13 @@ public class AdminController extends Controller{
 		renderJson();
 	}
 	/**
-	 * 打开菜单添加页面
+	 * 打开联系方式添加页面
 	 */
 	public void openStucontactAdd() {
 		render("stucontact/stucontactAdd.html");
 	}
 	/**
-	 * 添加保存菜单信息
-	 */
-	public void saveStucontact() {
-		String id=getPara("id");
-		String tel=getPara("tel");
-		String qq=getPara("qq");
-		String weixin=getPara("weixin");
-		String other=getPara("other");
-		String stu_no=getPara("stu_no");
-		boolean result=StuContatcModel.save(id, tel, qq, weixin, other, stu_no);
-		setAttr("result", result);
-		renderJson();
-		
-	}
-	/**
-	 * 打开菜单修改页面
+	 * 打开联系方式修改页面
 	 */
 	public void openStucontactEdit() {
 		//接收页面数据
@@ -193,7 +178,7 @@ public class AdminController extends Controller{
 	
 	/**
 	* @Title: saveStucontac
-	* @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情
+	* @Description:学生联系保存，在添加学生联系信息页面上，点击保存的那个按键做的事情
 	* @param     参数
 	* @return void    返回类型
 	* @throws
@@ -214,7 +199,7 @@ public class AdminController extends Controller{
 	/**
 	 * 
 	* @Title: updateStucontact
-	* @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情
+	* @Description:更新学生联系信息，就是学生联系修改信息页面，点击保存的那个按钮做的事情
 	* @param     参数
 	* @return void    返回类型
 	* @throws
@@ -232,7 +217,22 @@ public class AdminController extends Controller{
 		renderJson();
 		
 	}
-	
+	/**
+	 * 
+	* @Title: delStudent
+	* @Description:删除信息，这个我们是根据唯一主键id来删除的。
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void delStuContatc() {
+		String id=getPara("id");
+		//删除
+		boolean result=StuContatcModel.delStuContatcByID(id);
+		//返回结果
+		setAttr("result", result);
+		renderJson();
+	}
 	
 	
 	
