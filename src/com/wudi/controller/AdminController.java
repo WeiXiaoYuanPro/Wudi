@@ -8,6 +8,7 @@ import com.wudi.model.NavsModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.DormitoryModel;
+import com.wudi.model.admin.StuContatcModel;
 /**
  * 
 * @ClassName: AdminController
@@ -104,6 +105,136 @@ public class AdminController extends Controller{
 		renderJson();
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 显示菜单列表
+	 */
+	public void stucontactinfo() {
+		render("stucontact/stucontactinfo.html");
+	}
+	/**
+	 * 
+	* @Title: getstucontact
+	* @Description: 获取侧菜单数据列表
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void getStucontact() {
+		//获取页面查询的关键字
+		String key=getPara("key");
+		Page<StuContatcModel> list=StuContatcModel.getList(1,100,key);
+		setAttr("infos", list);
+		renderJson();
+	}
+	/**
+	 * 打开菜单添加页面
+	 */
+	public void openStucontactAdd() {
+		render("stucontact/stucontactAdd.html");
+	}
+	/**
+	 * 添加保存菜单信息
+	 */
+	public void saveStucontact() {
+		String id=getPara("id");
+		String tel=getPara("tel");
+		String qq=getPara("qq");
+		String weixin=getPara("weixin");
+		String other=getPara("other");
+		String stu_no=getPara("stu_no");
+		boolean result=StuContatcModel.save(id, tel, qq, weixin, other, stu_no);
+		setAttr("result", result);
+		renderJson();
+		
+	}
+	/**
+	 * 打开菜单修改页面
+	 */
+	public void openStucontactEdit() {
+		//接收页面数据
+		String id=getPara("id");
+		setAttr("id", id);
+		renderFreeMarker("stucontact/stucontactEdit.html");
+	}
+	
+	/**
+	* @Title: saveStucontac
+	* @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void saveStucontac() {
+		String id=getPara("id");
+		String tel=getPara("tel");
+		String qq=getPara("qq");
+		String weixin=getPara("weixin");
+		String other=getPara("other");
+		String stu_no=getPara("stu_no");
+		//保存数据
+		boolean result=StuContatcModel.save(id,tel, qq, weixin, other, stu_no);
+		setAttr("result", result);
+		renderJson();
+	}
+
+	/**
+	 * 
+	* @Title: updateStucontact
+	* @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 * 更新保存菜单信息
+	 */
+	public void updateStucontact() {
+		String id=getPara("id");
+		String tel=getPara("tel");
+		String qq=getPara("qq");
+		String weixin=getPara("weixin");	
+		String other=getPara("other");
+		String stu_no=getPara("stu_no");
+		boolean result=StuContatcModel.update(id,tel, qq, weixin, other, stu_no);
+		setAttr("result", result);
+		renderJson();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	* @Title: students
 	* @Description: 打开学生信息列表页面
@@ -227,6 +358,8 @@ public class AdminController extends Controller{
 		setAttr("result", result);
 		renderJson();
 	}
+	
+	
 	
 	
 	
