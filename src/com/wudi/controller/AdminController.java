@@ -637,7 +637,9 @@ public class AdminController extends Controller{
 	
 	/**
 	 * 
+	 * 
 	 * Stu_info
+	 * 
 	 * 
 	 */
 		public void stuinfos() {
@@ -703,13 +705,18 @@ public class AdminController extends Controller{
 			renderJson();
 		}
 
+		
+		
+		
+		
+		
 		/**
 		* @Title: classroom
 		* @Description: 打开教室信息列表页面
 		* @param     参数
 		* @return void    返回类型
 		* @throws
-		 */
+		*/
 		public void classroom() {
 			render("cla/classroominfo.html");
 		}
