@@ -6,16 +6,20 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-		var no=$("input[name='no']").val();
+		var id=$("input[name='id']").val();
 		//加载页面数据
-		$.get("getstudent?no="+no, function(data){
-			var d=data.m;
+		$.get("getModeListById?id="+id, function(data){
+			var ml=data.ml;
+			var m=data.m;
+        	$("#selectf").prepend("<option value='-1'>请选择</option>");
+        	for(i in ml){
+        		$("#selectf").prepend("<option value='"+item[i].id+"'>"+item[i].title+"</option>");;
+        	};
 	        	//执行加载数据的方法erter
-	        	$("input[name='name']").val(d.name);
-	        	$("input[name='cls']").val(d.cls);
-	        	$("input[name='sex']").val(d.sex);
+	        	$("input[name='title']").val(m.title);
+	        	$("input[name='href']").val(m.href);
+	        	$("input[name='icon']").val(m.icon);
 		})
-
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台

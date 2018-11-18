@@ -6,18 +6,21 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
+		var id=$("input[name='id']").val();
 		//加载页面数据
-		$.get("getModeByFid", function(data){alert("ss");
-			var ml=data.ml;
-        	$("#selectf").prepend("<option value='-1'>请选择</option>");
-        	for(i in ml){
-        		$("#selectf").prepend("<option value='"+ml[i].id+"'>"+ml[i].title+"</option>");;
-        	};
+		$.get("getstu_family?id="+id, function(data){
+			var d=data.m;
+	        	//执行加载数据的方法
+	        	$("input[name='adrr']").val(d.adrr);
+	        	$("input[name='tel']").val(d.tel);
+	        	$("input[name='remark']").val(d.remark);
+	        	$("input[name='stu_no']").val(d.stu_no);
 		})
- 	form.on("submit(add)",function(data){console.log(data.field);
+
+ 	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
- 		 $.ajax({//异步请求返回给后台？？？
-	    	  url:'saveNavs',
+ 		 $.ajax({//异步请求返回给后台
+	    	  url:'updateStu_family',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',
@@ -27,14 +30,14 @@ layui.config({
 	    	  success:function(d){
 	    			//弹出loading
 			    	top.layer.close(index);
-			  		top.layer.msg("添加成功！");
+			  		top.layer.msg("操作成功！");
 			   		layer.closeAll("iframe");
 			  	 		//刷新父页面
 			  	 	parent.location.reload();
 		    		
 	    	  },
 	    	  error:function(XMLHttpRequest, textStatus, errorThrown){
-	    		  top.layer.msg('保存失败！！！服务器有问题！！！！<br>请检测服务器是否启动？', {
+	    		  top.layer.msg('操作失败！！！服务器有问题！！！！<br>请检测服务器是否启动？', {
 	    		        time: 20000, //20s后自动关闭
 	    		        btn: ['知道了']
 	    		      });

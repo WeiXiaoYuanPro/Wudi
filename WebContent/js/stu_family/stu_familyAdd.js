@@ -6,18 +6,11 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-		//加载页面数据
-		$.get("getModeByFid", function(data){alert("ss");
-			var ml=data.ml;
-        	$("#selectf").prepend("<option value='-1'>请选择</option>");
-        	for(i in ml){
-        		$("#selectf").prepend("<option value='"+ml[i].id+"'>"+ml[i].title+"</option>");;
-        	};
-		})
- 	form.on("submit(add)",function(data){console.log(data.field);
+
+ 	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
- 		 $.ajax({//异步请求返回给后台？？？
-	    	  url:'saveNavs',
+ 		 $.ajax({//异步请求返回给后台
+	    	  url:'saveStu_family',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',
