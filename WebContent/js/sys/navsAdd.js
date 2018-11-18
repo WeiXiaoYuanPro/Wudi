@@ -7,16 +7,17 @@ layui.config({
 		laypage = layui.laypage;
 		$ = layui.jquery;
 		//加载页面数据
-		$.get("getModeByFid", function(data){alert("ss");
+		$.get("getModeByFId", function(data){
 			var ml=data.ml;
-        	$("#selectf").prepend("<option value='-1'>请选择</option>");
-        	for(i in ml){
-        		$("#selectf").prepend("<option value='"+ml[i].id+"'>"+ml[i].title+"</option>");;
-        	};
-		})
- 	form.on("submit(add)",function(data){console.log(data.field);
+			for(var i=0;i<ml.length;i++){
+        		$("#selectfid").append("<option value='"+ml[i].id+"'>"+ml[i].title+"</option>");
+				 //console.log(ml);
+			}
+			form.render();//必须要再次渲染，要不然option显示不出来
+		});
+ 	form.on("submit(addUser)",function(data){
  		var index;
- 		 $.ajax({//异步请求返回给后台？？？
+ 		 $.ajax({//异步请求返回给后台
 	    	  url:'saveNavs',
 	    	  type:'POST',
 	    	  data:data.field,

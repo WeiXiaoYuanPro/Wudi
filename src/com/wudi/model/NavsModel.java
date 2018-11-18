@@ -66,9 +66,9 @@ public class NavsModel extends Model<NavsModel> {
 	 * TODO:xiao 根据id查找信息
 	 * @return list
 	 */
-	public static List<NavsModel> getModeListById(String id){
-		String sql="select * from "+tableName+" where id=?";
-		return dao.find(sql,id);
+	public static List<NavsModel> getModeListByFid(String fid){
+		String sql="select * from "+tableName+" where fid=?";
+		return dao.find(sql,fid);
 	}
 	/**
 	 * TODO:xiao 根据id查找信息

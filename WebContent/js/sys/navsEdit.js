@@ -10,20 +10,25 @@ layui.config({
 		//加载页面数据
 		$.get("getModeListById?id="+id, function(data){
 			var ml=data.ml;
-			var m=data.m;
-        	$("#selectf").prepend("<option value='-1'>请选择</option>");
-        	for(i in ml){
-        		$("#selectf").prepend("<option value='"+item[i].id+"'>"+item[i].title+"</option>");;
-        	};
+			var m=data.m; console.log(m);
+			for(var i=0;i<ml.length;i++){
+				 console.log(ml[i]);
+				if(ml[i].id==m.fid){
+	        		$("#selectfid").append("<option selected='selected' value='"+ml[i].id+"'>"+ml[i].title+"</option>");
+				}else{
+					$("#selectfid").append("<option value='"+ml[i].id+"'>"+ml[i].title+"</option>");
+					
+				}
+			}
+			form.render();//必须要再次渲染，要不然option显示不出来
 	        	//执行加载数据的方法erter
-	        	$("input[name='title']").val(m.title);
-	        	$("input[name='href']").val(m.href);
-	        	$("input[name='icon']").val(m.icon);
-		})
+	        $("input[name='title']").val(m.title);
+	        $("input[name='href']").val(m.href);
+		});
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台
-	    	  url:'updateStudent',
+	    	  url:'updatenavs',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',

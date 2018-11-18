@@ -80,7 +80,7 @@ public class AdminController extends Controller{
 	public void saveNavs() {
 		String title=getPara("title");
 		String href=getPara("href");
-		String icon=getPara("icon");
+		String icon="&#xe630;";
 		String fid=getPara("fid");
 		boolean result=NavsModel.saveModel(title, href, icon, fid);
 		setAttr("result", result);
@@ -93,7 +93,7 @@ public class AdminController extends Controller{
 	public void getModeListById() {
 		String id=getPara("id");
 		NavsModel m=NavsModel.getModeById(id);
-		List<NavsModel> ml=NavsModel.getModeListById(id);
+		List<NavsModel> ml=NavsModel.getModeListByFid("-1");
 		setAttr("m", m);//找数据去更新
 		setAttr("ml", ml);//父节点列表
 		renderJson();
@@ -102,7 +102,7 @@ public class AdminController extends Controller{
 	 * TODO:根据fid查找信息数据
 	 */
 	public void getModeByFId() {
-		List<NavsModel> ml=NavsModel.getModeListById("-1");
+		List<NavsModel> ml=NavsModel.getModeListByFid("-1");
 		setAttr("ml", ml);//找数据去更新
 		renderJson();
 	}
@@ -122,7 +122,7 @@ public class AdminController extends Controller{
 		String id=getPara("id");
 		String title=getPara("title");
 		String href=getPara("href");
-		String icon=getPara("icon");
+		String icon="&#xe630;";
 		String fid=getPara("fid");
 		boolean result=NavsModel.updateModel(id,title, href, icon, fid);
 		setAttr("result", result);
