@@ -7,8 +7,11 @@ import com.jfinal.plugin.activerecord.Page;
 import com.wudi.model.NavsModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
+import com.wudi.model.admin.ClassroomModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.StuContatcModel;
+import com.wudi.model.admin.StuinfoModel;
+
 /**
  * 
 * @ClassName: AdminController
@@ -630,4 +633,213 @@ public class AdminController extends Controller{
 		setAttr("result", result);
 		renderJson();
 	}
+	
+	
+	/**
+	 * 
+	 * Stu_info
+	 * 
+	 */
+		public void stuinfos() {
+			render("stu_info/stuinfoinfo.html");
+		}
+		public void queryStuinfos() {
+			//获取页面查询的关键字
+			String key=getPara("key");
+			//开始查询
+			Page<StuinfoModel> s=StuinfoModel.getList(1, 10,key);
+			//将查到的学生信息列表放到infos，给页面
+			setAttr("infos", s);
+			//返回格式是json
+			renderJson();
+		}
+		public void openStuinfoAdd() {
+			render("stu_info/stuinfoAdd.html");
+		}
+		public void getstuinfo() {
+			//接收页面数据
+			String no=getPara("no");
+			//根据条件查询数据库的数据
+			StuinfoModel student=StuinfoModel.getByNo(no);
+			//放到编辑页面上去
+			setAttr("m", student);
+			//返回格式是json
+			renderJson();
+		}
+		public void openStuinfoEdit() {
+			//接收页面数据
+			String no=getPara("no");
+			setAttr("no", no);
+			renderFreeMarker("stu_info/stuinfoEdit.html");
+		}
+		public void saveStuinfo() {
+			String no=getPara("no");
+			String name=getPara("name");
+			int sex=getParaToInt("sex");
+			String birth=getPara("birth");
+			String img=getPara("img");
+			//保存数据
+			boolean result=StuinfoModel.save(no,name,sex,birth,img);
+			setAttr("result", result);
+			renderJson();
+		}
+		public void updateStuinfo() {
+			String no=getPara("no");
+			String name=getPara("name");
+			int sex=getParaToInt("sex");
+			String birth=getPara("birth");
+			String img=getPara("img");
+			//更新数据
+			boolean result=StuinfoModel.update(no,name,sex,birth,img);
+			setAttr("result", result);
+			renderJson();
+		}
+		public void delStuinfo() {
+			String no=getPara("no");
+			//删除
+			boolean result=StuinfoModel.delStuinfoByNO(no);
+			//返回结果
+			setAttr("result", result);
+			renderJson();
+		}
+
+		/**
+		* @Title: classroom
+		* @Description: 打开教室信息列表页面
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void classroom() {
+			render("cla/classroominfo.html");
+		}
+		/**
+		* @Title: queryClass
+		* @Description: 获取学生宿舍信息列表信息（查询），在这里，我们是用异步加载方式，
+		* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void queryClassroom() {
+			//获取页面查询的关键字
+			String key=getPara("key");
+			//开始查询
+			Page<ClassroomModel> Classroom=ClassroomModel.getList(1, 10,key);
+			//将查到的学生信息列表放到infos，给页面
+			setAttr("infos", Classroom);
+			//返回格式是json
+			renderJson();
+		}
+		/**
+		* @Title: openDormitoryAdd
+		* @Description:打开添加信息页面
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void openClassroomAdd() {
+			render("cla/classroomAdd.html");
+		}
+		
+		/**
+		* @Title: getdormitory
+		* @Description:获取需要修改的学生宿舍信息
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void getclassroom() {
+			//接收页面数据
+			String id=getPara("id");
+			//根据条件查询数据库的数据
+			ClassroomModel Classroom=ClassroomModel.getById(id);
+			//放到编辑页面上去
+			setAttr("m", Classroom);
+			//返回格式是json
+			renderJson();
+		}
+		/**
+		* @Title: openDormitoryEdit
+		* @Description:打开修改信息页面
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void openClassroomEdit() {
+			//接收页面数据
+			String id=getPara("id");
+			setAttr("id", id);
+			renderFreeMarker("cla/classroomEdit.html");
+		}
+		/**
+		* @Title: saveDormitory
+		* @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void saveClassroom() {
+			String id=getPara("id");
+			String name=getPara("name");
+			String building_id=getPara("building_id");
+			int capacity=getParaToInt("capacity");
+			int type=getParaToInt("type");
+			int status=getParaToInt("status");
+			String latitud=getPara("latitude");
+			BigDecimal latitude=new BigDecimal(latitud); 
+			latitude=latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
+			String longitud=getPara("longitude");
+			BigDecimal longitude=new BigDecimal(longitud); 
+			longitude=longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
+			
+			//保存数据
+			boolean result=ClassroomModel.save(id,name,building_id,capacity,type,status,latitude,longitude);
+			
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		 * 
+		* @Title: updateDormitory
+		* @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void updateClassroom() {
+			String id=getPara("id");
+			String name=getPara("name");
+			String building_id=getPara("building_id");
+			int capacity=getParaToInt("capacity");
+			int type=getParaToInt("type");
+			int status=getParaToInt("status");
+			String latitud=getPara("latitude");
+			BigDecimal latitude=new BigDecimal(latitud); 
+			latitude=latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
+			String longitud=getPara("longitude");
+			BigDecimal longitude=new BigDecimal(longitud); 
+			longitude=longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
+			
+			boolean result=ClassroomModel.update(id,name,building_id,capacity,type,status,latitude,longitude);
+			
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		 * 
+		* @Title: delDormitory
+		* @Description:删除信息，这个我们是根据唯一主键id来删除的。
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void delClassroom() {
+			String id=getPara("id");
+			//删除
+			boolean result=ClassroomModel.delClassroomByID(id);
+			//返回结果
+			setAttr("result", result);
+			renderJson();
+		}
 }
