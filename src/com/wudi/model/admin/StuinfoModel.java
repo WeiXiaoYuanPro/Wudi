@@ -142,13 +142,13 @@ public class StuinfoModel extends Model<StuinfoModel> {
 		if(s==null){
 			return false;
 		}
-		s.setNo(no);
 		s.setName(name);
 		s.setSex(sex);
 		s.setBirth(birth);
 		s.setImg(img);
 		try {
-			s.update();
+			String sql="UPDATE "+tableName+" set name='"+name+"', sex="+sex+",birth='"+birth+"',img='"+img+"' where no='"+no+"'";
+			Db.query(sql);
 		} catch (Exception e) {
 			return false;
 		}
