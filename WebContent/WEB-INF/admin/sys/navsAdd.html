@@ -18,7 +18,7 @@
 	</style>
 </head>
 <body class="childrenBody">
-	<form class="layui-form" name="studentform" style="width:80%;">
+	<form class="layui-form" name="navsform" style="width:80%;">
 		<div class="layui-form-item">
 			<label class="layui-form-label">菜单名称</label>
 			<div class="layui-input-block">
@@ -26,30 +26,28 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label"></label>
+			<label class="layui-form-label">菜单名称</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="name" lay-verify="required" placeholder="请输入姓名">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">班级</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="cls" lay-verify="required" placeholder="请输入班级">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-inline">
-			    <label class="layui-form-label">性别</label>
-			    <div class="layui-input-block userSex">
-			      	<input type="radio" name="sex" value="1" title="男" checked>
-			      	<input type="radio" name="sex" value="2" title="女">
-			      	<input type="radio" name="sex" value="0" title="保密">
-			    </div>
+		        <select name="fid" id="selectf">
+		        </select>
 		    </div>
 		</div>
 		<div class="layui-form-item">
+			<label class="layui-form-label">超链接</label>
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="addUser">立即提交</button>
+				<input type="text" class="layui-input" name="href"  placeholder="请输入超链接">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">图标</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="icon" lay-verify="required" placeholder="请输入班级">
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="add">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		    </div>
 		</div>

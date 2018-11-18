@@ -1,6 +1,7 @@
 package com.wudi.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
@@ -82,6 +83,25 @@ public class AdminController extends Controller{
 		setAttr("result", result);
 		renderJson();
 		
+	}
+	/**
+	 * TODO:根据id查找信息数据
+	 */
+	public void getModeListById() {
+		String id=getPara("id");
+		NavsModel m=NavsModel.getModeById(id);
+		List<NavsModel> ml=NavsModel.getModeListById(id);
+		setAttr("m", m);//找数据去更新
+		setAttr("ml", ml);//父节点列表
+		renderJson();
+	}
+	/**
+	 * TODO:根据fid查找信息数据
+	 */
+	public void getModeByFId() {
+		List<NavsModel> ml=NavsModel.getModeListById("-1");
+		setAttr("ml", ml);//找数据去更新
+		renderJson();
 	}
 	/**
 	 * 打开菜单修改页面
