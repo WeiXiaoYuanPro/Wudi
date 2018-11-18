@@ -6,6 +6,7 @@ import java.util.List;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.wudi.model.NavsModel;
+import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
@@ -859,6 +860,96 @@ public class AdminController extends Controller{
 			//删除
 			boolean result=ClassroomModel.delClassroomByID(id);
 			//返回结果
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		 * @Title: stu_families @Description: 打开学生家庭信息列表页面 @param 参数 @return void 返回类型 @throws
+		 */
+		public void stu_families() {
+			render("stu_family/stu_family_info.html");
+		}
+		/**
+		 * @Title: queryStu_family @Description: 获取学生家庭信息列表信息（查询），在这里，我们是用异步加载方式，
+		 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+		 */
+		public void queryStu_family() {
+			// 获取页面查询的关键字
+			String key = getPara("key");
+			// 开始查询
+			Page<Stu_familyModel> stu = Stu_familyModel.getList(1, 10, key);
+			// 将查到的学生家庭信息列表放到stu_family_infos，给页面
+			setAttr("infos", stu);
+			// 返回格式是json
+			renderJson();
+		}
+	/**
+	 @Title: openStu_familyAdd @Description:打开添加信息页面 @param 参数 @return void
+	 * 返回类型 @throws
+	 */
+		public void openStu_familyAdd() {
+			render("stu_family/stu_familyAdd.html");
+		}
+	/**
+	 * @Title:getstu_family @Description:获取需要修改的学生家庭信息 @param 参数 @return void
+		 * 返回类型 @throws
+	 */
+		public void getstu_family() {
+			// 接收页面数据
+			String id = getPara("id");
+			// 根据条件查询数据库的数据
+			Stu_familyModel stu = Stu_familyModel.getById(id);
+			// 放到编辑页面上去
+			setAttr("m", stu);
+			// 返回格式是json
+			renderJson();
+		}
+		/**
+		 * @Title: openStu_familyEdit @Description:打开修改信息页面 @param 参数 @return void
+		 * 返回类型 @throws
+		 */
+		public void openStu_familyEdit() {
+			// 接收页面数据
+			String id = getPara("id");
+			setAttr("id", id);
+			renderFreeMarker("stu_family/stu_familyEdit.html");
+		}
+		/**
+		 * @Title: saveStu_family @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
+		 * 参数 @return void 返回类型 @throws
+		 */
+		public void saveStu_family() {
+			String id = getPara("id");
+			String addr = getPara("addr");
+			String tel = getPara("tel");
+			String remark = getPara("remark");
+			String stu_no = getPara("stu_no");
+			boolean result = Stu_familyModel.save(id, addr, tel, remark, stu_no);
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		 * @Title: updateStu_family @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
+		 * 参数 @return void 返回类型 @throws
+		 */
+		public void updateStu_family() {
+			String id=getPara("id");
+			String addr = getPara("addr");
+			String tel = getPara("tel");
+			String remark = getPara("remark");
+			String stu_no = getPara("stu_no");
+			boolean result = Stu_familyModel.update(id,addr, tel, remark, stu_no);
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		 * 
+		 * @Title: delStu_family @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
+		 * void 返回类型 @throws
+		 */
+		public void delStu_family() {
+			String id = getPara("id");
+			boolean result = Stu_familyModel.delStu_familyById(id);
 			setAttr("result", result);
 			renderJson();
 		}
