@@ -136,23 +136,21 @@ public class StuinfoModel extends Model<StuinfoModel> {
 	}
 	/**
 	 * 更新
+	 * TODO:帮蒋霜 修改
 	 */
 	public static boolean update(String no,String name,int sex,String birth,String img){
-		StuinfoModel s=StuinfoModel.getByNo(no);
-		if(s==null){
-			return false;
-		}
-		s.setName(name);
-		s.setSex(sex);
-		s.setBirth(birth);
-		s.setImg(img);
+		boolean result=false;
 		try {
-			String sql="UPDATE "+tableName+" set name='"+name+"', sex="+sex+",birth='"+birth+"',img='"+img+"' where no='"+no+"'";
-			Db.query(sql);
+			String sql="UPDATE "+tableName+" set name=?, sex=?,birth=?,img=?  where no=?";
+			//上面的几个问号就是对应下面name,sex,birth,img,no
+			int r=Db.update(sql,name,sex,birth,img,no);
+			if(r>0) {
+				result=true;
+			}
 		} catch (Exception e) {
-			return false;
+			result=false;
 		}
-		return true;
+		return result;
 	}
 	/**
 	 * 根据学号删除数据
