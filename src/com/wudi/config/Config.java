@@ -17,6 +17,7 @@ import com.wudi.model.NavsModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.DormitoryModel;
+import com.wudi.model.admin.StuinfoModel;
 /**
  * 	系统配置类
  *   @author XIAO
@@ -68,6 +69,7 @@ public class Config extends JFinalConfig {
 			arpMysql.addMapping("student", StudentModel.class);//学生表
 			arpMysql.addMapping("dormitory", DormitoryModel.class);//宿舍表
 			arpMysql.addMapping("building", BuildingModel.class);//学校楼房信息表
+			arpMysql.addMapping("stuinfo", StuinfoModel.class);//学生表
 		}
 		//添加插件
 		me.add(dsMysql);
