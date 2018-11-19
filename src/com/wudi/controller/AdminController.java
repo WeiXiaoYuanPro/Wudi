@@ -9,6 +9,7 @@ import java.util.UUID;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.wudi.model.NavsModel;
+import com.wudi.model.admin.SchoolModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
@@ -1371,4 +1372,93 @@ public class AdminController extends Controller{
 			setAttr("result", result);
 			renderJson();
 		}
+		/**
+		 * @Title: schools @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
+		 */
+	    public void schools() {
+	    	render("school/schoolinfo.html");
+	    }
+	    /**
+		 * @Title: querySchools @Description: 获取学校信息列表信息（查询），在这里，我们是用异步加载方式，
+		 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+		 */
+	    public void querySchools() {
+	    	//获取查询页面的关键字key
+	    	String key=getPara("key");
+	    	//开始查询
+	    	Page<SchoolModel> schools=SchoolModel.getList(1, 10, key);
+	    	//将查到的信息给infos，放到页面
+	    	setAttr("infos", schools);
+	    	renderJson();
+	    }
+	    /**
+		 * @Title: openSchoolAdd @Description:打开添加信息页面 @param 参数 @return void
+		 * 返回类型 @throws
+		 */
+	    public void openSchoolAdd() {
+			render("school/schoolAdd.html");
+		}
+	    /**
+		 * @Title: getSchool @Description:获取需要修改的学校信息 @param 参数 @return void
+		 * 返回类型 @throws
+		 */
+	    public void getSchool() {
+	    	//获取需要修改的学校信息
+	    	String id=getPara("id");
+	    	// 根据条件查询数据库的数据
+	    	SchoolModel school=SchoolModel.getById(id);
+	    	//放到编辑页面上
+	    	setAttr("m", school);
+	    	//以Json格式返回
+	    	renderJson();
+	    }
+	    /**
+		 * @Title: openSchoolEdit @Description:打开修改信息页面 @param 参数 @return void
+		 * 返回类型 @throws
+		 */
+	    public void openSchoolEdit() {
+	    	//获取页面
+	    	String id=getPara("id");
+	    	setAttr("id", id);
+	    	renderFreeMarker("school/schoolEdit.html");
+	    }
+	    /**
+		 * @Title: saveSchool @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
+		 * 参数 @return void 返回类型 @throws
+		 */
+	    public void saveSchool() {
+	    	String id=getPara("id");
+	    	String schoolname=getPara("schoolname");
+	    	String no=getPara("no");
+	    	String addr=getPara("addr");
+	    	String img=getPara("img");
+	    	String remark=getPara("remark");
+	    	boolean result=SchoolModel.save(id, schoolname, no, addr, img, remark);
+	    	setAttr("result", result);
+	    	renderJson();
+	    }
+	    /**
+		 * @Title: updateSchool @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
+		 * 参数 @return void 返回类型 @throws
+		 */
+	    public void updateSchool() {
+	    	String id=getPara("id");
+	    	String schoolname=getPara("schoolname");
+	    	String no=getPara("no");
+	    	String addr=getPara("addr");
+	    	String img=getPara("img");
+	    	String remark=getPara("remark");
+	    	boolean result=SchoolModel.update(id, schoolname, no, addr, img, remark);
+	    	setAttr("result", result);
+	    	renderJson();
+	    }
+	    /**
+	     * @Title:delSchool  @Description:删除信息，根据主键id进行删除
+	     */
+	    public void delSchool() {
+	    	String id=getPara("id");
+	    	boolean result=SchoolModel.delSchoolById(id);
+	    	setAttr("result", result);
+	    	renderJson();
+	    }
 }
