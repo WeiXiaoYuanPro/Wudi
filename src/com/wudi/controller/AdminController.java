@@ -1115,6 +1115,25 @@ public class AdminController extends Controller{
 		public void cmslogin_log() {
 			render("cms1/cmslogin_loginfo.html");
 		}
+		
+		/**
+		* @Title: queryCms_User
+		* @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
+		* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void queryCmslogin_Log() {
+			//获取页面查询的关键字
+			String key=getPara("key");
+			//开始查询
+			Page<CmsloginLogModel> Cmslogin_Log=CmsloginLogModel.getList(1, 10,key);
+			//将查到的学生信息列表放到infos，给页面
+			setAttr("infos", Cmslogin_Log);
+			//返回格式是json
+			renderJson();
+		}
 		/**
 		 * 
 		* @Title: delDormitory
@@ -1131,6 +1150,15 @@ public class AdminController extends Controller{
 			setAttr("result", result);
 			renderJson();
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 
 		/**
