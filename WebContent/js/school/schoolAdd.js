@@ -6,29 +6,11 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-		var no=$("input[name='no']").val();
-		//加载页面数据
-		$.get("getstuinfo?no="+no, function(data){
-			var d=data.m;
-			var sta;
-	        	//执行加载数据的方法
-	        	$("input[name='name']").val(d.name);
-	        	$("input[name='birth']").val(d.birth);
-	        	$("input[name='img']").val(d.img);
-	        	
-	        	if(sta == 0){
-	        		$("#r1").attr("checken",true);
-	        		$("#r2").attr("checken",false);
-	        	}else{
-	        		$("#r1").attr("checken",false);
-	        		$("#r2").attr("checken",true);
-	        	}
-		})
 
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台
-	    	  url:'updateStuinfo',
+	    	  url:'saveSchool',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',
@@ -38,14 +20,14 @@ layui.config({
 	    	  success:function(d){
 	    			//弹出loading
 			    	top.layer.close(index);
-			  		top.layer.msg("操作成功！");
+			  		top.layer.msg("添加成功！");
 			   		layer.closeAll("iframe");
 			  	 		//刷新父页面
 			  	 	parent.location.reload();
 		    		
 	    	  },
 	    	  error:function(XMLHttpRequest, textStatus, errorThrown){
-	    		  top.layer.msg('操作失败！！！服务器有问题！！！！<br>请检测服务器是否启动？', {
+	    		  top.layer.msg('保存失败！！！服务器有问题！！！！<br>请检测服务器是否启动？', {
 	    		        time: 20000, //20s后自动关闭
 	    		        btn: ['知道了']
 	    		      });

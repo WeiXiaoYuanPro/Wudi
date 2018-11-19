@@ -149,6 +149,9 @@ public class NavsModel extends Model<NavsModel> {
 	 * @return
 	 */
 	public static boolean updateModel(String id,String title,String href, String icon,String fid) {
+		if(fid=="-1") {
+			return false;
+		}
 		NavsModel m=dao.findById(id);
 		if(m==null) {
 			return false;

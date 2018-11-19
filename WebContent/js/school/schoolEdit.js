@@ -6,29 +6,22 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-		var no=$("input[name='no']").val();
+		var id=$("input[name='id']").val();
 		//加载页面数据
-		$.get("getstuinfo?no="+no, function(data){
+		$.get("getSchool?id="+id, function(data){
 			var d=data.m;
-			var sta;
 	        	//执行加载数据的方法
-	        	$("input[name='name']").val(d.name);
-	        	$("input[name='birth']").val(d.birth);
+	        	$("input[name='schoolname']").val(d.schoolname);
+	        	$("input[name='no']").val(d.no);
+	        	$("input[name='addr']").val(d.addr);
 	        	$("input[name='img']").val(d.img);
-	        	
-	        	if(sta == 0){
-	        		$("#r1").attr("checken",true);
-	        		$("#r2").attr("checken",false);
-	        	}else{
-	        		$("#r1").attr("checken",false);
-	        		$("#r2").attr("checken",true);
-	        	}
+	        	$("input[name='remark']").val(d.remark);
 		})
 
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台
-	    	  url:'updateStuinfo',
+	    	  url:'updateSchool',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',
