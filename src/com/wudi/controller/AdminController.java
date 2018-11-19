@@ -1,9 +1,8 @@
 package com.wudi.controller;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import com.jfinal.core.Controller;
@@ -11,16 +10,17 @@ import com.jfinal.plugin.activerecord.Page;
 import com.wudi.model.NavsModel;
 import com.wudi.model.admin.SchoolModel;
 import com.wudi.model.StudentModel;
+import com.wudi.model.admin.StuContatcModel;
+import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
 import com.wudi.model.admin.CmsUserModel;
 import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
-import com.wudi.model.admin.StuContatcModel;
-import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
 import com.wudi.model.admin.UserInfoModel;
+import com.wudi.model.admin.UserLoginLogModel;
 
 /**
  * 
@@ -88,31 +88,12 @@ public class AdminController extends Controller{
 	public void saveNavs() {
 		String title=getPara("title");
 		String href=getPara("href");
-		String icon="&#xe630;";
+		String icon=getPara("icon");
 		String fid=getPara("fid");
 		boolean result=NavsModel.saveModel(title, href, icon, fid);
 		setAttr("result", result);
 		renderJson();
 		
-	}
-	/**
-	 * TODO:根据id查找信息数据
-	 */
-	public void getModeListById() {
-		String id=getPara("id");
-		NavsModel m=NavsModel.getModeById(id);
-		List<NavsModel> ml=NavsModel.getModeListByFid("-1");
-		setAttr("m", m);//找数据去更新
-		setAttr("ml", ml);//父节点列表
-		renderJson();
-	}
-	/**
-	 * TODO:根据fid查找信息数据
-	 */
-	public void getModeByFId() {
-		List<NavsModel> ml=NavsModel.getModeListByFid("-1");
-		setAttr("ml", ml);//找数据去更新
-		renderJson();
 	}
 	/**
 	 * 打开菜单修改页面
@@ -130,143 +111,13 @@ public class AdminController extends Controller{
 		String id=getPara("id");
 		String title=getPara("title");
 		String href=getPara("href");
-		String icon="&#xe630;";
+		String icon=getPara("icon");
 		String fid=getPara("fid");
 		boolean result=NavsModel.updateModel(id,title, href, icon, fid);
 		setAttr("result", result);
 		renderJson();
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * 显示菜单列表
-	 */
-	public void stucontactinfo() {
-		render("stucontact/stucontactinfo.html");
-	}
-	/**
-	 * 
-	* @Title: getstucontact
-	* @Description: 获取侧菜单数据列表
-	* @param     参数
-	* @return void    返回类型
-	* @throws
-	 */
-	public void getStucontact() {
-		//获取页面查询的关键字
-		String key=getPara("key");
-		Page<StuContatcModel> list=StuContatcModel.getList(1,100,key);
-		setAttr("infos", list);
-		renderJson();
-	}
-	/**
-	 * 打开联系方式添加页面
-	 */
-	public void openStucontactAdd() {
-		render("stucontact/stucontactAdd.html");
-	}
-	/**
-	 * 打开联系方式修改页面
-	 */
-	public void openStucontactEdit() {
-		//接收页面数据
-		String id=getPara("id");
-		setAttr("id", id);
-		renderFreeMarker("stucontact/stucontactEdit.html");
-	}
-	
-	/**
-	* @Title: saveStucontac
-	* @Description:学生联系保存，在添加学生联系信息页面上，点击保存的那个按键做的事情
-	* @param     参数
-	* @return void    返回类型
-	* @throws
-	 */
-	public void saveStucontac() {
-		String id=getPara("id");
-		String tel=getPara("tel");
-		String qq=getPara("qq");
-		String weixin=getPara("weixin");
-		String other=getPara("other");
-		String stu_no=getPara("stu_no");
-		//保存数据
-		boolean result=StuContatcModel.save(id,tel, qq, weixin, other, stu_no);
-		setAttr("result", result);
-		renderJson();
-	}
-
-	/**
-	 * 
-	* @Title: updateStucontact
-	* @Description:更新学生联系信息，就是学生联系修改信息页面，点击保存的那个按钮做的事情
-	* @param     参数
-	* @return void    返回类型
-	* @throws
-	 * 更新保存菜单信息
-	 */
-	public void updateStucontact() {
-		String id=getPara("id");
-		String tel=getPara("tel");
-		String qq=getPara("qq");
-		String weixin=getPara("weixin");	
-		String other=getPara("other");
-		String stu_no=getPara("stu_no");
-		boolean result=StuContatcModel.update(id,tel, qq, weixin, other, stu_no);
-		setAttr("result", result);
-		renderJson();
-		
-	}
-	/**
-	 * 
-	* @Title: delStudent
-	* @Description:删除信息，这个我们是根据唯一主键id来删除的。
-	* @param     参数
-	* @return void    返回类型
-	* @throws
-	 */
-	public void delStuContatc() {
-		String id=getPara("id");
-		//删除
-		boolean result=StuContatcModel.delStuContatcByID(id);
-		//返回结果
-		setAttr("result", result);
-		renderJson();
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	* @Title: students
 	* @Description: 打开学生信息列表页面
@@ -393,8 +244,265 @@ public class AdminController extends Controller{
 	
 	
 	
+
 	
 	
+	
+	
+	
+	
+	
+	/**
+	 * 在AdminController类中添加拉学生联系方式表 和  客户端登陆日志记录表
+	 * @author 王驰
+	 * 2018年11月18日 12:21:34
+	 *
+	 */
+	
+	
+	/**
+	* @Title: stucontatc
+	* @Description: 打开学生联系信息列表页面
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void stucontatc() {
+		render("stucontatc/stucontatcinfo.html");
+	}
+	/**
+	* @Title: queryStucontatc
+	* @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
+	* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void queryStuContatc() {
+		//获取页面查询的关键字
+		String key=getPara("key");
+		//开始查询
+		Page<StuContatcModel> stucontatc=StuContatcModel.getList(1, 10,key);
+		//将查到的学生信息列表放到infos，给页面
+		setAttr("infos", stucontatc);
+		//返回格式是json
+		renderJson();
+	}
+	/**
+	* @Title: openstucontatc
+	* @Description:打开添加学生联系方式页面
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void openStuContatcAdd() {
+		render("stucontatc/stucontatcAdd.html");
+	}
+	
+	/**
+	* @Title: getStuContatc
+	* @Description:获取需要修改的学生信息
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void getStuContatc() {
+		//接收页面数据
+		String id=getPara("id");
+		//根据条件查询数据库的数据
+		StuContatcModel stucontatc=StuContatcModel.getById(id);
+		//放到编辑页面上去
+		setAttr("m", stucontatc);
+		//返回格式是json
+		renderJson();
+	}
+	/**
+	* @Title: openstucontatcEdit
+	* @Description:打开修改信息页面
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void openStuContatcEdit() {
+		//接收页面数据
+		String id=getPara("id");
+		setAttr("id", id);
+		renderFreeMarker("stucontatc/stucontatcEdit.html");
+	}
+	/**
+	* @Title: saveStuContatc
+	* @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void saveStuContatc() {
+		String id=getPara("id");
+		String tel=getPara("tel");
+		String qq=getPara("qq");
+		String weixin=getPara("weixin");
+		String other=getPara("other");
+		String stu_no=getPara("stu_no");
+		//保存数据
+		boolean result=StuContatcModel.save(id,tel,qq,weixin,other,stu_no);
+		
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 * 
+	* @Title: updateStuContatc
+	* @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void updateStuContatc() {
+		String id=getPara("id");
+		String tel=getPara("tel");
+		String qq=getPara("qq");
+		String weixin=getPara("weixin");
+		String other=getPara("other");
+		String stu_no=getPara("stu_no");
+		//更新数据
+		boolean result=StuContatcModel.update(id,tel,qq,weixin,other,stu_no);
+		
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 * 
+	* @Title: delStuContatc
+	* @Description:删除信息，这个我们是根据唯一主键id来删除的。
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void delStuContatc() {
+		String id=getPara("id");
+		//删除
+		boolean result=StuContatcModel.delStuContatcByID(id);
+		//返回结果
+		setAttr("result", result);
+		renderJson();
+	}
+	
+	
+
+	/**
+	* @Title: dormitory
+	* @Description: 打开学生宿舍信息列表页面
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void UserLoginLog() {
+		render("userloginlog/userloginloginfo.html");
+	}
+	/**
+	 * 打开客户端登陆日志记录添加页面
+	 */
+	public void openUserLoginLogAdd() {
+		render("userloginlog/userloginlogAdd.html");
+	}
+	/**
+	* @Title: queryUserLoginLog
+	* @Description: 获取客户端登陆日志记录表信息（查询），在这里，我们是用异步加载方式，
+	* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void queryUserLoginLog() {
+		//获取页面查询的关键字
+		String key=getPara("key");
+		//开始查询
+		Page<UserLoginLogModel> Dormitory=UserLoginLogModel.getList(1, 10,key);
+		//将查到的学生信息列表放到infos，给页面
+		setAttr("infos", Dormitory);
+		//返回格式是json
+		renderJson();
+	}
+	/**
+	 * 
+	* @Title: userloginlog
+	* @Description: 获取侧客户端登陆日志记录表
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void getUserLoginLogList() {
+		//获取页面查询的关键字
+		String key=getPara("key");
+		Page<UserLoginLogModel> list=UserLoginLogModel.getList(1,100,key);
+		setAttr("infos", list);
+		renderJson();
+	}
+	/**
+	 * 添加保存客户端登陆日志记录表信息
+	 */
+	public void saveUserLoginLog() {
+		String id=getPara("id");
+		String username=getPara("username");
+		String login_time=getPara("login_time");
+		String ip=getPara("ip");
+		String addr=getPara("addr");
+		String remark=getPara("remark");
+		int status=getParaToInt("status");
+		boolean result=UserLoginLogModel.saveModel(id, username, login_time, ip, addr, remark, status);
+		setAttr("result", result);
+		renderJson();
+		
+	}
+	/**
+	 * 打开客户端登陆日志记录表修改页面
+	 */
+	public void openUserLoginLogEdit() {
+		//接收页面数据
+		String id=getPara("id");
+		setAttr("id", id);
+		renderFreeMarker("sys/userloginlogEdit.html");
+	}
+	/**
+	 * 更新保存客户端登陆日志记录表信息
+	 */
+	public void updateuserloginlog() {
+		String id=getPara("id");
+		String username=getPara("username");
+		String login_time=getPara("login_time");
+		String ip=getPara("ip");
+		String addr=getPara("addr");
+		String remark=getPara("remark");
+		int status=getParaToInt("status");
+		boolean result=UserLoginLogModel.update(id, username, login_time, ip, addr, remark, status);
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 * 
+	* @Title: delUserLoginLog
+	* @Description:删除信息，这个我们是根据唯一主键id来删除的。
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void delUserLoginLog() {
+		String id=getPara("id");
+		//删除
+		boolean result=UserLoginLogModel.delUserLoginLogByID(id);
+		//返回结果
+		setAttr("result", result);
+		renderJson();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
 	/**
 	* @Title: dormitory
 	* @Description: 打开学生宿舍信息列表页面
@@ -666,9 +774,7 @@ public class AdminController extends Controller{
 	
 	/**
 	 * 
-	 * 
 	 * Stu_info
-	 * 
 	 * 
 	 */
 		public void stuinfos() {
@@ -734,18 +840,13 @@ public class AdminController extends Controller{
 			renderJson();
 		}
 
-		
-		
-		
-		
-		
 		/**
 		* @Title: classroom
 		* @Description: 打开教室信息列表页面
 		* @param     参数
 		* @return void    返回类型
 		* @throws
-		*/
+		 */
 		public void classroom() {
 			render("cla/classroominfo.html");
 		}
@@ -878,6 +979,7 @@ public class AdminController extends Controller{
 			setAttr("result", result);
 			renderJson();
 		}
+
 		/**
 		 * @Title: stu_families @Description: 打开学生家庭信息列表页面 @param 参数 @return void 返回类型 @throws
 		 */
@@ -1151,6 +1253,7 @@ public class AdminController extends Controller{
 			renderJson();
 		}
 		
+
 		
 		
 		
@@ -1159,7 +1262,7 @@ public class AdminController extends Controller{
 		
 		
 		
-		
+
 
 		/**
 		 * @Title: userInfo @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
@@ -1224,7 +1327,7 @@ public class AdminController extends Controller{
 		 */
 		public void saveUserInfo() {
 			// 获取系统时间
-			Date time = new Date();
+			Date time = new Date(0);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String id = UUID.randomUUID().toString();
@@ -1489,4 +1592,5 @@ public class AdminController extends Controller{
 	    	setAttr("result", result);
 	    	renderJson();
 	    }
+
 }
