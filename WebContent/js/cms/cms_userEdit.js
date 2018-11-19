@@ -8,13 +8,13 @@ layui.config({
 		$ = layui.jquery;
 		var id=$("input[id='id']").val();
 		//加载页面数据
-		$.get("getCms_User?id="+id, function(data){
+		$.get("getcms_user?id="+id, function(data){
 			var d=data.m;
-	        	//执行加载数据的方法
-	        	
+	        	//执行加载数据的方法	
 	        	$("input[name='username']").val(d.username);
 	        	$("input[name='password']").val(d.password);
 	        	$("input[name='img']").val(d.img);
+	        	$("input[name='type']").val(d.type);
 	        	$("input[name='status']").val(d.status);
 		});
 

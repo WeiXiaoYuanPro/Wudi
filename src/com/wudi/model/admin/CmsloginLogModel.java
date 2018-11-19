@@ -113,10 +113,10 @@ public class CmsloginLogModel extends Model<CmsloginLogModel> {
 	 * @param no
 	 * @return
 	 */
-	public static boolean delCms_UserByUsername(String username) {
+	public static boolean delCmslogin_LogByID(String id) {
 		try {
-			String delsql="DELETE FROM "+tableName+" WHERE username=?";
-			int iRet=Db.update(delsql, username);
+			String delsql="DELETE FROM "+tableName+" WHERE id=?";
+			int iRet=Db.update(delsql, id);
 			if(iRet > 0)
 			{
 				return true;

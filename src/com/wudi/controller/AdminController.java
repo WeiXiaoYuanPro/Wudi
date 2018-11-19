@@ -11,6 +11,7 @@ import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
 import com.wudi.model.admin.CmsUserModel;
+import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.StuContatcModel;
 import com.wudi.model.admin.StuinfoModel;
@@ -977,7 +978,7 @@ public class AdminController extends Controller{
 			render("cms/cms_userinfo.html");
 		}
 		/**
-		* @Title: queryStudents
+		* @Title: queryCms_User
 		* @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
 		* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
 		* @param     参数
@@ -995,7 +996,7 @@ public class AdminController extends Controller{
 			renderJson();
 		}
 		/**
-		* @Title: openStudentAdd
+		* @Title: openCms_UserAdd
 		* @Description:打开添加信息页面
 		* @param     参数
 		* @return void    返回类型
@@ -1006,7 +1007,7 @@ public class AdminController extends Controller{
 		}
 		
 		/**
-		* @Title: getstudent
+		* @Title: getCms_User
 		* @Description:获取需要修改的学生信息
 		* @param     参数
 		* @return void    返回类型
@@ -1023,7 +1024,7 @@ public class AdminController extends Controller{
 			renderJson();
 		}
 		/**
-		* @Title: openStudentEdit
+		* @Title: openCms_UserEdit
 		* @Description:打开修改信息页面
 		* @param     参数
 		* @return void    返回类型
@@ -1036,7 +1037,7 @@ public class AdminController extends Controller{
 			renderFreeMarker("cms/cms_userEdit.html");
 		}
 		/**
-		* @Title: saveStudent
+		* @Title: saveCms_User
 		* @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情
 		* @param     参数
 		* @return void    返回类型
@@ -1056,7 +1057,7 @@ public class AdminController extends Controller{
 		}
 		/**
 		 * 
-		* @Title: updateStudent
+		* @Title: updateDormitory
 		* @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情
 		* @param     参数
 		* @return void    返回类型
@@ -1066,11 +1067,12 @@ public class AdminController extends Controller{
 			String id=getPara("id");
 			String username=getPara("username");
 			String password=getPara("password");
-
+			//Date create_time=getPara("create_time");
 			String img=getPara("img");
 			int type=getParaToInt("type");
 			int status=getParaToInt("status");
-			//更新数据
+			
+			
 			boolean result=CmsUserModel.update(id,username,password,img,type,status);
 			
 			setAttr("result", result);
@@ -1078,16 +1080,16 @@ public class AdminController extends Controller{
 		}
 		/**
 		 * 
-		* @Title: delStudent
+		* @Title: delDormitory
 		* @Description:删除信息，这个我们是根据唯一主键id来删除的。
 		* @param     参数
 		* @return void    返回类型
 		* @throws
 		 */
 		public void delCms_User() {
-			String username=getPara("username");
+			String id=getPara("id");
 			//删除
-			boolean result=CmsUserModel.delCms_UserByUsername(username);
+			boolean result=CmsUserModel.delCmsUserByID(id);
 			//返回结果
 			setAttr("result", result);
 			renderJson();
@@ -1106,5 +1108,21 @@ public class AdminController extends Controller{
 		 */
 		public void cmslogin_log() {
 			render("cms1/cmslogin_loginfo.html");
+		}
+		/**
+		 * 
+		* @Title: delDormitory
+		* @Description:删除信息，这个我们是根据唯一主键id来删除的。
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void delCmslogin_Log() {
+			String id=getPara("id");
+			//删除
+			boolean result=CmsloginLogModel.delCmslogin_LogByID(id);
+			//返回结果
+			setAttr("result", result);
+			renderJson();
 		}
 }

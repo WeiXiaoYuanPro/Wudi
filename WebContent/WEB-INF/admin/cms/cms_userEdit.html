@@ -38,22 +38,16 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<div class="layui-inline">
-			    <label class="layui-form-label">类型</label>
-			    <div class="layui-input-block userSex">
-			      	<input type="radio" name="type" value="1" title="普通管理员" checked>
-			      	<input type="radio" name="type" value="0" title="超级管理员">
-			    </div>
-		    </div>
+			<label class="layui-form-label">类型</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="img" lay-verify="required" placeholder="请输入类型（0超级管理员，1普通管理员）">
+			</div>
 		</div>
 		<div class="layui-form-item">
-			<div class="layui-inline">
-			    <label class="layui-form-label">状态</label>
-			    <div class="layui-input-block userSex">
-			      	<input type="radio" name="status" value="1" title="正常" checked>
-			      	<input type="radio" name="status" value="0" title="异常">
-			    </div>
-		    </div>
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="img" lay-verify="required" placeholder="请输入状态（0:正常，1异常）">
+			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">

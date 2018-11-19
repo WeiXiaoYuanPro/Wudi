@@ -171,12 +171,13 @@ public class CmsUserModel extends Model<CmsUserModel> {
 		if(model==null){
 			return false;
 		}
+		model.setId(id);
+		model.setUsername(username);
 		model.setPassword(password);
+		//model.setCreate_Time(create_time);
 		model.setImg(img);
 		model.setType(type);
 		model.setStatus(status);
-		model.setUsername(username);
-		
 		try {
 			model.update();
 		} catch (Exception e) {
@@ -189,10 +190,10 @@ public class CmsUserModel extends Model<CmsUserModel> {
 	 * @param no
 	 * @return
 	 */
-	public static boolean delCms_UserByUsername(String username) {
+	public static boolean delCmsUserByID(String id) {
 		try {
-			String delsql="DELETE FROM "+tableName+" WHERE username=?";
-			int iRet=Db.update(delsql, username);
+			String delsql="DELETE FROM "+tableName+" WHERE id=?";
+			int iRet=Db.update(delsql, id);
 			if(iRet > 0)
 			{
 				return true;
