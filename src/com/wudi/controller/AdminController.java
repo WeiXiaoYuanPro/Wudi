@@ -1,7 +1,10 @@
 package com.wudi.controller;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
@@ -15,6 +18,7 @@ import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.StuContatcModel;
 import com.wudi.model.admin.StuinfoModel;
+import com.wudi.model.admin.UserInfoModel;
 
 /**
  * 
@@ -1122,6 +1126,119 @@ public class AdminController extends Controller{
 			//删除
 			boolean result=CmsloginLogModel.delCmslogin_LogByID(id);
 			//返回结果
+			setAttr("result", result);
+			renderJson();
+		}
+		
+		/**
+		 * @Title: userInfo @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
+		 */
+		public void userInfo() {
+			render("userinfo/userinfoInfo.html");
+		}
+
+		/**
+		 * @Title: openUserInfoAdd @Description:打开添加信息页面 @param 参数 @return void
+		 *         返回类型 @throws
+		 */
+		public void openUserInfoAdd() {
+			render("userinfo/userinfoAdd.html");
+		}
+
+		/**
+		 * @Title: openUserInfoEdit @Description:打开修改信息页面 @param 参数 @return void
+		 *         返回类型 @throws
+		 */
+		public void openUserInfoEdit() {
+			// 接收页面数据
+			String id = getPara("id");
+
+			setAttr("id", id);
+			renderFreeMarker("userinfo/userinfoEdit.html");
+		}
+
+		/**
+		 * @Title: queryUserInfo @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
+		 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+		 */
+		public void queryUserInfo() {
+			// 获取页面查询的关键字
+			String key = getPara("key");
+			// 开始查询
+			Page<UserInfoModel> date = UserInfoModel.getList(1, 10, key);
+			// 将查到的学生信息列表放到infos，给页面
+			setAttr("infos", date);
+			// 返回格式是json
+			renderJson();
+		}
+
+		/**
+		 * @Title: getUserInfo @Description:获取需要修改的学生信息 @param 参数 @return void
+		 *         返回类型 @throws
+		 */
+		public void getUserInfo() {
+			// 接收页面数据
+			String id = getPara("id");
+			// 根据条件查询数据库的数据
+			UserInfoModel date = UserInfoModel.getById(id);
+			// *放到编辑页面上去*
+			setAttr("d", date);
+			// 返回格式是json
+			renderJson();
+		}
+
+		/**
+		 * @Title: saveUserInfo @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
+		 *         参数 @return void 返回类型 @throws
+		 */
+		public void saveUserInfo() {
+			// 获取系统时间
+			Date time = new Date();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+			String id = UUID.randomUUID().toString();
+			String username = getPara("username");
+			String password = getPara("password");
+			String create_time = df.format(time.getTime());
+			String img = getPara("img");
+			String status = getPara("status");
+			// 保存数据
+			boolean result = UserInfoModel.save(id, username, password, create_time, img, Integer.parseInt(status));
+
+			setAttr("result", result);
+			renderJson();
+		}
+
+		/**
+		 * 
+		 * @Title: updateUserInfo @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
+		 *         参数 @return void 返回类型 @throws
+		 */
+		public void updateUserInfo() {
+			String id = getPara("id");
+			String username = getPara("username");
+			String password = getPara("password");
+			String create_time = getPara("create_time");
+			String img = getPara("img");
+			String status = getPara("status");
+
+			// 更新数据
+			boolean result = UserInfoModel.update(id, username, password, create_time, img, Integer.parseInt(status));
+
+			setAttr("result", result);
+			renderJson();
+		}
+
+		/**
+		 * 
+		 * @Title: delUserInfo @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
+		 *         void 返回类型 @throws
+		 */
+		public void delUserInfo() {
+			String id = getPara("id");
+			// 删除
+			boolean result = UserInfoModel.delUserInfoById(id);
+			// 返回结果
 			setAttr("result", result);
 			renderJson();
 		}
