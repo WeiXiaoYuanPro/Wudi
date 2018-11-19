@@ -16,7 +16,7 @@ layui.config({
 	        	$("input[name='sex']").val(d.sex);
 		})
 
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+ 	form.on("submit(addUser)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'updateStudent',
