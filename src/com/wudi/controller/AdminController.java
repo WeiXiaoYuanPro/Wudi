@@ -9,14 +9,15 @@ import java.util.UUID;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.wudi.model.NavsModel;
-import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
 import com.wudi.model.admin.CmsUserModel;
 import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
+import com.wudi.model.admin.Role_infoModel;
 import com.wudi.model.admin.StuContatcModel;
+import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
 import com.wudi.model.admin.UserInfoModel;
 
@@ -1130,6 +1131,7 @@ public class AdminController extends Controller{
 			renderJson();
 		}
 		
+
 		/**
 		 * @Title: userInfo @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
 		 */
@@ -1239,6 +1241,133 @@ public class AdminController extends Controller{
 			// 删除
 			boolean result = UserInfoModel.delUserInfoById(id);
 			// 返回结果
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		* @Title: role
+		* @Description: 打开学生信息列表页面
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void role() {
+			render("role/roleinfo.html");
+		}
+		
+		/**
+		* @Title: queryRole
+		* @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
+		* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void queryRole() {
+			//获取页面查询的关键字
+			String key=getPara("key");
+			//开始查询
+			Page<Role_infoModel> role=Role_infoModel.getList(1, 10,key);
+			//将查到的学生信息列表放到infos，给页面
+			setAttr("infos", role);
+			//返回格式是json
+			renderJson();
+		}
+		/**
+		* @Title: openRoleAdd
+		* @Description:打开添加信息页面
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void openRoleAdd() {
+			render("role/roleAdd.html");
+		}
+		/**
+		* @Title: getrole
+		* @Description:获取需要修改的学生信息
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void getrole() {
+			//接收页面数据
+			String id=getPara("id");
+			//根据条件查询数据库的数据
+			Role_infoModel role=Role_infoModel.getByNo(id);
+			//放到编辑页面上去
+			setAttr("m", role);
+			//返回格式是json
+			renderJson();
+		}
+		/**
+		* @Title: openRoleEdit
+		* @Description:打开修改信息页面
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void openRoleEdit() {
+			//接收页面数据
+			String id=getPara("id");
+			setAttr("id", id);
+			renderFreeMarker("role/roleEdit.html");
+		}
+		/**
+		* @Title: saveRole
+		* @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void saveRole() {
+			String id=getPara("id");
+			String rolename=getPara("rolename");
+			int level=getParaToInt("level");
+			String control=getPara("control");
+			String remark=getPara("remark");
+			String user_id=getPara("user_id");
+			//保存数据
+			boolean result=Role_infoModel.save(id,rolename,level,control,remark,user_id);
+			
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		 * 
+		* @Title: updateRole
+		* @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void updateRole() {
+			String id=getPara("id");
+			String rolename=getPara("rolename");
+			int level=getParaToInt("level");
+			String control=getPara("control");
+			String remark=getPara("remark");
+			String user_id=getPara("user_id");
+			//更新数据
+			boolean result=Role_infoModel.update(id,rolename,level,control,remark,user_id);
+			
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		 * 
+		* @Title: delRole
+		* @Description:删除信息，这个我们是根据唯一主键id来删除的。
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void delRole() {
+			String id=getPara("id");
+			//删除
+			boolean result=Role_infoModel.delRoleByID(id);
+			//返回结果
+
 			setAttr("result", result);
 			renderJson();
 		}
