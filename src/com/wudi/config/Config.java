@@ -17,6 +17,8 @@ import com.wudi.model.NavsModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
+import com.wudi.model.admin.CmsUserModel;
+import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.StuinfoModel;
 /**
@@ -74,6 +76,11 @@ public class Config extends JFinalConfig {
 			arpMysql.addMapping("classroom", ClassroomModel.class);//教室信息表
 
 			arpMysql.addMapping("stuinfo", StuinfoModel.class);//学生表
+			
+			arpMysql.addMapping("cms_user", CmsUserModel.class);//用户信息表
+			
+			arpMysql.addMapping("cmslogin_log", CmsloginLogModel.class);//用户信息表
+			
 
 		}
 		//添加插件
