@@ -21,7 +21,9 @@ import com.wudi.model.admin.CmsUserModel;
 import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
+import com.wudi.model.admin.SchoolModel;
 import com.wudi.model.admin.StuinfoModel;
+import com.wudi.model.admin.UserInfoModel;
 /**
  * 	系统配置类
  *   @author XIAO
@@ -72,6 +74,14 @@ public class Config extends JFinalConfig {
 			arpMysql.addMapping("navs", NavsModel.class);//主页面左侧菜单显示的表
 			arpMysql.addMapping("student", StudentModel.class);//学生表
 			arpMysql.addMapping("dormitory", DormitoryModel.class);//宿舍表
+
+			arpMysql.addMapping("building", BuildingModel.class);//学校楼房信息表
+			arpMysql.addMapping("classroom", ClassroomModel.class);//教室信息表
+			arpMysql.addMapping("stuinfo", StuinfoModel.class);//学生表		
+			arpMysql.addMapping("cms_user", CmsUserModel.class);//cms信息表		
+			arpMysql.addMapping("cmslogin_log", CmsloginLogModel.class);//cms登陆信息表
+			arpMysql.addMapping("user_info", UserInfoModel.class);//用户信息表
+
 			arpMysql.addMapping("building", BuildingModel.class);//学校楼房信息表
 
 			arpMysql.addMapping("classroom", ClassroomModel.class);//教室信息表
@@ -83,7 +93,9 @@ public class Config extends JFinalConfig {
 			arpMysql.addMapping("cmslogin_log", CmsloginLogModel.class);//用户信息表
 			
 			arpMysql.addMapping("role_info", Role_infoModel.class);//学生表
+			arpMysql.addMapping("school", SchoolModel.class);//学生表
 			
+
 
 		}
 		//添加插件
