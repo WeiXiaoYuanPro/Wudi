@@ -10,6 +10,7 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
 import com.wudi.controller.AdminController;
+import com.wudi.controller.FileController;
 import com.wudi.controller.WeixinController;
 import com.wudi.interceptor.AdminInterceptor;
 import com.wudi.interceptor.WeixinIntercepter;
@@ -45,6 +46,7 @@ public class Config extends JFinalConfig {
 		// 设置路由，客户端访问就是在这里设置的路径地址
 		me.add("/admin", AdminController.class,"WEB-INF/admin");//后台数据管理访问路径：localhost:8080/admin
 		me.add("/wudi", WeixinController.class);//微信小程序访问路径：localhost:8080/wudi
+		me.add("/file", FileController.class,"upload");//文件上传下载访问路径：localhost:8080/file
 		
 	}
 

@@ -59,8 +59,8 @@ public class NavsModel extends Model<NavsModel> {
 	* @throws
 	 */
 	public List<NavsModel> getChildren(){
-		String sql="select * from "+tableName+" where fid="+getId();
-		return dao.find(sql);
+		String sql="select * from "+tableName+" where fid=?";
+		return dao.find(sql,getId());
 	}
 	/**
 	 * TODO:xiao 根据id查找信息

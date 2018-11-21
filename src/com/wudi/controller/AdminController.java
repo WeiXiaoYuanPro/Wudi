@@ -1054,9 +1054,8 @@ public class AdminController extends Controller{
 			String password=getPara("password");
 			String img=getPara("img");
 			int type=getParaToInt("type");
-			int status=getParaToInt("status");
 			//保存数据
-			boolean result=CmsUserModel.save(username,password,img,type,status);
+			boolean result=CmsUserModel.save(username,password,img,type);
 			
 			setAttr("result", result);
 			renderJson();

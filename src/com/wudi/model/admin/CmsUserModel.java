@@ -122,7 +122,7 @@ public class CmsUserModel extends Model<CmsUserModel> {
 	}
 /**
  * 
- * 
+ *  	TODO:肖老师修改：2018年11月20日16:09:17
 * @Title: save
 * @Description:保存，这里是以分别参数传下来的，你们还可以用对象的信息传下来，喜欢这么写就怎么写
 * @param @param no
@@ -133,15 +133,15 @@ public class CmsUserModel extends Model<CmsUserModel> {
 * @return boolean    返回类型
 * @throws
  */
-	public static boolean save(String username,String password,String img, int type,int status) {
+	public static boolean save(String username,String password,String img, int type) {
 		CmsUserModel s=new CmsUserModel();
 		s.setId (UUID.randomUUID().toString());
-		s.setPassword(password);
-		s.setCreate_Time(new Date());
-		s.setImg(img);
-		s.setType(type);
-		s.setStatus(status);
 		s.setUsername(username);
+		s.setPassword(password);
+		s.setCreate_Time(new Date());//默认是服务器时间
+		s.setImg(img);//保存的是图像路径
+		s.setType(type);
+		s.setStatus(0);//0默认正常
 		return s.save();
 	}
 	
