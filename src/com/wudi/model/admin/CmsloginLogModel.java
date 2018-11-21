@@ -88,7 +88,7 @@ public class CmsloginLogModel extends Model<CmsloginLogModel> {
 		StringBuffer from_sql=new StringBuffer();
 		from_sql.append("from ").append(tableName);
 		if(!StringUtil.isBlankOrEmpty(key)) {
-			from_sql.append(" where name like '%"+key+"%'");
+			from_sql.append(" where username like '%"+key+"%'");
 		}
 		return dao.paginate(pageNumber,pageSize,sele_sql,from_sql.toString());
 	}  

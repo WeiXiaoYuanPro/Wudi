@@ -59,8 +59,8 @@ public class NavsModel extends Model<NavsModel> {
 	* @throws
 	 */
 	public List<NavsModel> getChildren(){
-		String sql="select * from "+tableName+" where fid="+getId();
-		return dao.find(sql);
+		String sql="select * from "+tableName+" where fid=?";
+		return dao.find(sql,getId());
 	}
 	/**
 	 * TODO:xiao 根据id查找信息
@@ -149,6 +149,9 @@ public class NavsModel extends Model<NavsModel> {
 	 * @return
 	 */
 	public static boolean updateModel(String id,String title,String href, String icon,String fid) {
+		if(fid.equals("-1")) {
+			return false;
+		}
 		NavsModel m=dao.findById(id);
 		if(m==null) {
 			return false;

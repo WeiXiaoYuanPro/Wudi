@@ -95,7 +95,7 @@ layui.config({
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			var msgid;
 	 		 $.ajax({//异步请求返回给后台
-		    	  url:'delCms_User',
+		    	  url:'delCmslogin_Log',
 		    	  type:'POST',
 		    	  data:{"id":_this.attr("data-id")},
 		    	  dataType:'json',
@@ -144,15 +144,14 @@ layui.config({
 			    	+'<td>'+currData[i].username+'</td>'
 			    	+'<td>'+currData[i].login_time+'</td>'
 			    	+'<td>'+currData[i].ip+'</td>'
-			    	+'<td>'+currData[i].addr+'</td>';
-					+'<td>'+currData[i].remark+'</td>';
+			    	+'<td>'+currData[i].addr+'</td>'
+					+'<td>'+currData[i].remark+'</td>'
 			    	if(currData[i].status == 1){
 			    		dataHtml += '<td style="color:#f00">失败</td>';
 			    	}else{
 			    		dataHtml += '<td>成功</td>';
 			    	}			    	
 			    	dataHtml +='<td>'
-					+  '<a class="layui-btn layui-btn-mini news_edit" data-id="'+currData[i].id+'"><i class="iconfont icon-edit" ></i> 编辑</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+currData[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';

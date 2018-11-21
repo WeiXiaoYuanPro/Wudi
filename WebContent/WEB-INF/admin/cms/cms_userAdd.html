@@ -15,6 +15,7 @@
 		@media(max-width:1240px){
 			.layui-form-item .layui-inline{ width:100%; float:none; }
 		}
+		.layui-upload-img{width: 92px; height: 92px; margin: 0 10px 10px 120px;}
 	</style>
 </head>
 <body class="childrenBody">
@@ -32,25 +33,24 @@
 				<input type="text" class="layui-input" name="password" lay-verify="required" placeholder="请输入密码">
 			</div>
 		</div>
-		
 		<div class="layui-form-item">
 			<label class="layui-form-label">头像图片</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="img" lay-verify="required" placeholder="请输入密码">
-			</div>
+			<div class="layui-upload">
+  				<button type="button" class="layui-btn" id="test1">上传图片</button>
+  				<input type="hidden" id="img_url" name="img" value=""/>
+  				<div class="layui-upload-list">
+    			<img class="layui-upload-img" id="demo1">
+    			<p id="demoText"></p>
+  				</div>
+			</div> 
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">类型</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="type" lay-verify="required" placeholder="请输入密码">
-			</div>
+		      <input type="radio" name="type" value="1" title="普通管理员" checked="true">
+		      <input type="radio" name="type" value="0" title="超级管理员">
+		    </div>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">状态</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="status" lay-verify="required" placeholder="请输入密码">
-			</div>
-		</div>		
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="addUser">立即提交</button>
