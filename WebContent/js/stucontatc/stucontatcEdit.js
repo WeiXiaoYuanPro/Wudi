@@ -8,7 +8,7 @@ layui.config({
 		$ = layui.jquery;
 		var no=$("input[name='id']").val();
 		//加载页面数据
-		$.get("getStuContatc?id="+id, function(data){
+		$.get("getStucontatc?id="+id, function(data){
 			var d=data.m;
 	        	//执行加载数据的方法
 	        	$("input[name='tel']").val(d.tel);
@@ -21,7 +21,7 @@ layui.config({
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台
-	    	  url:'updateStuContatc',
+	    	  url:'updateStucontatc',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',

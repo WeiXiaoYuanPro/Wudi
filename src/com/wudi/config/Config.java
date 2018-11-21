@@ -23,6 +23,7 @@ import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
 import com.wudi.model.admin.SchoolModel;
+import com.wudi.model.admin.StuContatcModel;
 import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
 import com.wudi.model.admin.UserInfoModel;
@@ -96,7 +97,10 @@ public class Config extends JFinalConfig {
 			arpMysql.addMapping("cmslogin_log", CmsloginLogModel.class);//用户信息表
 			
 			arpMysql.addMapping("role_info", Role_infoModel.class);//学生表
+			
 			arpMysql.addMapping("school", SchoolModel.class);//学生表
+			
+			arpMysql.addMapping("stucontatc", StuContatcModel.class);//学生联系信息
 			
 
 

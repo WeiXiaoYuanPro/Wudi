@@ -148,10 +148,10 @@ public class AdminController extends Controller{
 	
 	
 	/**
-	 * 显示菜单列表
+	 * 显示学生联系列表
 	 */
-	public void stucontactinfo() {
-		render("stucontact/stucontactinfo.html");
+	public void stucontatcinfo() {
+		render("stucontatc/stucontatcinfo.html");
 	}
 	/**
 	 * 
@@ -161,7 +161,7 @@ public class AdminController extends Controller{
 	* @return void    返回类型
 	* @throws
 	 */
-	public void getStucontact() {
+	public void getStucontatc() {
 		//获取页面查询的关键字
 		String key=getPara("key");
 		Page<StuContatcModel> list=StuContatcModel.getList(1,100,key);
@@ -171,17 +171,17 @@ public class AdminController extends Controller{
 	/**
 	 * 打开联系方式添加页面
 	 */
-	public void openStucontactAdd() {
-		render("stucontact/stucontactAdd.html");
+	public void openStucontatcAdd() {
+		render("stucontatc/stucontatcAdd.html");
 	}
 	/**
 	 * 打开联系方式修改页面
 	 */
-	public void openStucontactEdit() {
+	public void openStucontatcEdit() {
 		//接收页面数据
 		String id=getPara("id");
 		setAttr("id", id);
-		renderFreeMarker("stucontact/stucontactEdit.html");
+		renderFreeMarker("stucontatc/stucontatcEdit.html");
 	}
 	
 	/**
@@ -191,7 +191,7 @@ public class AdminController extends Controller{
 	* @return void    返回类型
 	* @throws
 	 */
-	public void saveStucontac() {
+	public void saveStucontatc() {
 		String id=getPara("id");
 		String tel=getPara("tel");
 		String qq=getPara("qq");
@@ -206,14 +206,14 @@ public class AdminController extends Controller{
 
 	/**
 	 * 
-	* @Title: updateStucontact
+	* @Title: updateStucontatc
 	* @Description:更新学生联系信息，就是学生联系修改信息页面，点击保存的那个按钮做的事情
 	* @param     参数
 	* @return void    返回类型
 	* @throws
 	 * 更新保存菜单信息
 	 */
-	public void updateStucontact() {
+	public void updateStucontatc() {
 		String id=getPara("id");
 		String tel=getPara("tel");
 		String qq=getPara("qq");
@@ -227,13 +227,13 @@ public class AdminController extends Controller{
 	}
 	/**
 	 * 
-	* @Title: delStudent
+	* @Title: delStuContatc
 	* @Description:删除信息，这个我们是根据唯一主键id来删除的。
 	* @param     参数
 	* @return void    返回类型
 	* @throws
 	 */
-	public void delStuContatc() {
+	public void delStucontatc() {
 		String id=getPara("id");
 		//删除
 		boolean result=StuContatcModel.delStuContatcByID(id);
