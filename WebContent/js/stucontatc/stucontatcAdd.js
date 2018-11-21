@@ -10,7 +10,7 @@ layui.config({
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台
-	    	  url:'saveStuContatc',
+	    	  url:'saveStucontatc',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',

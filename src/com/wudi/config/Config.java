@@ -24,7 +24,9 @@ import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
 import com.wudi.model.admin.SchoolModel;
 
+
 import com.wudi.model.admin.SchoolZoneModel;
+
 
 import com.wudi.model.admin.StuContatcModel;
 
@@ -96,9 +98,14 @@ public class Config extends JFinalConfig {
 			arpMysql.addMapping("stuinfo", StuinfoModel.class);//学生表
 			
 			arpMysql.addMapping("role_info", Role_infoModel.class);//学生表
+			
 			arpMysql.addMapping("school", SchoolModel.class);//学生表
 			
+
+			arpMysql.addMapping("stucontatc", StuContatcModel.class);//学生联系信息
+
 			arpMysql.addMapping("stucontact", StuContatcModel.class);//学生联系表
+
 			
 
 
