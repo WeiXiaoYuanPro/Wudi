@@ -8,7 +8,7 @@ layui.config({
 
 	//加载页面数据
 	var newsData = '';
-	$.get("queryCmslogin_Log", function(d){
+	$.get("queryClassroom", function(d){
 		var data=d.infos.list;
         	//执行加载数据的方法
         	newsList(data);
@@ -20,7 +20,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
             	$.ajax({
-					url : "queryCmslogin_Log",
+					url : "queryClassroom",
 					type:'POST',
 			    	data:{"key":$(".search_input").val()},
 			    	dataType:'json',
@@ -38,7 +38,26 @@ layui.config({
 		}
 	})
 
-	
+	//添加
+	//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+	$(window).one("resize",function(){
+		$(".newsAdd_btn").click(function(){
+			var index = layui.layer.open({
+				title : "添加教室信息",
+				type : 2,
+				content : "openClassroomAdd",
+				success : function(layero, index){
+					setTimeout(function(){
+						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
+							tips: 3
+						});
+					},500)
+				}
+			})			
+			layui.layer.full(index);
+		})
+	}).resize();
+
 	//批量删除
 	$(".batchDel").click(function(){
 		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
@@ -87,15 +106,31 @@ layui.config({
 		}
 		form.render('checkbox');
 	})
-
-		
+	$("body").on("click",".news_edit",function(){  //编辑
+		//修改
+		var _this = $(this);
+		var id=_this.attr("data-id")
+			var index = layui.layer.open({
+				title : "修改教室信息",
+				type : 2,
+				content : "openClassroomEdit?id="+id,
+				success : function(layero, index){
+					setTimeout(function(){
+						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
+							tips: 3
+						});
+					},500)
+				}
+			})			
+			layui.layer.full(index);
+	})
 	
 	$("body").on("click",".news_del",function(){  //删除
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			var msgid;
 	 		 $.ajax({//异步请求返回给后台
-		    	  url:'delCmslogin_Log',
+		    	  url:'delClassroom',
 		    	  type:'POST',
 		    	  data:{"id":_this.attr("data-id")},
 		    	  dataType:'json',
@@ -141,18 +176,16 @@ layui.config({
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
 			    	+'<td>'+currData[i].id+'</td>'
-			    	+'<td>'+currData[i].username+'</td>'
-			    	+'<td>'+currData[i].login_time+'</td>'
-			    	+'<td>'+currData[i].ip+'</td>'
-			    	+'<td>'+currData[i].addr+'</td>'
-					+'<td>'+currData[i].remark+'</td>'
-			    	if(currData[i].status == 1){
-			    		dataHtml += '<td style="color:#f00">失败</td>';
-			    	}else{
-			    		dataHtml += '<td>成功</td>';
-			    	}			    	
-			    	dataHtml +='<td>'
-					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+currData[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+			    	+'<td>'+currData[i].name+'</td>'
+			    	+'<td>'+currData[i].building_id+'</td>'
+			    	+'<td>'+currData[i].capacity+'</td>'
+			    	+'<td>'+currData[i].type+'</td>'
+			    	+'<td>'+currData[i].status+'</td>'
+			    	+'<td>'+currData[i].latitude+'</td>'
+			    	+'<td>'+currData[i].longitude+'</td>'
+			    	+'<td>'
+					+  '<a class="layui-btn layui-btn-mini news_edit" data-id="'+data[i].id+'"><i class="iconfont icon-edit" ></i> 编辑</a>'
+					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';
 				}
@@ -167,7 +200,7 @@ layui.config({
 		if(that){
 			newsData = that;
 		}
-		laypage.render({
+		laypage({
 			cont : "page",
 			pages : Math.ceil(newsData.length/nums),
 			jump : function(obj){
