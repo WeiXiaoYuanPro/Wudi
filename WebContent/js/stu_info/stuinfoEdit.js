@@ -2,7 +2,7 @@ var $;
 layui.config({
 	base : "js/"
 }).use(['form','layer','jquery'],function(){
-	var form = layui.form(),
+	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
@@ -10,19 +10,20 @@ layui.config({
 		//加载页面数据
 		$.get("getstuinfo?no="+no, function(data){
 			var d=data.m;
-			var sta;
+			var sex;
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
 	        	$("input[name='birth']").val(d.birth);
 	        	$("input[name='img']").val(d.img);
 	        	
-	        	if(sta == 0){
-	        		$("#r1").attr("checken",true);
-	        		$("#r2").attr("checken",false);
-	        	}else{
-	        		$("#r1").attr("checken",false);
-	        		$("#r2").attr("checken",true);
-	        	}
+	        	if(d.sex == 0){
+		        	$("#r1").attr("checked","checked");
+		        	$("#r2").attr("checked",false);
+		        }
+		        else{
+		        	$("#r1").attr("checked",false);
+		        	$("#r2").attr("checked","checked");
+		        }
 		})
 
  	form.on("submit(addUser)",function(data){console.log(data.field);
