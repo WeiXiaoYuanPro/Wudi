@@ -106,6 +106,9 @@ layui.config({
 		}
 		form.render('checkbox');
 	})
+	
+	
+	
 	$("body").on("click",".news_edit",function(){  //编辑
 		//修改
 		var _this = $(this);
