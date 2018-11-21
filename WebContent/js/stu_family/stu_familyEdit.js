@@ -11,7 +11,7 @@ layui.config({
 		$.get("getstu_family?id="+id, function(data){
 			var d=data.m;
 	        	//执行加载数据的方法
-	        	$("input[name='adrr']").val(d.adrr);
+	        	$("input[name='addr']").val(d.addr);
 	        	$("input[name='tel']").val(d.tel);
 	        	$("input[name='remark']").val(d.remark);
 	        	$("input[name='stu_no']").val(d.stu_no);
