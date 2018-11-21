@@ -12,9 +12,10 @@ layui.config({
 			var d=data.m;
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
-	        	$("input[name='building_id']").val(d.building_id);
 	        	$("input[name='addr']").val(d.capacity);
 	        	$("input[name='remark']").val(d.type);
+	        	$("input[name='school_id']").val(d.school_id);
+
 		})
 
  	form.on("submit(addUser)",function(data){console.log(data.field);
