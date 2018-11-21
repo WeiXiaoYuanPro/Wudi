@@ -154,7 +154,7 @@ public class ClassroomModel extends Model<ClassroomModel> {
 				if(model==null){
 					return false;
 				}
-				model.setId(UUID.randomUUID().toString());
+				model.setId(id);
 				model.setName(name);
 				model.setBuilding_id(building_id);
 				model.setCapacity(capacity);

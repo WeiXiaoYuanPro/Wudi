@@ -121,7 +121,7 @@ public class SchoolZoneModel extends Model<SchoolZoneModel>{
 			if(model==null){
 				return false;
 			}
-			model.setId(UUID.randomUUID().toString());
+			model.setId(id);
 			model.setName(name);
 			model.setAddr(addr);
 			model.setRemark(remark);

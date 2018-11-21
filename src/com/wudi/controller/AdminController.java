@@ -1588,7 +1588,7 @@ public class AdminController extends Controller{
 		* @throws
 		 */
 		public void updateSchoolZone() {
-			String id=getPara("id");
+ 			String id=getPara("id");
 			String name=getPara("name");
 			String addr=getPara("addr");
 			String remark=getPara("remark");

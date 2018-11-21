@@ -155,7 +155,7 @@ public class DormitoryModel extends Model<DormitoryModel> {
 			if(model==null){
 				return false;
 			}
-			model.setId(UUID.randomUUID().toString());
+			model.setId(id);
 			model.setName(name);
 			model.setBuilding_id(building_id);
 			model.setCapacity(capacity);

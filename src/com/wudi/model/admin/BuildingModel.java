@@ -125,7 +125,7 @@ public class BuildingModel extends Model<BuildingModel> {
 			model.setName(name);
 			model.setRemark(remark);
 			model.setSchool_id(school_id);
-			model.setId(UUID.randomUUID().toString());
+			model.setId(id);
 			try {
 				model.update();
 			} catch (Exception e) {
