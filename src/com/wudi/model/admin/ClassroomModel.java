@@ -2,6 +2,7 @@ package com.wudi.model.admin;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -116,7 +117,7 @@ public class ClassroomModel extends Model<ClassroomModel> {
 		 */
 			public static boolean save(String id,String name,String building_id,int capacity,int type,int status,BigDecimal latitude,BigDecimal longitude) {
 				ClassroomModel s=new ClassroomModel();
-				s.setId(id);
+				s.setId(UUID.randomUUID().toString());
 				s.setName(name);
 				s.setBuilding_id(building_id);
 				s.setCapacity(capacity);
@@ -153,7 +154,7 @@ public class ClassroomModel extends Model<ClassroomModel> {
 				if(model==null){
 					return false;
 				}
-				model.setId(id);
+				model.setId(UUID.randomUUID().toString());
 				model.setName(name);
 				model.setBuilding_id(building_id);
 				model.setCapacity(capacity);

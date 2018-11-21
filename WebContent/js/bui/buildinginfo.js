@@ -1,7 +1,7 @@
 layui.config({
 	base : "js/"
 }).use(['form','layer','jquery','laypage'],function(){
-	var form = layui.form(),
+	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage,
 		$ = layui.jquery;
@@ -177,9 +177,9 @@ layui.config({
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
 			    	+'<td>'+currData[i].id+'</td>'
 			    	+'<td>'+currData[i].name+'</td>'
-			    	+'<td>'+currData[i].school_id+'</td>'
 			    	+'<td>'+currData[i].addr+'</td>'
 			    	+'<td>'+currData[i].remark+'</td>'
+			    	+'<td>'+currData[i].school_id+'</td>'
 			    	+'<td>'
 					+  '<a class="layui-btn layui-btn-mini news_edit" data-id="'+data[i].id+'"><i class="iconfont icon-edit" ></i> 编辑</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
@@ -197,7 +197,7 @@ layui.config({
 		if(that){
 			newsData = that;
 		}
-		laypage({
+		laypage.render({
 			cont : "page",
 			pages : Math.ceil(newsData.length/nums),
 			jump : function(obj){
