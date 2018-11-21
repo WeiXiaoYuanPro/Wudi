@@ -23,11 +23,11 @@ import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
 import com.wudi.model.admin.SchoolModel;
-<<<<<<< HEAD
+
 import com.wudi.model.admin.SchoolZoneModel;
-=======
+
 import com.wudi.model.admin.StuContatcModel;
->>>>>>> refs/remotes/origin/master
+
 import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
 import com.wudi.model.admin.UserInfoModel;
