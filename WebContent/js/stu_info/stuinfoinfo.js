@@ -178,13 +178,13 @@ layui.config({
 			    	+'<td>'+currData[i].no+'</td>'
 			    	+'<td>'+currData[i].name+'</td>';
 					
-					sex = currData[i].sex;
-					if(sex == 0){
-						sex = "男";
+					state = currData[i].sex;
+					if(state == 1){
+						state = "男";
 					}else{
-						sex = "女";
+						state = "女";
 					}
-					dataHtml +='<td>'+sex+'</td>'
+					dataHtml +='<td>'+state+'</td>'
 					
 			    	dataHtml += '<td>'+currData[i].birth+'</td>'
 			    	+'<td>'+currData[i].img+'</td>'

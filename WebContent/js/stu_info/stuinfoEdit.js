@@ -10,13 +10,13 @@ layui.config({
 		//加载页面数据
 		$.get("getstuinfo?no="+no, function(data){
 			var d=data.m;
-			var sex;
+			var state;
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
 	        	$("input[name='birth']").val(d.birth);
 	        	$("input[name='img']").val(d.img);
 	        	
-	        	if(d.sex == 0){
+	        	if(d.sex == 1){
 		        	$("#r1").attr("checked","checked");
 		        	$("#r2").attr("checked",false);
 		        }
@@ -24,7 +24,9 @@ layui.config({
 		        	$("#r1").attr("checked",false);
 		        	$("#r2").attr("checked","checked");
 		        }
-		})
+	        	
+	        	form.render();
+		});
 
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
