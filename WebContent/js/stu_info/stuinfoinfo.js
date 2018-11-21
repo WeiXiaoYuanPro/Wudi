@@ -1,7 +1,7 @@
 layui.config({
 	base : "js/"
 }).use(['form','layer','jquery','laypage'],function(){
-	var form = layui.form,
+	var form = layui.form(),
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage,
 		$ = layui.jquery;
@@ -177,15 +177,11 @@ layui.config({
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
 			    	+'<td>'+currData[i].no+'</td>'
 			    	+'<td>'+currData[i].name+'</td>';
-					
-					sex = currData[i].sex;
-					if(sex == 0){
-						sex = "男";
-					}else{
-						sex = "女";
-					}
-					dataHtml +='<td>'+sex+'</td>'
-					
+			    	if(currData[i].sex == 1){
+			    		dataHtml += '<td style="color:#f00">男</td>';
+			    	}else{
+			    		dataHtml += '<td>女</td>';
+			    	}
 			    	dataHtml += '<td>'+currData[i].birth+'</td>'
 			    	+'<td>'+currData[i].img+'</td>'
 			    	+'<td>'
@@ -201,11 +197,11 @@ layui.config({
 		}
 
 		//分页
-		var nums =10; //每页出现的数据量
+		var nums =5; //每页出现的数据量
 		if(that){
 			newsData = that;
 		}
-		laypage.render({
+		laypage({
 			cont : "page",
 			pages : Math.ceil(newsData.length/nums),
 			jump : function(obj){
