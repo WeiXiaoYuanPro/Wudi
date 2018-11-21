@@ -10,6 +10,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.wudi.model.NavsModel;
 import com.wudi.model.admin.SchoolModel;
+import com.wudi.model.admin.SchoolZoneModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
@@ -148,10 +149,10 @@ public class AdminController extends Controller{
 	
 	
 	/**
-	 * 显示菜单列表
+	 * 显示学生联系列表
 	 */
-	public void stucontactinfo() {
-		render("stucontact/stucontactinfo.html");
+	public void stucontatcinfo() {
+		render("stucontatc/stucontatcinfo.html");
 	}
 	/**
 	 * 
@@ -161,7 +162,7 @@ public class AdminController extends Controller{
 	* @return void    返回类型
 	* @throws
 	 */
-	public void getStucontact() {
+	public void getStucontatc() {
 		//获取页面查询的关键字
 		String key=getPara("key");
 		Page<StuContatcModel> list=StuContatcModel.getList(1,100,key);
@@ -171,17 +172,17 @@ public class AdminController extends Controller{
 	/**
 	 * 打开联系方式添加页面
 	 */
-	public void openStucontactAdd() {
-		render("stucontact/stucontactAdd.html");
+	public void openStucontatcAdd() {
+		render("stucontatc/stucontatcAdd.html");
 	}
 	/**
 	 * 打开联系方式修改页面
 	 */
-	public void openStucontactEdit() {
+	public void openStucontatcEdit() {
 		//接收页面数据
 		String id=getPara("id");
 		setAttr("id", id);
-		renderFreeMarker("stucontact/stucontactEdit.html");
+		renderFreeMarker("stucontatc/stucontatcEdit.html");
 	}
 	
 	/**
@@ -191,7 +192,7 @@ public class AdminController extends Controller{
 	* @return void    返回类型
 	* @throws
 	 */
-	public void saveStucontac() {
+	public void saveStucontatc() {
 		String id=getPara("id");
 		String tel=getPara("tel");
 		String qq=getPara("qq");
@@ -206,14 +207,14 @@ public class AdminController extends Controller{
 
 	/**
 	 * 
-	* @Title: updateStucontact
+	* @Title: updateStucontatc
 	* @Description:更新学生联系信息，就是学生联系修改信息页面，点击保存的那个按钮做的事情
 	* @param     参数
 	* @return void    返回类型
 	* @throws
 	 * 更新保存菜单信息
 	 */
-	public void updateStucontact() {
+	public void updateStucontatc() {
 		String id=getPara("id");
 		String tel=getPara("tel");
 		String qq=getPara("qq");
@@ -227,13 +228,13 @@ public class AdminController extends Controller{
 	}
 	/**
 	 * 
-	* @Title: delStudent
+	* @Title: delStuContatc
 	* @Description:删除信息，这个我们是根据唯一主键id来删除的。
 	* @param     参数
 	* @return void    返回类型
 	* @throws
 	 */
-	public void delStuContatc() {
+	public void delStucontatc() {
 		String id=getPara("id");
 		//删除
 		boolean result=StuContatcModel.delStuContatcByID(id);
@@ -621,7 +622,7 @@ public class AdminController extends Controller{
 		String remark=getPara("remark");
 		
 		//保存数据
-		boolean result=BuildingModel.save(id,name,school_id,addr,remark);
+		boolean result=BuildingModel.save(id, name, addr, remark, school_id);
 		
 		setAttr("result", result);
 		renderJson();
@@ -641,7 +642,7 @@ public class AdminController extends Controller{
 		String addr=getPara("addr");
 		String remark=getPara("remark");
 		
-		boolean result=BuildingModel.update(id,name,school_id,addr,remark);
+		boolean result=BuildingModel.update(id, name, addr, remark, school_id);
 		
 		setAttr("result", result);
 		renderJson();
@@ -1488,4 +1489,130 @@ public class AdminController extends Controller{
 	    	setAttr("result", result);
 	    	renderJson();
 	    }
+	    
+	    
+	    /**
+		* @Title: schoolzone
+		* @Description: 打开学校分校信息列表页面
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void schoolzone() {
+			render("sch/schoolzoneinfo.html");
+		}
+		/**
+		* @Title: querySchoolZone
+		* @Description: 获取学校分校信息列表信息（查询），在这里，我们是用异步加载方式，
+		* 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void querySchoolZone() {
+			//获取页面查询的关键字
+			String key=getPara("key");
+			//开始查询
+			Page<SchoolZoneModel> schoolzone=SchoolZoneModel.getList(1, 10,key);
+			//将查到的学生信息列表放到infos，给页面
+			setAttr("infos", schoolzone);
+			//返回格式是json
+			renderJson();
+		}
+		/**
+		* @Title: openBuilding
+		* @Description:打开添加信息页面
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void openSchoolZoneAdd() {
+			render("sch/schoolzoneAdd.html");
+		}
+		
+		/**
+		* @Title: getschoolzone
+		* @Description:获取需要修改的学校楼房信息
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void getschoolzone() {
+			//接收页面数据
+			String id=getPara("id");
+			//根据条件查询数据库的数据
+			SchoolZoneModel schoolzone=SchoolZoneModel.getById(id);
+			//放到编辑页面上去
+			setAttr("m", schoolzone);
+			//返回格式是json
+			renderJson();
+		}
+		/**
+		* @Title: opeSchoolZoneEdit
+		* @Description:打开修改信息页面
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void openSchoolZoneEdit() {
+			//接收页面数据
+			String id=getPara("id");
+			setAttr("id", id);
+			renderFreeMarker("sch/schoolzoneEdit.html");
+		}
+		/**
+		* @Title: saveSchoolZone
+		* @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void saveSchoolZone() {
+			String id=getPara("id");
+			String name=getPara("name");
+			String addr=getPara("addr");
+			String remark=getPara("remark");
+			String school_id=getPara("school_id");
+			//保存数据
+			boolean result=SchoolZoneModel.save(id, name, addr, remark, school_id);
+			
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		 * 
+		* @Title: updateSchoolZone
+		* @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void updateSchoolZone() {
+			String id=getPara("id");
+			String name=getPara("name");
+			String addr=getPara("addr");
+			String remark=getPara("remark");
+			String school_id=getPara("school_id");
+			
+			boolean result=SchoolZoneModel.update(id, name, addr, remark, school_id);
+			
+			setAttr("result", result);
+			renderJson();
+		}
+		/**
+		 * 
+		* @Title: delSchoolZone
+		* @Description:删除信息，这个我们是根据唯一主键id来删除的。
+		* @param     参数
+		* @return void    返回类型
+		* @throws
+		 */
+		public void delSchoolZone() {
+			String id=getPara("id");
+			//删除
+			boolean result=SchoolZoneModel.delSchoolZoneModelByID(id);
+			//返回结果
+			setAttr("result", result);
+			renderJson();
+		}
 }

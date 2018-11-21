@@ -8,7 +8,7 @@ layui.config({
 
 	//加载页面数据
 	var newsData = '';
-	$.get("queryDormitory", function(d){
+	$.get("queryClassroom", function(d){
 		var data=d.infos.list;
         	//执行加载数据的方法
         	newsList(data);
@@ -20,7 +20,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
             	$.ajax({
-					url : "queryDormitory",
+					url : "queryClassroom",
 					type:'POST',
 			    	data:{"key":$(".search_input").val()},
 			    	dataType:'json',
@@ -43,9 +43,9 @@ layui.config({
 	$(window).one("resize",function(){
 		$(".newsAdd_btn").click(function(){
 			var index = layui.layer.open({
-				title : "添加宿舍信息",
+				title : "添加教室信息",
 				type : 2,
-				content : "openDormitoryAdd",
+				content : "openClassroomAdd",
 				success : function(layero, index){
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -111,9 +111,9 @@ layui.config({
 		var _this = $(this);
 		var id=_this.attr("data-id")
 			var index = layui.layer.open({
-				title : "修改宿舍信息",
+				title : "修改教室信息",
 				type : 2,
-				content : "openDormitoryEdit?id="+id,
+				content : "openClassroomEdit?id="+id,
 				success : function(layero, index){
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -130,7 +130,7 @@ layui.config({
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			var msgid;
 	 		 $.ajax({//异步请求返回给后台
-		    	  url:'delDormitory',
+		    	  url:'delClassroom',
 		    	  type:'POST',
 		    	  data:{"id":_this.attr("data-id")},
 		    	  dataType:'json',
@@ -200,7 +200,7 @@ layui.config({
 		if(that){
 			newsData = that;
 		}
-		laypage.render({
+		laypage({
 			cont : "page",
 			pages : Math.ceil(newsData.length/nums),
 			jump : function(obj){

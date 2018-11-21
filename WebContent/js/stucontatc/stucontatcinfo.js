@@ -8,7 +8,7 @@ layui.config({
 
 	//加载页面数据
 	var newsData = '';
-	$.get("queryStuContatc", function(d){
+	$.get("queryStucontatc", function(d){
 		var data=d.infos.list;
         	//执行加载数据的方法
         	newsList(data);
@@ -20,7 +20,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
             	$.ajax({
-					url : "queryStuContatc",
+					url : "queryStucontatc",
 					type:'POST',
 			    	data:{"key":$(".search_input").val()},
 			    	dataType:'json',
@@ -45,7 +45,7 @@ layui.config({
 			var index = layui.layer.open({
 				title : "添加学生信息",
 				type : 2,
-				content : "openStuContatcAdd",
+				content : "openStucontatcAdd",
 				success : function(layero, index){
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -113,7 +113,7 @@ layui.config({
 			var index = layui.layer.open({
 				title : "修改学生联系方式",
 				type : 2,
-				content : "openStuContatcEdit?id="+id,
+				content : "openStucontatcEdit?id="+id,
 				success : function(layero, index){
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
