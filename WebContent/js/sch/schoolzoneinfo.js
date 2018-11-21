@@ -8,7 +8,7 @@ layui.config({
 
 	//加载页面数据
 	var newsData = '';
-	$.get("queryBuilding", function(d){
+	$.get("querySchoolZone", function(d){
 		var data=d.infos.list;
         	//执行加载数据的方法
         	newsList(data);
@@ -20,7 +20,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             setTimeout(function(){
             	$.ajax({
-					url : "queryBuilding",
+					url : "querySchoolZone",
 					type:'POST',
 			    	data:{"key":$(".search_input").val()},
 			    	dataType:'json',
@@ -45,7 +45,7 @@ layui.config({
 			var index = layui.layer.open({
 				title : "添加宿舍信息",
 				type : 2,
-				content : "openBuildingAdd",
+				content : "openSchoolZoneAdd",
 				success : function(layero, index){
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -106,9 +106,6 @@ layui.config({
 		}
 		form.render('checkbox');
 	})
-	
-	
-	
 	$("body").on("click",".news_edit",function(){  //编辑
 		//修改
 		var _this = $(this);
@@ -116,7 +113,7 @@ layui.config({
 			var index = layui.layer.open({
 				title : "修改宿舍信息",
 				type : 2,
-				content : "openBuildingEdit?id="+id,
+				content : "openSchoolZoneEdit?id="+id,
 				success : function(layero, index){
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -133,7 +130,7 @@ layui.config({
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			var msgid;
 	 		 $.ajax({//异步请求返回给后台
-		    	  url:'delBuilding',
+		    	  url:'delSchoolZone',
 		    	  type:'POST',
 		    	  data:{"id":_this.attr("data-id")},
 		    	  dataType:'json',

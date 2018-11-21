@@ -9,12 +9,11 @@ import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
-import com.wudi.model.StudentModel;
 import com.wudi.util.StringUtil;
 
-public class BuildingModel extends Model<BuildingModel> {
+public class SchoolZoneModel extends Model<SchoolZoneModel>{
 	private static final long serialVersionUID = 1L;
-	public static final String tableName = "building";
+	public static final String tableName = "school_zone";
 	public String getId() {
 		return get("id");
 	}
@@ -47,7 +46,7 @@ public class BuildingModel extends Model<BuildingModel> {
 	}
 	
 	//因为经常用他，所以干脆给他一个静态的，让他一直存在，免得我们每次new
-		public static final BuildingModel dao = new BuildingModel();
+		public static final SchoolZoneModel dao = new SchoolZoneModel();
 		
 		/**
 		 * 分页查询显示，就是查找
@@ -56,7 +55,7 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * @param key
 		 * @return
 		 */
-		public static Page<BuildingModel> getList(int pageNumber, int pageSize,String key) {
+		public static Page<SchoolZoneModel> getList(int pageNumber, int pageSize,String key) {
 			String sele_sql="select * ";
 			StringBuffer from_sql=new StringBuffer();
 			from_sql.append("from ").append(tableName);
@@ -70,7 +69,7 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * @param id
 		 * @return
 		 */
-		public static BuildingModel getById(Object id){
+		public static SchoolZoneModel getById(Object id){
 			return dao.findFirst("select *  from " + tableName + " where id = ? " , id);
 		}
 	/**
@@ -86,12 +85,13 @@ public class BuildingModel extends Model<BuildingModel> {
 	* @throws
 	 */
 		public static boolean save(String id,String name,String addr,String remark,String school_id) {
-			BuildingModel s=new BuildingModel();
-			s.setAddr(addr);
+			SchoolZoneModel s=new SchoolZoneModel();
+			s.setId(UUID.randomUUID().toString());
 			s.setName(name);
+			s.setAddr(addr);
 			s.setRemark(remark);
 			s.setSchool_id(school_id);
-			s.setId(UUID.randomUUID().toString());
+			
 			return s.save();
 		}
 		
@@ -102,12 +102,12 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * @return
 		 */
 		@Before(Tx.class)
-		public static boolean save(final BuildingModel building){
+		public static boolean save(final SchoolZoneModel schoolzone){
 			boolean succeed = Db.tx(new IAtom() {
 						
 						@Override
 						public boolean run() throws SQLException {
-							building.save();
+							schoolzone.save();
 							return true;
 						}
 						});
@@ -117,15 +117,16 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * 更新
 		 */
 		public static boolean update(String id,String name,String addr,String remark,String school_id){
-			BuildingModel model=BuildingModel.getById(id);
+			SchoolZoneModel model=SchoolZoneModel.getById(id);
 			if(model==null){
 				return false;
 			}
-			model.setAddr(addr);
+			model.setId(UUID.randomUUID().toString());
 			model.setName(name);
+			model.setAddr(addr);
 			model.setRemark(remark);
 			model.setSchool_id(school_id);
-			model.setId(UUID.randomUUID().toString());
+			
 			try {
 				model.update();
 			} catch (Exception e) {
@@ -138,7 +139,7 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * @param no
 		 * @return
 		 */
-		public static boolean delBuildingByID(String id) {
+		public static boolean delSchoolZoneModelByID(String id) {
 			try {
 				String delsql="DELETE FROM "+tableName+" WHERE id=?";
 				int iRet=Db.update(delsql, id);
