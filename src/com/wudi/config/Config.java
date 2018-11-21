@@ -105,8 +105,6 @@ public class Config extends JFinalConfig {
 
 			arpMysql.addMapping("stucontatc", StuContatcModel.class);//学生联系信息
 
-			arpMysql.addMapping("stucontact", StuContatcModel.class);//学生联系表
-
 			
 
 
