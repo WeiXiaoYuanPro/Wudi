@@ -2,7 +2,7 @@ var $;
 layui.config({
 	base : "js/"
 }).use(['form','layer','jquery'],function(){
-	var form = layui.form(),
+	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
@@ -10,7 +10,7 @@ layui.config({
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台
-	    	  url:'saveStucontatc',
+	    	  url:'saveStu_contatc',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',

@@ -11,19 +11,15 @@ import com.jfinal.plugin.activerecord.tx.Tx;
 import com.wudi.util.StringUtil;
 
 /**
- * 学生联系
- * @author 王驰
+ * 学生联系信息
+ * 
+ * @author wangchi
  *
  */
-public class StuContatcModel extends Model<StuContatcModel> {
+public class Stu_contatcModel extends Model<Stu_contatcModel> {
+
 	private static final long serialVersionUID = 1L;
-	public static final String stucontatc = "stucontatc";
-	// private String id;
-	// private String tel;
-	// private String qq;
-	// private String weixin;
-	// private String other;
-	// private String stu_no;
+	public static final String tableName = "stucontatc";
 
 	public String getId() {
 		return get("id");
@@ -74,7 +70,7 @@ public class StuContatcModel extends Model<StuContatcModel> {
 	}
 
 	// 因为经常用他，所以干脆给他一个静态的，让他一直存在，免得我们每次new
-	public static final StuContatcModel scm = new StuContatcModel();
+	public static final Stu_contatcModel dao = new Stu_contatcModel();
 
 	/**
 	 * 分页查询显示，就是查找
@@ -84,14 +80,24 @@ public class StuContatcModel extends Model<StuContatcModel> {
 	 * @param key
 	 * @return
 	 */
-	public static Page<StuContatcModel> getList(int pageNumber, int pageSize, String key) {
+	public static Page<Stu_contatcModel> getList(int pageNumber, int pageSize, String key) {
 		String sele_sql = "select * ";
 		StringBuffer from_sql = new StringBuffer();
-		from_sql.append("from ").append(stucontatc);
+		from_sql.append("from ").append(tableName);
 		if (!StringUtil.isBlankOrEmpty(key)) {
-			from_sql.append(" where name like '%" + key + "%'");
+			from_sql.append(" where stu_no like '%" + key + "%'");
 		}
-		return scm.paginate(pageNumber, pageSize, sele_sql, from_sql.toString());
+		return dao.paginate(pageNumber, pageSize, sele_sql, from_sql.toString());
+	}
+
+	/**
+	 * 根据no查找
+	 * 
+	 * @param no
+	 * @return
+	 */
+	public static Stu_contatcModel getByStu_no(String stu_no) {
+		return dao.findFirst("select * from " + tableName + " where stu_no = ? ", stu_no);
 	}
 
 	/**
@@ -100,28 +106,24 @@ public class StuContatcModel extends Model<StuContatcModel> {
 	 * @param id
 	 * @return
 	 */
-	public static StuContatcModel getById(String id) {
-		return scm.findFirst("select * from " + stucontatc + " where no = ? ", id);
+	public static Stu_contatcModel getById(Object id) {
+		return dao.findFirst("select *  from " + tableName + " where id = ? ", id);
 	}
 
 	/**
-	 * 根据id查找
 	 * 
+	 * @Title: save
+	 * @Description:保存，这里是以分别参数传下来的，你们还可以用对象的信息传下来，喜欢这么写就怎么写
 	 * @param id
-	 * @return
-	 */
-	public static StuContatcModel getById(Object id) {
-		return scm.findFirst("select *  from " + stucontatc + " where id = ? ", id);
-	}
-
-	/**
-	 * 
-	 * @Title: save @Description:保存，这里是以分别参数传下来的，你们还可以用对象的信息传下来，喜欢这么写就怎么写 @param
-	 * id @param tel @param qq @param weixin @param other @param stu_no @param
-	 * 参数 @return boolean 返回类型 @throws
+	 * @param tel
+	 * @param qq
+	 * @param weixin
+	 * @param other
+	 * @param stu_no
+	 * @param 参数     @return boolean 返回类型 @throws
 	 */
 	public static boolean save(String id, String tel, String qq, String weixin, String other, String stu_no) {
-		StuContatcModel s = new StuContatcModel();
+		Stu_contatcModel s = new Stu_contatcModel();
 		s.setId(id);
 		s.setTel(tel);
 		s.setQq(qq);
@@ -131,8 +133,6 @@ public class StuContatcModel extends Model<StuContatcModel> {
 		return s.save();
 	}
 
-
-
 	/**
 	 * 保存，这个保存时事务的保存，关于支付，关于钱的保存，我们一般都用这样的保存方法，现在我们暂时不用这个，因为不好调试
 	 * 
@@ -141,12 +141,12 @@ public class StuContatcModel extends Model<StuContatcModel> {
 	 * @return
 	 */
 	@Before(Tx.class)
-	public static boolean save(final StuContatcModel stucontatc) {
+	public static boolean save(final Stu_contatcModel student) {
 		boolean succeed = Db.tx(new IAtom() {
 
 			@Override
 			public boolean run() throws SQLException {
-				stucontatc.save();
+				student.save();
 				return true;
 			}
 		});
@@ -157,7 +157,7 @@ public class StuContatcModel extends Model<StuContatcModel> {
 	 * 更新
 	 */
 	public static boolean update(String id, String tel, String qq, String weixin, String other, String stu_no) {
-		StuContatcModel model = StuContatcModel.getById(id);
+		Stu_contatcModel model = Stu_contatcModel.getById(id);
 		if (model == null) {
 			return false;
 		}
@@ -175,15 +175,16 @@ public class StuContatcModel extends Model<StuContatcModel> {
 		return true;
 	}
 
+
 	/**
 	 * 根据id删除数据
 	 * 
 	 * @param id
 	 * @return
 	 */
-	public static boolean delStuContatcByID(String id) {
+	public static boolean delStu_contatcById(String id) {
 		try {
-			String delsql = "DELETE FROM " + stucontatc + " WHERE id=?";
+			String delsql = "DELETE FROM " + tableName + " WHERE id=?";
 			int iRet = Db.update(delsql, id);
 			if (iRet > 0) {
 				return true;
@@ -195,5 +196,6 @@ public class StuContatcModel extends Model<StuContatcModel> {
 			return false;
 		}
 	}
+
 
 }
