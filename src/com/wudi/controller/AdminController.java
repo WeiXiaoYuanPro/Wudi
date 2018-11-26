@@ -64,8 +64,13 @@ public class AdminController extends Controller {
 	public void getNavsList() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		Page<NavsModel> list = NavsModel.getList(1, 100, key);
-		setAttr("infos", list);
+		int limit=getParaToInt("limit");
+		int page=getParaToInt("page");
+		Page<NavsModel> list = NavsModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
 		renderJson();
 	}
 
@@ -482,14 +487,16 @@ public class AdminController extends Controller {
 	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryBuilding() {
-		// 获取页面查询的关键字
-		String key = getPara("key");
-		// 开始查询
-		Page<BuildingModel> Building = BuildingModel.getList(1, 10, key);
-		// 将查到的学生信息列表放到infos，给页面
-		setAttr("infos", Building);
-		// 返回格式是json
-		renderJson();
+        // 获取页面查询的关键字
+        String key = getPara("key");
+        int limit=getParaToInt("limit");
+        int page=getParaToInt("page");
+        Page<BuildingModel> list = BuildingModel.getList(page, limit, key);
+        setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", list.getTotalRow());
+        setAttr("data", list.getList());
+        renderJson();
 	}
 
 	/**
