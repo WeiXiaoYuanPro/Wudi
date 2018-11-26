@@ -9,9 +9,6 @@ import java.util.UUID;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.wudi.model.NavsModel;
-import com.wudi.model.admin.SchoolModel;
-import com.wudi.model.admin.SchoolZoneModel;
-import com.wudi.model.admin.Stu_contatcModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
@@ -19,6 +16,9 @@ import com.wudi.model.admin.CmsUserModel;
 import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
+import com.wudi.model.admin.SchoolModel;
+import com.wudi.model.admin.SchoolZoneModel;
+import com.wudi.model.admin.Stu_contatcModel;
 import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
 import com.wudi.model.admin.UserInfoModel;
@@ -64,8 +64,13 @@ public class AdminController extends Controller {
 	public void getNavsList() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		Page<NavsModel> list = NavsModel.getList(1, 100, key);
-		setAttr("infos", list);
+		int limit=getParaToInt("limit");
+		int page=getParaToInt("page");
+		Page<NavsModel> list = NavsModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
 		renderJson();
 	}
 
@@ -483,21 +488,17 @@ public class AdminController extends Controller {
 	 */
 	public void queryBuilding() {
 		// 获取页面查询的关键字
-		String key = getPara("key");
-		// 开始查询
-		Page<BuildingModel> Building = BuildingModel.getList(1, 10, key);
 		// 将查到的学生信息列表放到infos，给页面
-		setAttr("infos", Building);
-		// 返回格式是json
-		renderJson();
-	}
+        String key = getPara("key");
+        int limit=getParaToInt("limit");
+        int page=getParaToInt("page");
+        Page<BuildingModel> list = BuildingModel.getList(page, limit, key);
+        setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", list.getTotalRow());
+        setAttr("data", list.getList());
+        renderJson();
 
-	/**
-	 * @Title: openBuilding @Description:打开添加信息页面 @param 参数 @return void
-	 * 返回类型 @throws
-	 */
-	public void openBuildingAdd() {
-		render("bui/buildingAdd.html");
 	}
 
 	/**
