@@ -488,7 +488,6 @@ public class AdminController extends Controller {
 	 */
 	public void queryBuilding() {
 		// 获取页面查询的关键字
-		// 将查到的学生信息列表放到infos，给页面
         String key = getPara("key");
         int limit=getParaToInt("limit");
         int page=getParaToInt("page");
@@ -498,7 +497,6 @@ public class AdminController extends Controller {
         setAttr("count", list.getTotalRow());
         setAttr("data", list.getList());
         renderJson();
-
 	}
 
 	/**
