@@ -498,7 +498,12 @@ public class AdminController extends Controller {
         setAttr("data", list.getList());
         renderJson();
 	}
-
+	/**
+	 * 返回类型 @throws
+	 */
+	public void openBuildingAdd() {
+		render("bui/buildingAdd.html");
+	}
 	/**
 	 * @Title: getbuilding @Description:获取需要修改的学校楼房信息 @param 参数 @return void
 	 * 返回类型 @throws
