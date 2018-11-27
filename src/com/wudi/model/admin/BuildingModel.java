@@ -9,7 +9,6 @@ import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
-import com.wudi.model.StudentModel;
 import com.wudi.util.StringUtil;
 
 public class BuildingModel extends Model<BuildingModel> {
@@ -39,11 +38,11 @@ public class BuildingModel extends Model<BuildingModel> {
 	public void setRemark(String remark) {
 		set("remark" , remark);
 	}
-	public String getSchool_id() {
-		return get("school_id");
+	public String getSchoolzone_id() {
+		return get("schoolzone_id");
 	}
-	public void setSchool_id(String school_id) {
-		set("school_id" , school_id);
+	public void setSchoolzone_id(String schoolzone_id) {
+		set("schoolzone_id" , schoolzone_id);
 	}
 	
 	//因为经常用他，所以干脆给他一个静态的，让他一直存在，免得我们每次new
@@ -57,11 +56,11 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * @return
 		 */
 		public static Page<BuildingModel> getList(int pageNumber, int pageSize,String key) {
-			String sele_sql="select * ";
+			String sele_sql="SELECT  a.*, b.`name` AS schoolname ";
 			StringBuffer from_sql=new StringBuffer();
-			from_sql.append("from ").append(tableName);
+			from_sql.append("from ").append(tableName).append(" AS a LEFT JOIN ").append(SchoolZoneModel.tableName).append(" AS b ON a.schoolzone_id = b.id ");
 			if(!StringUtil.isBlankOrEmpty(key)) {
-				from_sql.append(" where name like '%"+key+"%'");
+				from_sql.append(" where a.name like '%"+key+"%'");
 			}
 			return dao.paginate(pageNumber,pageSize,sele_sql,from_sql.toString());
 		}  
@@ -77,20 +76,16 @@ public class BuildingModel extends Model<BuildingModel> {
 	 * 
 	* @Title: save
 	* @Description:保存，这里是以分别参数传下来的，你们还可以用对象的信息传下来，喜欢这么写就怎么写
-	* @param @param no
-	* @param @param name
-	* @param @param cls
-	* @param @param sex
 	* @param @return    参数
 	* @return boolean    返回类型
 	* @throws
 	 */
-		public static boolean save(String id,String name,String addr,String remark,String school_id) {
+		public static boolean save(String name,String addr,String remark,String school_id) {
 			BuildingModel s=new BuildingModel();
 			s.setAddr(addr);
 			s.setName(name);
 			s.setRemark(remark);
-			s.setSchool_id(school_id);
+			s.setSchoolzone_id(school_id);
 			s.setId(UUID.randomUUID().toString());
 			return s.save();
 		}
@@ -124,8 +119,7 @@ public class BuildingModel extends Model<BuildingModel> {
 			model.setAddr(addr);
 			model.setName(name);
 			model.setRemark(remark);
-			model.setSchool_id(school_id);
-			model.setId(id);
+			model.setSchoolzone_id(school_id);
 			try {
 				model.update();
 			} catch (Exception e) {

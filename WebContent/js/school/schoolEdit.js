@@ -10,15 +10,16 @@ layui.config({
 		//加载页面数据
 		$.get("getSchool?id="+id, function(data){
 			var d=data.m;
-	        	//执行加载数据的方法
-	        	$("input[name='schoolname']").val(d.schoolname);
-	        	$("input[name='no']").val(d.no);
-	        	$("input[name='addr']").val(d.addr);
-	        	$("input[name='img']").val(d.img);
-	        	$("input[name='remark']").val(d.remark);
+			//执行加载数据的方法
+        	$("input[name='schoolname']").val(d.schoolname);
+        	$("input[name='no']").val(d.no);
+        	$("input[name='addr']").val(d.addr);
+        	$("input[name='img']").val(d.img);
+        	$("input[name='remark']").val(d.remark);
+	        $("textarea[name='remark']").val(d.remark);
 		})
 
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+ 	form.on("submit(update)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'updateSchool',

@@ -9,10 +9,12 @@ layui.config({
 		var id=$("input[name='id']").val();
 		//加载页面数据
 		$.get("getModeListById?id="+id, function(data){
+			var m=data.m;
 			var ml=data.ml;
-			var m=data.m; console.log(m);
+	        	//执行加载数据的方法
+			$("input[name='title']").val(m.title);
+	        $("input[name='href']").val(m.href);
 			for(var i=0;i<ml.length;i++){
-				 console.log(ml[i]);
 				if(ml[i].id==m.fid){
 	        		$("#selectfid").append("<option selected='selected' value='"+ml[i].id+"'>"+ml[i].title+"</option>");
 				}else{
@@ -21,11 +23,9 @@ layui.config({
 				}
 			}
 			form.render();//必须要再次渲染，要不然option显示不出来
-	        	//执行加载数据的方法erter
-	        $("input[name='title']").val(m.title);
-	        $("input[name='href']").val(m.href);
-		});
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+		})
+
+ 	form.on("submit(update)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'updatenavs',

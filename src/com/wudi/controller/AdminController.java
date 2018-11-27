@@ -9,9 +9,6 @@ import java.util.UUID;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.wudi.model.NavsModel;
-import com.wudi.model.admin.SchoolModel;
-import com.wudi.model.admin.SchoolZoneModel;
-import com.wudi.model.admin.Stu_contatcModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
@@ -19,6 +16,9 @@ import com.wudi.model.admin.CmsUserModel;
 import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
+import com.wudi.model.admin.SchoolModel;
+import com.wudi.model.admin.SchoolZoneModel;
+import com.wudi.model.admin.Stu_contatcModel;
 import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
 import com.wudi.model.admin.UserInfoModel;
@@ -506,7 +506,33 @@ public class AdminController extends Controller {
 	public void openBuildingAdd() {
 		render("bui/buildingAdd.html");
 	}
-
+	/**
+	 * 获取
+	* @Title: getSchoolModels
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void getSchoolModels() {
+		List<SchoolModel> list=SchoolModel.getListAll();
+		setAttr("ml", list);
+		renderJson();
+	}
+	/**
+	 * 获取
+	* @Title: getSchoolModels
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void getSchoolzoneModels() {
+		String school_id = getPara("school_id");
+		List<SchoolZoneModel> list=SchoolZoneModel.getListBySchoolId(school_id);
+		setAttr("ml", list);
+		renderJson();
+	}
 	/**
 	 * @Title: getbuilding @Description:获取需要修改的学校楼房信息 @param 参数 @return void
 	 * 返回类型 @throws
@@ -518,6 +544,12 @@ public class AdminController extends Controller {
 		BuildingModel Building = BuildingModel.getById(id);
 		// 放到编辑页面上去
 		setAttr("m", Building);
+		//联动下拉框学校
+		List<SchoolModel> school_list=SchoolModel.getListAll();
+		setAttr("sl", school_list);
+		//联动下拉框学校分校
+		List<SchoolZoneModel> schoolzone_list=SchoolZoneModel.getListById(Building.getSchoolzone_id());
+		setAttr("szl", schoolzone_list);
 		// 返回格式是json
 		renderJson();
 	}
@@ -538,15 +570,12 @@ public class AdminController extends Controller {
 	 * 参数 @return void 返回类型 @throws
 	 */
 	public void saveBuilding() {
-		String id = getPara("id");
 		String name = getPara("name");
-		String school_id = getPara("school_id");
+		String schoolzone_id = getPara("schoolzone_id");
 		String addr = getPara("addr");
 		String remark = getPara("remark");
-
 		// 保存数据
-		boolean result = BuildingModel.save(id, name, addr, remark, school_id);
-
+		boolean result = BuildingModel.save(name, addr, remark, schoolzone_id);
 		setAttr("result", result);
 		renderJson();
 	}
@@ -559,11 +588,11 @@ public class AdminController extends Controller {
 	public void updateBuilding() {
 		String id = getPara("id");
 		String name = getPara("name");
-		String school_id = getPara("school_id");
+		String schoolzone_id = getPara("schoolzone_id");
 		String addr = getPara("addr");
 		String remark = getPara("remark");
 
-		boolean result = BuildingModel.update(id, name, addr, remark, school_id);
+		boolean result = BuildingModel.update(id, name, addr, remark, schoolzone_id);
 
 		setAttr("result", result);
 		renderJson();
@@ -1253,13 +1282,16 @@ public class AdminController extends Controller {
 	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void querySchools() {
-		// 获取查询页面的关键字key
-		String key = getPara("key");
-		// 开始查询
-		Page<SchoolModel> schools = SchoolModel.getList(1, 10, key);
-		// 将查到的信息给infos，放到页面
-		setAttr("infos", schools);
-		renderJson();
+        // 获取页面查询的关键字
+        String key = getPara("key");
+        int limit=getParaToInt("limit");
+        int page=getParaToInt("page");
+        Page<SchoolModel> list = SchoolModel.getList(page, limit, key);
+        setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", list.getTotalRow());
+        setAttr("data", list.getList());
+        renderJson();
 	}
 
 	/**
@@ -1351,14 +1383,16 @@ public class AdminController extends Controller {
 	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void querySchoolZone() {
-		// 获取页面查询的关键字
-		String key = getPara("key");
-		// 开始查询
-		Page<SchoolZoneModel> schoolzone = SchoolZoneModel.getList(1, 10, key);
-		// 将查到的学生信息列表放到infos，给页面
-		setAttr("infos", schoolzone);
-		// 返回格式是json
-		renderJson();
+        // 获取页面查询的关键字
+        String key = getPara("key");
+        int limit=getParaToInt("limit");
+        int page=getParaToInt("page");
+        Page<SchoolZoneModel> list = SchoolZoneModel.getList(page, limit, key);
+        setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", list.getTotalRow());
+        setAttr("data", list.getList());
+        renderJson();
 	}
 
 	/**
@@ -1366,6 +1400,8 @@ public class AdminController extends Controller {
 	 * 返回类型 @throws
 	 */
 	public void openSchoolZoneAdd() {
+		List<SchoolModel> list=SchoolModel.getListAll();
+		setAttr("ml", list);
 		render("sch/schoolzoneAdd.html");
 	}
 
@@ -1380,6 +1416,8 @@ public class AdminController extends Controller {
 		SchoolZoneModel schoolzone = SchoolZoneModel.getById(id);
 		// 放到编辑页面上去
 		setAttr("m", schoolzone);
+		List<SchoolModel> list=SchoolModel.getListAll();
+		setAttr("sl", list);
 		// 返回格式是json
 		renderJson();
 	}

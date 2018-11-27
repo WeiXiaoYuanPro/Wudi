@@ -6,16 +6,17 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-		//加载页面数据
-		$.get("getModeByFId", function(data){
+	//加载页面选择框数据
+	$.get("getModeByFId", function(data){
 			var ml=data.ml;
 			for(var i=0;i<ml.length;i++){
-        		$("#selectfid").append("<option value='"+ml[i].id+"'>"+ml[i].title+"</option>");
-				 //console.log(ml);
+        		$("#selectId").append("<option value='"+ml[i].id+"'>"+ml[i].title+"</option>");
 			}
 			form.render();//必须要再次渲染，要不然option显示不出来
-		});
- 	form.on("submit(addUser)",function(data){
+	});
+	//===========================================
+		
+ 	form.on("submit(add)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'saveNavs',

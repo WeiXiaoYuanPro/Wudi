@@ -1,6 +1,7 @@
 package com.wudi.model.admin;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 import com.jfinal.aop.Before;
@@ -63,7 +64,7 @@ public class SchoolZoneModel extends Model<SchoolZoneModel>{
 				from_sql.append(" where name like '%"+key+"%'");
 			}
 			return dao.paginate(pageNumber,pageSize,sele_sql,from_sql.toString());
-		}  
+		}
 		/**
 		 * 根据id查找
 		 * @param id
@@ -156,5 +157,32 @@ public class SchoolZoneModel extends Model<SchoolZoneModel>{
 				return false;
 			}
 		}
-		
+		/**
+		 * TODO:XIAO 查找所有信息
+		* @Title: getListAll
+		* @Description:???
+		* @param @return    参数
+		* @return List<SchoolZoneModel>    返回类型
+		* @throws
+		 */
+		public static List<SchoolZoneModel> getListBySchoolId(String school_id) {
+			StringBuffer sql=new StringBuffer();
+			sql.append("select *  from ").append(tableName).append(" where school_id=?");
+			return dao.find(sql.toString(),school_id);
+		}
+		/**
+		 * 用在数据联动下拉框
+		* @Title: getListBySchoolId
+		* @Description:???
+		* @param @param school_id
+		* @param @return    参数
+		* @return List<SchoolZoneModel>    返回类型
+		* @throws
+		 */
+		public static List<SchoolZoneModel> getListById(String schoolzone_id) {
+			SchoolZoneModel m=dao.findById(schoolzone_id);
+			StringBuffer sql=new StringBuffer();
+			sql.append("select *  from ").append(tableName).append(" where school_id=?");
+			return dao.find(sql.toString(),m.getSchool_id());
+		} 
 }

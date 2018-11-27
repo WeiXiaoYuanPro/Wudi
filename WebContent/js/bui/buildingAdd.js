@@ -6,8 +6,40 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+	//加载页面选择框数据
+	$.get("getSchoolModels", function(data){
+			var ml=data.ml;
+			for(var i=0;i<ml.length;i++){
+        		$("#selectId").append("<option value='"+ml[i].id+"'>"+ml[i].schoolname+"</option>");
+			}
+			form.render();//必须要再次渲染，要不然option显示不出来
+	});
+	//===========================================
+ 	form.on("select(state)",function(data){
+ 		var index;
+ 		 $.ajax({//异步请求返回给后台
+	    	  url:'getSchoolzoneModels',
+	    	  type:'POST',
+	    	  data:{'school_id':data.value},
+	    	  dataType:'json',
+	    	  success:function(d){
+	    		  var ml=d.ml;
+	  			for(var i=0;i<ml.length;i++){
+	          		$("#schoolzone_id").append("<option value='"+ml[i].id+"'>"+ml[i].name+"</option>");
+	  			}
+	  			form.render();//必须要再次渲染，要不然option显示不出来
+	    	  },
+	    	  error:function(XMLHttpRequest, textStatus, errorThrown){
+	    		  top.layer.msg('联动失败！！！服务器有问题！！！！<br>请检测服务器是否启动？', {
+	    		        time: 20000, //20s后自动关闭
+	    		        btn: ['知道了']
+	    		      });
+	           }
+	      });
+ 		return false;
+ 	})
+		
+ 	form.on("submit(add)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'saveBuilding',

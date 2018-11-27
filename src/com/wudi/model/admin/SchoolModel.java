@@ -1,6 +1,7 @@
 package com.wudi.model.admin;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -69,7 +70,7 @@ public class SchoolModel extends Model<SchoolModel> {
 		StringBuffer from_sql=new StringBuffer();
 		from_sql.append("from ").append(tableName);
 		if(!StringUtil.isBlankOrEmpty(key)) {
-			from_sql.append(" where name like '%"+key+"%'");
+			from_sql.append(" where schoolname like '%"+key+"%'");
 		}
 		return dao.paginate(pageNumber,pageSize,sele_sql,from_sql.toString());
 	}  
@@ -175,5 +176,17 @@ public class SchoolModel extends Model<SchoolModel> {
 			return false;
 		}
 	}
-
+	/**
+	 * TODO:XIAO 查找所有信息
+	* @Title: getListAll
+	* @Description:???
+	* @param @return    参数
+	* @return List<SchoolZoneModel>    返回类型
+	* @throws
+	 */
+	public static List<SchoolModel> getListAll() {
+		StringBuffer sql=new StringBuffer();
+		sql.append("select *  from ").append(tableName);
+		return dao.find(sql.toString());
+	}
 }

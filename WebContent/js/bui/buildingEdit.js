@@ -10,15 +10,36 @@ layui.config({
 		//加载页面数据
 		$.get("getbuilding?id="+id, function(data){
 			var d=data.m;
+			var sl=data.sl;
+			var szl=data.szl;
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
-	        	$("input[name='addr']").val(d.capacity);
-	        	$("input[name='remark']").val(d.type);
-	        	$("input[name='school_id']").val(d.school_id);
-
+	        	$("input[name='addr']").val(d.addr);
+	        	$("textarea[name='remark']").val(d.remark);
+	        	
+	        	var school_id=szl[0].school_id;
+	        	//联动下拉学校分校
+	        	for(var i=0;i<szl.length;i++){
+	        		if(szl[i].id==d.schoolzone_id){
+	        			$("#schoolzone_id").append("<option selected='true' value='"+szl[i].id+"'>"+szl[i].name+"</option>");
+	        		}else{
+	        			$("#schoolzone_id").append("<option value='"+szl[i].id+"'>"+szl[i].name+"</option>");
+	        		}
+	        		
+				}
+	        	//联动下拉学校
+	        	for(var i=0;i<sl.length;i++){
+	        		if(sl[i].id==school_id){
+	        			$("#selectId").append("<option selected='true' value='"+sl[i].id+"'>"+sl[i].schoolname+"</option>");
+	        		}else{
+	        			$("#selectId").append("<option value='"+sl[i].id+"'>"+sl[i].schoolname+"</option>");
+	        		}
+	        		
+				}
+	        	form.render();//必须要再次渲染，要不然option显示不出来
 		})
 
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+ 	form.on("submit(update)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'updateBuilding',
