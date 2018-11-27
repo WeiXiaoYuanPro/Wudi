@@ -48,5 +48,13 @@ public class WeixinController extends Controller {
 		setAttr("data", map);
 		renderJson();
 	}
-
+	public void test() {
+		Map<String, Object> map=new HashMap<>();
+		map.put("usename", "xiao");
+		map.put("leve", 11);
+		map.put("code", 2);
+		setAttr("data", map);
+		renderJson();
+	}
+	
 }

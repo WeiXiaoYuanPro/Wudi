@@ -487,7 +487,7 @@ public class AdminController extends Controller {
 	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryBuilding() {
-        // 获取页面查询的关键字
+		// 获取页面查询的关键字
         String key = getPara("key");
         int limit=getParaToInt("limit");
         int page=getParaToInt("page");
@@ -498,9 +498,7 @@ public class AdminController extends Controller {
         setAttr("data", list.getList());
         renderJson();
 	}
-
 	/**
-	 * @Title: openBuilding @Description:打开添加信息页面 @param 参数 @return void
 	 * 返回类型 @throws
 	 */
 	public void openBuildingAdd() {
