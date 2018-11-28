@@ -146,7 +146,7 @@ public class AdminController extends Controller {
 	 * 返回类型 @throws
 	 */
 	public void stu_contatc() {
-		render("stu_contatc/stu_contatc_info.html");
+		render("stu_contatc/stu_contatcinfo.html");
 	}
 
 	/**
@@ -155,13 +155,16 @@ public class AdminController extends Controller {
 	 */
 	public void queryStu_contatc() {
 		// 获取页面查询的关键字
-		String key = getPara("key");
-		// 开始查询
-		Page<Stu_contatcModel> stu = Stu_contatcModel.getList(1, 10, key);
-		// 将查到的学生家庭信息列表放到stu_family_infos，给页面
-		setAttr("infos", stu);
-		// 返回格式是json
-		renderJson();
+        String key = getPara("key");
+        int limit=getParaToInt("limit");
+        int page=getParaToInt("page");
+        Page<Stu_contatcModel> list = Stu_contatcModel.getList(page, limit, key);
+        setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", list.getTotalRow());
+        setAttr("data", list.getList());
+        renderJson();
+	
 	}
 
 	/**
@@ -179,11 +182,11 @@ public class AdminController extends Controller {
 	 * @Title: getstu_contatc @Description:获取需要修改的学生家庭信息 @param 参数 @return void
 	 * 返回类型 @throws
 	 */
-	public void getstu_contatc() {
+	public void getStu_contatc() {
 		// 接收页面数据
-		String stu_no = getPara("stu_no");
+		String id = getPara("id");
 		// 根据条件查询数据库的数据
-		Stu_contatcModel stu = Stu_contatcModel.getByStu_no(stu_no);
+		Stu_contatcModel stu = Stu_contatcModel.getById(id);
 		// 放到编辑页面上去
 		setAttr("m", stu);
 		// 返回格式是json
