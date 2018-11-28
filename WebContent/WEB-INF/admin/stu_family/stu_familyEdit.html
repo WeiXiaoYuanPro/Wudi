@@ -22,36 +22,36 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">id</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="id" value="${(id)}" lay-verify="required" placeholder="请输入ID">
+				<input type="text" class="layui-input layui-disabled" name="id" value="${(id)}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">地址</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="addr" lay-verify="required" placeholder="请输入地址">
+				<input type="text" class="layui-input" name="addr" lay-verify="required" placeholder="请输入地址"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">电话</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="tel" lay-verify="required" placeholder="请输入电话">
+				<input type="text" class="layui-input" name="tel" lay-verify="required" placeholder="请输入电话"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">备注</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="remark" lay-verify="required" placeholder="备注">
+				<input type="text" class="layui-input" name="remark" lay-verify="required" placeholder="备注"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">学号</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="stu_no" lay-verify="required" placeholder="请输入学号">
+				<input type="text" class="layui-input" name="stu_no" lay-verify="required" placeholder="请输入学号"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="addUser">立即提交</button>
+				<button class="layui-btn" lay-submit="" lay-filter="update">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		    </div>
 		</div>

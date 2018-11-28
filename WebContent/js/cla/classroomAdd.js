@@ -6,7 +6,15 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-
+		//加载页面选择框数据
+		$.get("getSchoolModels", function(data){
+				var ml=data.ml;
+				for(var i=0;i<ml.length;i++){
+	        		$("#selectId").append("<option value='"+ml[i].id+"'>"+ml[i].classroomname+"</option>");
+				}
+				form.render();//必须要再次渲染，要不然option显示不出来
+		});
+	//===========================================
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台

@@ -19,6 +19,17 @@ layui.config({
 	        	$("input[name='latitude']").val(d.latitude);
 	        	$("input[name='longitude']").val(d.longitude);
 		})
+		//联动下拉学校
+    	for(var i=0;i<sl.length;i++){
+    		if(sl[i].id==d.classroom_id){
+    			$("#selectId").append("<option selected='true' value='"+sl[i].id+"'>"+sl[i].classroomname+"</option>");
+    		}else{
+    			$("#selectId").append("<option value='"+sl[i].id+"'>"+sl[i].classroomname+"</option>");
+    		}
+    		
+		}
+    	form.render();//必须要再次渲染，要不然option显示不出来
+	
 
  	form.on("submit(addUser)",function(data){console.log(data.field);
  		var index;
