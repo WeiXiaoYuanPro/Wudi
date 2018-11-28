@@ -702,12 +702,14 @@ public class AdminController extends Controller {
 	public void queryClassroom() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		// 开始查询
-		Page<ClassroomModel> Classroom = ClassroomModel.getList(1, 10, key);
-		// 将查到的学生信息列表放到infos，给页面
-		setAttr("infos", Classroom);
-		// 返回格式是json
-		renderJson();
+		int limit=getParaToInt("limit");
+        int page=getParaToInt("page");
+        Page<ClassroomModel> list = ClassroomModel.getList(page, limit, key);
+        setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", list.getTotalRow());
+        setAttr("data", list.getList());
+        renderJson();
 	}
 
 	/**
