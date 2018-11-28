@@ -618,22 +618,24 @@ public class AdminController extends Controller {
 	 * 
 	 */
 	public void stuinfos() {
-		render("stu_info/stuinfoinfo.html");
+		render("stuinfo/stuinfoinfo.html");
 	}
 
 	public void queryStuinfos() {
 		// 获取页面查询的关键字
-		String key = getPara("key");
-		// 开始查询
-		Page<StuinfoModel> s = StuinfoModel.getList(1, 10, key);
-		// 将查到的学生信息列表放到infos，给页面
-		setAttr("infos", s);
-		// 返回格式是json
-		renderJson();
+        String key = getPara("key");
+        int limit=getParaToInt("limit");
+        int page=getParaToInt("page");
+        Page<StuinfoModel> list = StuinfoModel.getList(page, limit, key);
+        setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", list.getTotalRow());
+        setAttr("data", list.getList());
+        renderJson();
 	}
 
 	public void openStuinfoAdd() {
-		render("stu_info/stuinfoAdd.html");
+		render("stuinfo/stuinfoAdd.html");
 	}
 
 	public void getstuinfo() {
@@ -651,7 +653,7 @@ public class AdminController extends Controller {
 		// 接收页面数据
 		String no = getPara("no");
 		setAttr("no", no);
-		renderFreeMarker("stu_info/stuinfoEdit.html");
+		renderFreeMarker("stuinfo/stuinfoEdit.html");
 	}
 
 	public void saveStuinfo() {

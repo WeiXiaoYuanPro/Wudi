@@ -109,38 +109,8 @@ layui.config({
 			    		      });
 			           }
 			      });
-		 //关闭当前提示
+		 //关闭当前提示	
 	      layer.close(index);
-		 		 $.ajax({//异步请求返回给后台
-			    	  url:'delBuilding',
-			    	  type:'POST',
-			    	  data:{"id":data.id},
-			    	  dataType:'json',
-			    	  beforeSend: function(re){
-			    		  msgid = top.layer.msg('数据处理中，请稍候',{icon: 16,time:false,shade:0.8});
-			          },
-			    	  success:function(d){
-			    		  top.layer.close(msgid);
-			    		  if(d.result){
-			    			//弹出loading
-						   		layer.closeAll("iframe");
-						  	 //刷新父页面
-						  	 	parent.location.reload();
-			    		  }else{
-			    			  top.layer.msg("操作失败！，数据库操作有问题！！");
-			    		  }
-				    		
-			    	  },
-			    	  error:function(XMLHttpRequest, textStatus, errorThrown){
-			    		  top.layer.msg('操作失败！！！服务器有问题！！！！<br>请检测服务器是否启动？', {
-			    		        time: 20000, //20s后自动关闭
-			    		        btn: ['知道了']
-			    		      });
-			           }
-			      });
-	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-	      layer.close(index);
-	      //向服务端发送删除指令
 	    });
 	  } else if(layEvent === 'edit'){ //编辑
 		  var index = layui.layer.open({
