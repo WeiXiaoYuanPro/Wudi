@@ -10,17 +10,17 @@ layui.config({
 		//加载页面数据
 		$.get("getdormitory?id="+id, function(data){
 			var d=data.m;
-	        	//执行加载数据的方法
-	        	$("input[name='name']").val(d.name);
-	        	$("input[name='building_id']").val(d.building_id);
-	        	$("input[name='capacity']").val(d.capacity);
-	        	$("input[name='type']").val(d.type);
-	        	$("input[name='status']").val(d.status);
-	        	$("input[name='latitude']").val(d.latitude);
-	        	$("input[name='longitude']").val(d.longitude);
+			//执行加载数据的方法
+        	$("input[name='name']").val(d.name);
+        	$("input[name='building_id']").val(d.building_id);
+        	$("input[name='capacity']").val(d.capacity);
+        	$("input[name='type']").val(d.type);
+        	$("input[name='status']").val(d.status);
+        	$("input[name='latitude']").val(d.latitude);
+        	$("input[name='longitude']").val(d.longitude);
 		})
 
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+ 	form.on("submit(update)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'updateDormitory',
