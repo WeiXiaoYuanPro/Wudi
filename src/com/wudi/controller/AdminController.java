@@ -376,7 +376,12 @@ public class AdminController extends Controller {
 		// 将查到的学生信息列表放到infos，给页面
 		setAttr("infos", Dormitory);
 		// 返回格式是json
-		renderJson();
+		setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", Dormitory.getTotalRow());
+        setAttr("data", Dormitory.getList());
+        renderJson();
+		
 	}
 
 	/**
