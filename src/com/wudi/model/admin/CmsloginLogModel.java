@@ -9,6 +9,7 @@ import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
+import com.mysql.fabric.xmlrpc.base.Data;
 import com.wudi.util.StringUtil;
 /**
  * 学生信息
@@ -129,6 +130,18 @@ public class CmsloginLogModel extends Model<CmsloginLogModel> {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static boolean save(String username,String ip,String addr,String login_time) {
+		CmsloginLogModel cl = new CmsloginLogModel();
+		cl.setId(UUID.randomUUID().toString());
+		cl.setName(username);
+		cl.setLogin_Time(login_time);
+		cl.setIp(ip);
+		cl.setAddr(addr);
+		cl.setRemark("0");
+		cl.setStatus(0);
+		return cl.save();
 	}
 
 }

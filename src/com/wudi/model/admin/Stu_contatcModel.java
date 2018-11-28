@@ -1,6 +1,7 @@
 package com.wudi.model.admin;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -124,7 +125,7 @@ public class Stu_contatcModel extends Model<Stu_contatcModel> {
 	 */
 	public static boolean save(String id, String tel, String qq, String weixin, String other, String stu_no) {
 		Stu_contatcModel s = new Stu_contatcModel();
-		s.setId(id);
+		s.setId(UUID.randomUUID().toString());
 		s.setTel(tel);
 		s.setQq(qq);
 		s.setWeixin(weixin);

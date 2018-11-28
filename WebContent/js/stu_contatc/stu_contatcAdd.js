@@ -6,8 +6,9 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+	//===========================================
+		
+ 	form.on("submit(add)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'saveStu_contatc',
