@@ -207,5 +207,11 @@ public class CmsUserModel extends Model<CmsUserModel> {
 			return false;
 		}
 	}
+	
+	
+	public static CmsUserModel test(String username) {
+		String sql="select * from "+tableName+" where username=?";
+		return dao.findFirst(sql, username);
+	}
 
 }

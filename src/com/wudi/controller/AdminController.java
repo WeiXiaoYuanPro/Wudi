@@ -823,12 +823,14 @@ public class AdminController extends Controller {
 	public void queryStu_family() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		// 开始查询
-		Page<Stu_familyModel> stu = Stu_familyModel.getList(1, 10, key);
-		// 将查到的学生家庭信息列表放到stu_family_infos，给页面
-		setAttr("infos", stu);
-		// 返回格式是json
-		renderJson();
+		int limit=getParaToInt("limit");
+        int page=getParaToInt("page");
+        Page<Stu_familyModel> list = Stu_familyModel.getList(page, limit, key);
+        setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", list.getTotalRow());
+        setAttr("data", list.getList());
+        renderJson();
 	}
 
 	/**
@@ -870,12 +872,11 @@ public class AdminController extends Controller {
 	 *         参数 @return void 返回类型 @throws
 	 */
 	public void saveStu_family() {
-		String id = getPara("id");
 		String addr = getPara("addr");
 		String tel = getPara("tel");
 		String remark = getPara("remark");
 		String stu_no = getPara("stu_no");
-		boolean result = Stu_familyModel.save(id, addr, tel, remark, stu_no);
+		boolean result = Stu_familyModel.save(addr, tel, remark, stu_no);
 		setAttr("result", result);
 		renderJson();
 	}
@@ -1476,6 +1477,36 @@ public class AdminController extends Controller {
 		// 删除
 		boolean result = SchoolZoneModel.delSchoolZoneModelByID(id);
 		// 返回结果
+		setAttr("result", result);
+		renderJson();
+	}
+	
+	/**
+	 * 登录判断
+	 */
+	public void Login() {
+		Date date = new Date();
+		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String login_time=(dateFormat.format(date));
+		String ip = getRequest().getRemoteHost();
+		String addr = getRequest().getRemoteAddr();
+		String username = getPara("username");
+		String password = getPara("password");
+		CmsUserModel n = CmsUserModel.test(username);
+		int result ;
+		if(n==null) {
+			result = 0;
+		}
+		else {
+			if(n.getPassword().equals(password)) {
+				boolean results = CmsloginLogModel.save(username, ip, addr, login_time);
+				setAttr("results", results);
+				result = 1;
+			}
+			else {
+				result = 2;
+			}	
+		}
 		setAttr("result", result);
 		renderJson();
 	}

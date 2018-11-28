@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>学生信息添加--后台管理模板</title>
+	<title>学校信息添加</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,47 +11,38 @@
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
 	<style type="text/css">
-		.layui-form-item .layui-inline{ width:33.333%; float:left; margin-right:0; }
-		@media(max-width:1240px){
-			.layui-form-item .layui-inline{ width:100%; float:none; }
-		}
+		.layui-form { width:40%; float:left; margin-left:5%; margin-top: 3%}
 	</style>
 </head>
 <body class="childrenBody">
-	<form class="layui-form" name="studentform" style="width:80%;">
+	<form class="layui-form layui-form-pane" name="addform">
 		<div class="layui-form-item">
-			<label class="layui-form-label">id</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="id" lay-verify="required" placeholder="请输入ID">
+			<label class="layui-form-label">家庭地址</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input" name="addr" lay-verify="required" placeholder="请输入家庭地址"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">地址</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="addr" lay-verify="required" placeholder="请输入地址">
+			<label class="layui-form-label">家庭联系电话</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input" name="tel" lay-verify="required" placeholder="请输入家庭联系电话"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">电话</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="tel" lay-verify="required" placeholder="请输入电话">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">备注</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="remark" lay-verify="required" placeholder="备注">
+			<label class="layui-form-label">其他备注</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input" name=remark lay-verify="required" placeholder="请输入备注"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">学号</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="stu_no" lay-verify="required" placeholder="请输入学号">
+				<input type="text" class="layui-input" name="stu_no" lay-verify="required" placeholder="请输入学号"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="addUser">立即提交</button>
+				<button class="layui-btn" lay-submit="" lay-filter="add">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		    </div>
 		</div>

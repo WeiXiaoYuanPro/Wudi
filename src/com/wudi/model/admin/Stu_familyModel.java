@@ -1,6 +1,7 @@
 package com.wudi.model.admin;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -96,9 +97,9 @@ public class Stu_familyModel extends Model<Stu_familyModel> {
 * @return boolean    返回类型
 * @throws
  */
-	public static boolean save(String id,String addr,String tel,String remark,String stu_no) {
+	public static boolean save(String addr,String tel,String remark,String stu_no) {
 		Stu_familyModel s=new Stu_familyModel();
-		s.setId(id);
+		s.setId(UUID.randomUUID().toString());
 		s.setAddr(addr);
 		s.setTel(tel);
 		s.setRemark(remark);
