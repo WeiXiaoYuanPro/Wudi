@@ -135,7 +135,7 @@ public class CmsUserModel extends Model<CmsUserModel> {
  */
 	public static boolean save(String username,String password,String img, int type) {
 		CmsUserModel s=new CmsUserModel();
-		s.setId (UUID.randomUUID().toString());
+		s.setId (StringUtil.getId());
 		s.setUsername(username);
 		s.setPassword(password);
 		s.setCreate_Time(new Date());//默认是服务器时间

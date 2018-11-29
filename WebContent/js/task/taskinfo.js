@@ -22,7 +22,14 @@ layui.config({
 	      ,{field: 'create_time', title: '开始时间', lign:'center'}
 	      ,{field: 'deadline', title: '截止时间', lign:'center'} 
 	      ,{field: 'depname', title: '执行人',align:'center' }
-	      ,{field: 'status', title: '状态',align:'center' }
+	      ,{field: 'status', title: '状态',align:'center',
+	    	  templet: function(d){
+	    		  if(d.status==1){
+	    			  return '<span style="color:green;">已完成</span>';
+	    		  }else{
+	    			  return '<span style="color:red;">未完成</span>';
+	    		  }}  
+	      }
 	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
 	    ]]
 	  });
@@ -56,6 +63,7 @@ layui.config({
 				title : "【添加信息】",
 				icon: 2,
 				type : 2,
+				area: ['800px', '600px'],
 				content : "openTaskAdd",
 				success : function(layero, index){
 					setTimeout(function(){
@@ -65,7 +73,6 @@ layui.config({
 					},500)
 				}
 			})			
-			layui.layer.full(index);
 		})
 	}).resize();
   
@@ -77,8 +84,9 @@ layui.config({
 	 
 	  if(layEvent === 'detail'){ //查看
 		 var index = layui.layer.open({
-              title : "修改信息",
+              title : "查看信息",
               type : 2,
+              area: ['1000px', '600px'],
               content : "openTaskShow?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){
@@ -88,7 +96,6 @@ layui.config({
                   },500)
               }
           })          
-          layui.layer.full(index);
 	  } else if(layEvent === 'del'){
 		  
 	  } else if(layEvent === 'edit'){

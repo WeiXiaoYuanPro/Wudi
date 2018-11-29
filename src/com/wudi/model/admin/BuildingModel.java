@@ -86,7 +86,7 @@ public class BuildingModel extends Model<BuildingModel> {
 			s.setName(name);
 			s.setRemark(remark);
 			s.setSchoolzone_id(school_id);
-			s.setId(UUID.randomUUID().toString());
+			s.setId(StringUtil.getId());
 			return s.save();
 		}
 		

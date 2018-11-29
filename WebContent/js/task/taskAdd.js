@@ -23,7 +23,7 @@ layui.config({
 		 //日期
 	laydate.render({
 		    elem: '#date1',
-		    format:'yyyy-MM-dd HH:mm:ss'
+		    type: 'datetime'
     });
 //===========================================	
  	form.on("submit(add)",function(data){

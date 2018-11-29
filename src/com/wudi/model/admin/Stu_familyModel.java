@@ -99,7 +99,7 @@ public class Stu_familyModel extends Model<Stu_familyModel> {
  */
 	public static boolean save(String addr,String tel,String remark,String stu_no) {
 		Stu_familyModel s=new Stu_familyModel();
-		s.setId(UUID.randomUUID().toString());
+		s.setId(StringUtil.getId());
 		s.setAddr(addr);
 		s.setTel(tel);
 		s.setRemark(remark);

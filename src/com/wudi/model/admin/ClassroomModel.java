@@ -117,7 +117,7 @@ public class ClassroomModel extends Model<ClassroomModel> {
 		 */
 			public static boolean save(String id,String name,String building_id,int capacity,int type,int status,BigDecimal latitude,BigDecimal longitude) {
 				ClassroomModel s=new ClassroomModel();
-				s.setId(UUID.randomUUID().toString());
+				s.setId(StringUtil.getId());
 				s.setName(name);
 				s.setBuilding_id(building_id);
 				s.setCapacity(capacity);

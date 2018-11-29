@@ -87,7 +87,7 @@ public class SchoolZoneModel extends Model<SchoolZoneModel>{
 	 */
 		public static boolean save(String id,String name,String addr,String remark,String school_id) {
 			SchoolZoneModel s=new SchoolZoneModel();
-			s.setId(UUID.randomUUID().toString());
+			s.setId(StringUtil.getId());
 			s.setName(name);
 			s.setAddr(addr);
 			s.setRemark(remark);

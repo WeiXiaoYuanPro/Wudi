@@ -134,7 +134,7 @@ public class CmsloginLogModel extends Model<CmsloginLogModel> {
 	
 	public static boolean save(String username,String ip,String addr,String login_time) {
 		CmsloginLogModel cl = new CmsloginLogModel();
-		cl.setId(UUID.randomUUID().toString());
+		cl.setId(StringUtil.getId());
 		cl.setName(username);
 		cl.setLogin_Time(login_time);
 		cl.setIp(ip);

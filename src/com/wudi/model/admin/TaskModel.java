@@ -2,7 +2,6 @@ package com.wudi.model.admin;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
@@ -120,7 +119,7 @@ public class TaskModel extends Model<TaskModel> {
 	public static boolean saveModel(String title,Date deadline, String content,String executor) {
 		TaskModel m=new TaskModel();
 		m.setTitle(title);
-		m.setId(UUID.randomUUID().toString());
+		m.setId(StringUtil.getId());
 		m.setDeadline(deadline);
 		m.setCreate_time(new Date());
 		m.setContent(content);

@@ -1,10 +1,10 @@
 package com.wudi.controller;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
@@ -24,6 +24,7 @@ import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
 import com.wudi.model.admin.TaskModel;
 import com.wudi.model.admin.UserInfoModel;
+import com.wudi.util.StringUtil;
 
 /**
  * 
@@ -1130,7 +1131,7 @@ public class AdminController extends Controller {
 		Date time = new Date();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		String id = UUID.randomUUID().toString();
+		String id = StringUtil.getId();
 		String username = getPara("username");
 		String password = getPara("password");
 		String create_time = df.format(time.getTime());
@@ -1588,13 +1589,32 @@ public class AdminController extends Controller {
 	 */
 	public void savaTask() {
 		String title = getPara("title");
-		Date deadline = getParaToDate("deadline");
+		String det = getPara("deadline");
+		Date deadline=new Date();
+		try {
+			deadline = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(det.trim());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		String content = getPara("content");
 		String executor = getPara("executor");
 		// 保存数据
 		boolean result = TaskModel.saveModel(title, deadline, content, executor);
 		setAttr("result", result);
 		renderJson();
+	}
+	/**
+	 * 打开任务详情
+	* @Title: openTaskShow
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void openTaskShow(){
+		String id=getPara("id");
+		setAttr("id", id);
+		renderFreeMarker("task/taskEdit.html");
 	}
 	/**
 	 * 查看任务列表
@@ -1604,10 +1624,17 @@ public class AdminController extends Controller {
 	* @return void    返回类型
 	* @throws
 	 */
-	public void openTaskShow() {
+	public void getTaskShow() {
 		String id=getPara("id");
 		TaskModel m=TaskModel.getModeShowById(id);
 		setAttr("m", m);
+		renderJson();
+	}
+	public void updateTask() {
+		String id=getPara("id");
+		// 保存数据
+		boolean result = TaskModel.updateModel(id);
+		setAttr("result", result);
 		renderJson();
 	}
 	
