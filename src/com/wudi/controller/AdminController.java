@@ -14,6 +14,7 @@ import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
 import com.wudi.model.admin.CmsUserModel;
 import com.wudi.model.admin.CmsloginLogModel;
+import com.wudi.model.admin.DepmanModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
 import com.wudi.model.admin.SchoolModel;
@@ -21,6 +22,7 @@ import com.wudi.model.admin.SchoolZoneModel;
 import com.wudi.model.admin.Stu_contatcModel;
 import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
+import com.wudi.model.admin.TaskModel;
 import com.wudi.model.admin.UserInfoModel;
 
 /**
@@ -1522,4 +1524,91 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
+	/**
+	 * 打开任务列表
+	* @Title: openTaskList
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void openTaskList() {
+		render("task/taskinfo.html");
+	}
+	/**
+	 * 任务列表
+	* @Title: getTaskList
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void getTaskList() {
+		// 获取页面查询的关键字
+		String key = getPara("key");
+		int limit=getParaToInt("limit");
+		int page=getParaToInt("page");
+		Page<TaskModel> list = TaskModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
+	}
+	/**
+	* @Title: openTaskAdd
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void openTaskAdd() {
+		render("task/taskAdd.html");
+	}
+	/**
+	 * 获取执行者列表下拉框
+	* @Title: getexecutors
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void getexecutors() {
+		List<DepmanModel> list=DepmanModel.getList();
+		setAttr("sl", list);
+		renderJson();
+	}
+	/**
+	 * 保存
+	* @Title: savaTask
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void savaTask() {
+		String title = getPara("title");
+		Date deadline = getParaToDate("deadline");
+		String content = getPara("content");
+		String executor = getPara("executor");
+		// 保存数据
+		boolean result = TaskModel.saveModel(title, deadline, content, executor);
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 * 查看任务列表
+	* @Title: openTaskShow
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void openTaskShow() {
+		String id=getPara("id");
+		TaskModel m=TaskModel.getModeShowById(id);
+		setAttr("m", m);
+		renderJson();
+	}
+	
 }

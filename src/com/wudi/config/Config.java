@@ -20,14 +20,15 @@ import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
 import com.wudi.model.admin.CmsUserModel;
 import com.wudi.model.admin.CmsloginLogModel;
+import com.wudi.model.admin.DepmanModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
 import com.wudi.model.admin.SchoolModel;
-
 import com.wudi.model.admin.SchoolZoneModel;
 import com.wudi.model.admin.Stu_contatcModel;
 import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
+import com.wudi.model.admin.TaskModel;
 import com.wudi.model.admin.UserInfoModel;
 /**
  * 	系统配置类
@@ -100,7 +101,9 @@ public class Config extends JFinalConfig {
 
 			arpMysql.addMapping("stucontatc", Stu_contatcModel.class);//学生联系信息
 			
+			arpMysql.addMapping("task", TaskModel.class);//任务
 			
+			arpMysql.addMapping("depman", DepmanModel.class);//开发成员
 
 
 		}
