@@ -55,6 +55,7 @@ layui.config({
 				title : "【添加信息】",
 				icon: 2,
 				type : 2,
+				area: ['800px', '600px'],
 				content : "openStu_contatcAdd",
 				success : function(layero, index){
 					setTimeout(function(){
@@ -64,7 +65,6 @@ layui.config({
 					},500)
 				}
 			})			
-			layui.layer.full(index);
 		})
 	}).resize();
   
@@ -147,6 +147,7 @@ layui.config({
 		  var index = layui.layer.open({
               title : "修改信息",
               type : 2,
+              area: ['800px', '600px'],
               content : "openStu_contatcEdit?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){
@@ -156,7 +157,6 @@ layui.config({
                   },500)
               }
           })          
-          layui.layer.full(index);
 	  }
 	});
 	

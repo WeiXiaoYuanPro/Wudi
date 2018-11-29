@@ -54,6 +54,7 @@ layui.config({
 				title : "【添加信息】",
 				icon: 2,
 				type : 2,
+				area: ['800px', '600px'],
 				content : "openBuildingAdd",
 				success : function(layero, index){
 					setTimeout(function(){
@@ -114,8 +115,9 @@ layui.config({
 	    });
 	  } else if(layEvent === 'edit'){ //编辑
 		  var index = layui.layer.open({
-              title : "修改信息",
+              title : "【修改信息】",
               type : 2,
+              area: ['800px', '600px'],
               content : "openBuildingEdit?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){

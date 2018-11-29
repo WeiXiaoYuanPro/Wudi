@@ -58,6 +58,7 @@ layui.config({
 					title : "【添加信息】",
 					icon: 2,
 					type : 2,
+					area: ['800px', '600px'],
 					content : "openClassroomAdd",
 					success : function(layero, index){
 						setTimeout(function(){
@@ -118,6 +119,7 @@ layui.config({
 			  var index = layui.layer.open({
 	              title : "修改信息",
 	              type : 2,
+	              area: ['800px', '600px'],
 	              content : "openClassroomEdit?id="+data.id,
 	              success : function(layero, index){
 	                  setTimeout(function(){

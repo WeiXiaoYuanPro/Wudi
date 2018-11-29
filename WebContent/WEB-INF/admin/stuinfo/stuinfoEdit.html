@@ -29,16 +29,16 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
-		    <label class="layui-form-label">单选框</label>
+		    <label class="layui-form-label">性别</label>
 		    <div class="layui-input-block">
-		      <input name="sex" title="男" type="radio" checked="" value="1">
-		      <input name="sex" title="女" type="radio" value="0">
+		      <input name="sex" title="男" type="radio" value="1" id="r1">
+		      <input name="sex" title="女" type="radio" value="0" id="r2">
 		    </div>
 		  	</div>
   		<div class="layui-form-item">
 			<label class="layui-form-label">出生年月</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="birth"  lay-verify="required" placeholder="出生年月 "  autocomplete="off">
+				<input type="text" id="date1"  class="layui-input" name="birth" lay-verify="date"  placeholder="出生年月 :yyyy-MM-dd"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">

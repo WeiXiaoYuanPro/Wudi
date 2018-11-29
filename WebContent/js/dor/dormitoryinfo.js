@@ -58,6 +58,7 @@ layui.config({
 				title : "【添加信息】",
 				icon: 2,
 				type : 2,
+				area: ['800px', '600px'],
 				content : "openDormitoryAdd",
 				success : function(layero, index){
 					setTimeout(function(){
@@ -119,6 +120,7 @@ layui.config({
 		  var index = layui.layer.open({
               title : "修改信息",
               type : 2,
+              area: ['800px', '600px'],
               content : "openDormitoryEdit?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){

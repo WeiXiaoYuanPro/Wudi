@@ -1,12 +1,16 @@
 var $;
 layui.config({
 	base : "js/"
-}).use(['form','layer','jquery'],function(){
+}).use(['form','layer','jquery','laydate'],function(){
 	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
+		laydate=layui.laydate,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-		
+		//执行一个laydate实例
+	laydate.render({
+		    elem: '#date1'//指定元素
+		  });	
  	form.on("submit(add)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台

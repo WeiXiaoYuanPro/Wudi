@@ -11,7 +11,7 @@
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
 	<style type="text/css">
-		.layui-form { width:40%; float:left; margin-left:5%; margin-top: 3%}
+		.layui-form {float:left; margin-left:5%; margin-top: 3%}
 	</style>
 </head>
 <body class="childrenBody">
@@ -19,7 +19,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">学号</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="no" value="${(no)}">
+				<input type="text" class="layui-input" name="no">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -28,10 +28,10 @@
 				<input type="text" class="layui-input" name="name"  lay-verify="required" placeholder="姓名"  autocomplete="off">
 			</div>
 		</div>
-		 <div class="layui-form-item" pane="">
+		 <div class="layui-form-item">
 		    <label class="layui-form-label">性别</label>
-		    <div class="layui-input-block">
-		      <input name="sex" title="男" type="radio" checked="" value="1">
+		    <div class="layui-input-inline">
+		      <input name="sex" title="男" type="radio" value="1" checked>
 		      <input name="sex" title="女" type="radio" value="0">
 		    </div>
 		  	</div>
@@ -39,7 +39,7 @@
   		<div class="layui-form-item">
 			<label class="layui-form-label">出生年月</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="birth"  lay-verify="required" placeholder="出生年月 "  autocomplete="off">
+				<input type="text" id="date1"  class="layui-input" name="birth" lay-verify="date"  placeholder="出生年月 :yyyy-MM-dd"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">

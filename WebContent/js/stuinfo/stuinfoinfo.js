@@ -19,7 +19,14 @@ layui.config({
 	    cols: [[ //表头
 	      {field: 'no', title: '学号', sort: true, fixed: 'left'}
 	      ,{field: 'name', title: '姓名',lign:'center'}
-	      ,{field: 'sex', title: '性别', lign:'center'}
+	      ,{field: 'sex', title: '性别', lign:'center', 
+	    	  templet: function(d){
+	    		  if(d.sex==1){
+	    			  return '<span >男</span>';
+	    		  }else{
+	    			  return '<span style="color: #c00;">女</span>';
+	    		  }}
+	      }
 	      ,{field: 'birth', title: '出生年月', lign:'center'} 
 	      ,{field: 'img', title: '头像',align:'center' }
 	      ,{fixed: 'right',title: '操作', align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
@@ -52,8 +59,9 @@ layui.config({
 		$(".add_btn").click(function(){
 			var index = layui.layer.open({
 				title : "【添加信息】",
-				icon: 2,
+				icon: 6,
 				type : 2,
+				area: ['800px', '600px'],
 				content : "openStuinfoAdd",
 				success : function(layero, index){
 					setTimeout(function(){
@@ -63,7 +71,6 @@ layui.config({
 					},500)
 				}
 			})			
-			layui.layer.full(index);
 		})
 	}).resize();
   
@@ -116,6 +123,7 @@ layui.config({
 		  var index = layui.layer.open({
               title : "修改信息",
               type : 2,
+              area: ['800px', '600px'],
               content : "openStuinfoEdit?no="+data.no,
               success : function(layero, index){
                   setTimeout(function(){
@@ -125,7 +133,6 @@ layui.config({
                   },500)
               }
           })          
-          layui.layer.full(index);
 	  }
 	});
 	

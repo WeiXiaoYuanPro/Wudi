@@ -1,22 +1,29 @@
 var $;
 layui.config({
 	base : "js/"
-}).use(['form','layer','jquery'],function(){
+}).use(['form','layer','jquery','laydate'],function(){
 	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
+		laydate=layui.laydate,
 		laypage = layui.laypage;
 		$ = layui.jquery;
+		//执行一个laydate实例
+		laydate.render({
+			    elem: '#date1'//指定元素
+			  });
 		var no=$("input[name='no']").val();
 		//加载页面数据
 		$.get("getstuinfo?no="+no, function(data){
 			var d=data.m;
-			var sl=data.sl;
-			var szl=data.szl;
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
-	        	$("input[name='sex']").val(d.sex);
 	        	$("input[name='birth']").val(d.birth);
 	        	$("textarea[name='img']").val(d.img);
+	        	if(d.sex==1){
+	        		$("#r1").attr("checked",true);
+	        	}else{
+	        		$("#r2").attr("checked",true);
+	        	}
 	        	form.render();//必须要再次渲染，要不然option显示不出来
 		})
 
