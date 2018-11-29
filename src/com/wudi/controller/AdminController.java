@@ -43,6 +43,9 @@ public class AdminController extends Controller {
 	public void index() {
 		render("index.html");
 	}
+	public void main() {
+		render("main.html");
+	}
 
 	/**
 	 * 
@@ -1637,5 +1640,10 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
-	
+	/**
+	 * 显示到图表
+	 */
+	public void getTaskinfo() {
+		
+	}
 }
