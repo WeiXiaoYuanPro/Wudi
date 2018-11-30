@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-29 15:23:25
+Date: 2018-11-30 16:50:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -111,6 +111,7 @@ CREATE TABLE `cmslogin_log` (
 -- ----------------------------
 INSERT INTO `cmslogin_log` VALUES ('03401e66-cd67-4c64-a316-8667fbebee38', 'js', '2018-11-28 :06:00:55', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', '0', '0');
 INSERT INTO `cmslogin_log` VALUES ('079a6285-ad32-44e9-95f3-62c03d9cfcf5', '3', '2018-11-28 07:05:28', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', '0', '0');
+INSERT INTO `cmslogin_log` VALUES ('1543567291333', '3', '2018-11-30 04:41:31', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', '0', '0');
 INSERT INTO `cmslogin_log` VALUES ('194f7107-fec9-4bfd-9ed7-3e63b6b759c2', '杨正旺', '2018-11-28 19:57:59', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', 'ok', '0');
 INSERT INTO `cmslogin_log` VALUES ('22106df7-08db-43e4-988d-c594c26c46f0', '3', '2018-11-28 07:51:53', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', '0', '0');
 INSERT INTO `cmslogin_log` VALUES ('314e4f7c-db8d-4f11-8bbe-14dacd6a8338', 'js', '2018-11-28 10:19:59', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', '0', '0');
@@ -136,14 +137,14 @@ CREATE TABLE `depman` (
 -- ----------------------------
 -- Records of depman
 -- ----------------------------
-INSERT INTO `depman` VALUES ('01', '肖老师', '1');
-INSERT INTO `depman` VALUES ('02', '梁老师', '1');
-INSERT INTO `depman` VALUES ('03', '李老师', '1');
 INSERT INTO `depman` VALUES ('10', '吴海', '1');
 INSERT INTO `depman` VALUES ('11', '唐国继', '1');
 INSERT INTO `depman` VALUES ('12', '陈糠杰', '1');
 INSERT INTO `depman` VALUES ('13', '龙明涛', '1');
 INSERT INTO `depman` VALUES ('14', '蒋霜', '1');
+INSERT INTO `depman` VALUES ('22', '肖老师', '1');
+INSERT INTO `depman` VALUES ('23', '梁老师', '1');
+INSERT INTO `depman` VALUES ('24', '李老师', '1');
 INSERT INTO `depman` VALUES ('4', '李颖鹏', '1');
 INSERT INTO `depman` VALUES ('5', '卢英剑', '1');
 INSERT INTO `depman` VALUES ('6', '李金鹏', '1');
@@ -208,7 +209,6 @@ INSERT INTO `navs` VALUES ('3', '学校基本信息管理', '&#xe630;', '', '-1'
 INSERT INTO `navs` VALUES ('3f596ea9-a2a4-4e8a-9f27-3028bb8defcf', '任务列表', '&#xe630;', 'admin/openTaskList', '5');
 INSERT INTO `navs` VALUES ('4', '前端信息管理', '&#xe630;', '', '-1');
 INSERT INTO `navs` VALUES ('5', '系統管理', '&#xe630;', '', '-1');
-INSERT INTO `navs` VALUES ('6', '学生信息管理', 'icon-text', 'admin/student', '2');
 INSERT INTO `navs` VALUES ('7', '学生家庭信息', '&#xe61c;', 'admin/stu_families', '2');
 INSERT INTO `navs` VALUES ('8', '学校信息管理', '&#xe630;', 'admin/schools', '3');
 INSERT INTO `navs` VALUES ('9', '分校区信息管理', '&#xe630;', 'admin/schoolzone', '3');
@@ -376,7 +376,7 @@ CREATE TABLE `stuinfo` (
 INSERT INTO `stuinfo` VALUES ('2017402120', '黄霜', '0', '1998', 'sss');
 INSERT INTO `stuinfo` VALUES ('2017402128', '胡普艳', '0', '1999', 'ssssss');
 INSERT INTO `stuinfo` VALUES ('2017402139', '孔倩', '0', '1997', 'qqq');
-INSERT INTO `stuinfo` VALUES ('2017402155', 'haha ', '0', '111', '222');
+INSERT INTO `stuinfo` VALUES ('2017402155', '吴吉吉', '1', '2018-10-28', '恩恩额');
 INSERT INTO `stuinfo` VALUES ('2017402210', '王生', '1', '1989', 'ss4444');
 
 -- ----------------------------
@@ -398,7 +398,21 @@ CREATE TABLE `task` (
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES ('4cccaa77-295f-4335-9a63-90effd9d8a2f', '测试一下', null, '0', '2018-11-29 11:05:27', null, '01', '2018-11-29 00:00:00');
+INSERT INTO `task` VALUES ('1543484956768', '测试3', null, '1', '2018-11-29 17:49:16', '2018-11-29 18:52:12', '22', '2018-11-30 00:00:00');
+INSERT INTO `task` VALUES ('1543485309133', '测试4', null, '0', '2018-11-29 17:55:09', null, '23', '2018-11-29 00:00:00');
+INSERT INTO `task` VALUES ('1543485750280', '测试5', null, '0', '2018-11-29 18:02:30', null, '24', '2018-11-29 18:02:25');
+INSERT INTO `task` VALUES ('1543550355025', '测试6', null, '0', '2018-11-30 11:59:15', null, '22', '2018-11-30 11:59:11');
+INSERT INTO `task` VALUES ('1543550416984', '444', null, '0', '2018-11-30 12:00:16', null, '23', '2018-11-30 12:00:08');
+INSERT INTO `task` VALUES ('1543565832662', '任务列表点击功能', null, '0', '2018-11-30 16:17:12', null, '22', '2018-11-30 16:16:48');
+INSERT INTO `task` VALUES ('1543565941465', '图片上传功能研究', null, '0', '2018-11-30 16:19:01', null, '5', '2018-11-30 16:18:40');
+INSERT INTO `task` VALUES ('1543565941469', '测试一下', null, '0', '2018-11-29 11:05:27', null, '22', '2018-11-29 00:00:00');
+INSERT INTO `task` VALUES ('1543566249739', '客户端登陆接口调试', null, '0', '2018-11-30 16:24:09', null, '6', '2018-11-30 16:24:05');
+INSERT INTO `task` VALUES ('1543566281034', '客户端退出接口调试', null, '0', '2018-11-30 16:24:41', null, '6', '2018-12-06 00:00:00');
+INSERT INTO `task` VALUES ('1543566319665', '后台管理系统登录功能', null, '1', '2018-11-30 16:25:19', '2018-11-30 16:43:39', '4', '2018-12-07 16:25:08');
+INSERT INTO `task` VALUES ('1543566356713', '后台管理系统登录日志', null, '0', '2018-11-30 16:25:56', null, '8', '2018-12-07 00:00:00');
+INSERT INTO `task` VALUES ('1543566400962', '测试任务', null, '0', '2018-11-30 16:26:40', null, '14', '2018-12-07 00:00:00');
+INSERT INTO `task` VALUES ('1543566440872', '测试任务，功能完善', null, '0', '2018-11-30 16:27:20', null, '9', '2018-12-07 00:00:00');
+INSERT INTO `task` VALUES ('1543566668131', '主页图表显示', null, '0', '2018-11-30 16:31:08', null, '7', '2018-12-03 00:00:00');
 
 -- ----------------------------
 -- Table structure for `user_info`
@@ -440,3 +454,9 @@ CREATE TABLE `userloginlog` (
 -- ----------------------------
 -- Records of userloginlog
 -- ----------------------------
+
+-- ----------------------------
+-- View structure for `dt`
+-- ----------------------------
+DROP VIEW IF EXISTS `dt`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `dt` AS select `a`.`id` AS `id`,`a`.`depname` AS `depname`,`a`.`status` AS `status`,`b`.`status` AS `taskstatus` from (`depman` `a` left join `task` `b` on((`a`.`id` = `b`.`executor`))) order by `b`.`id` ;

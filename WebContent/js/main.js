@@ -196,9 +196,9 @@ layui.config({
         		                trigger: 'item',
         		                formatter: '{a} <br/>{b} : {c} ({d}%)'
         		            },
-        		            center: [130,100],
-        		            radius : [0, 80],
-        		            itemStyle :　{
+        		            center:[130,100],
+        		            radius:[0, 80],
+        		            itemStyle:{
         		            	normal:{
         		                    labelLine : {
         		                        length : 20
