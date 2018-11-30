@@ -211,38 +211,47 @@ layui.config({
         		};
          // 使用刚指定的配置项和数据显示图表。
  myChart.setOption(option);
+ var names=[];    //成员名单数组
+ var completed=[];    //已完成数组
+ var notCompleted=[];    //未完成数组
+ var totalTask=[];    //总完成数组
 //异步加载数据
- $.get('getnavs').done(function (data) {
+ $.get('getTaskTubiaoinfo').done(function (data) {
+		 var list = data.names;
+         for(var i=0;i<list.length;i++){
+        	 names.push(list[i].name);    //遍历成员并填入数组
+        	 completed.push(list[i].completed);    //遍历成员并填入数组
+        	 notCompleted.push(list[i].notCompleted);    //遍历成员并填入数组
+        	 totalTask.push(list[i].totalTask);    //遍历成员并填入数组
+         }
+	 
      // 填入数据
      myChart.setOption({
          xAxis: {
-             data: ['王驰','李金鹏','李颖鹏','杨正旺','李洋','蒋霜','卢英剑','肖老师','梁老师']
+             data: names
          },
          series: [{
              // 根据名字对应到相应的系列
              name: '未完成',
-             data: [1,2,3,4,5,6,7,8,9]
+             data: notCompleted
          },
          {
              // 根据名字对应到相应的系列
              name: '已完成',
-             data: [1,2,3,4,5,6,7,8,9]
+             data: completed
          },
          {
              // 根据名字对应到相应的系列
              name: '总任务',
-             data: [11,12,13,14,15,16,17,18,19]
+             data: totalTask
          },
          {
              // 根据名字对应到相应的系列
              name: '工程任务',
-             data: [{value:148, name:'未完成'},
-             {value:51, name:'已完成'}]
+             data: [{value:data.notcTask, name:'未完成'},
+             {value:data.ctask, name:'已完成'}]
          }
          ]
-     });
- });	
-
-})
+     });});})
 
 

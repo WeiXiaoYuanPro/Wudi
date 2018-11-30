@@ -20,6 +20,7 @@ import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
 import com.wudi.model.admin.CmsUserModel;
 import com.wudi.model.admin.CmsloginLogModel;
+import com.wudi.model.admin.DTModel;
 import com.wudi.model.admin.DepmanModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
@@ -104,6 +105,7 @@ public class Config extends JFinalConfig {
 			arpMysql.addMapping("task", TaskModel.class);//任务
 			
 			arpMysql.addMapping("depman", DepmanModel.class);//开发成员
+			arpMysql.addMapping("dt", DTModel.class);//开发成员
 
 
 		}

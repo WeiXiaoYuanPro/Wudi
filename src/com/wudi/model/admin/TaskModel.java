@@ -150,5 +150,13 @@ public class TaskModel extends Model<TaskModel> {
 		from_sql.append(" where a.id=?");
 		return dao.findById(id);
 	}
-	
+	/**
+	 * TODO:xiao 根据executor查找信息
+	 * @return list
+	 */
+	public static  List<TaskModel> getModeByexecutor(String executor){
+		String sql="select * from "+tableName+" where executor=?";
+		List<TaskModel> list=dao.find(sql,executor);
+		return list;
+	}
 }

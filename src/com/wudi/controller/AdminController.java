@@ -3,6 +3,7 @@ package com.wudi.controller;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.ClassroomModel;
 import com.wudi.model.admin.CmsUserModel;
 import com.wudi.model.admin.CmsloginLogModel;
+import com.wudi.model.admin.DTModel;
 import com.wudi.model.admin.DepmanModel;
 import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.Role_infoModel;
@@ -22,6 +24,7 @@ import com.wudi.model.admin.SchoolZoneModel;
 import com.wudi.model.admin.Stu_contatcModel;
 import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
+import com.wudi.model.admin.TDvo;
 import com.wudi.model.admin.TaskModel;
 import com.wudi.model.admin.UserInfoModel;
 import com.wudi.util.StringUtil;
@@ -1643,7 +1646,53 @@ public class AdminController extends Controller {
 	/**
 	 * 显示到图表
 	 */
-	public void getTaskinfo() {
-		
+	public void getTaskTubiaoinfo() {
+		//获取开发者名单
+		 List<DTModel> list=DTModel.getList();
+		 //解析数据，放到图表中
+		 List<TDvo> tdList=new ArrayList<TDvo>();
+		 int notcTask=0;//未完成的任务
+		 int ctask=0;//已经完成的任务
+		 for(DTModel a:list) {
+			 TDvo t=new TDvo();
+			 t.setName(a.getDepname());
+			 t.setId(a.getId());
+			 boolean r=true;
+			 for(TDvo b:tdList) {
+				 if(b.getId().equals(a.getId())) {
+					 r=false;
+				 }
+			 }
+			 if(r) {
+				 tdList.add(t);
+			 }
+			 if(a.getTaskstatus()==1) {
+				 ctask++;
+			 }else {
+				 notcTask++;
+			 }
+		 }
+		 
+		 for(TDvo b:tdList) {
+			 int nc=0;//记录未完成任务
+			 int c=0;//记录完成完成任务
+			 for(DTModel a:list) {
+				 if(b.getId().equals(a.getId())) {
+					 if(a.getTaskstatus()==1) {
+						 c++;
+					 }else {
+						 nc++;
+					 }
+				 } 
+			 }
+			 b.setTotalTask(c+nc); 
+			 b.setNotCompleted(nc);
+			 b.setCompleted(c);
+		 }
+		 setAttr("notcTask", notcTask);
+		 setAttr("ctask", ctask);
+		 setAttr("names", tdList);
+		 setAttr("result", list);
+		 renderJson();
 	}
 }
