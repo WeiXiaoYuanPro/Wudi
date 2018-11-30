@@ -25,6 +25,7 @@ import com.wudi.model.admin.Stu_contatcModel;
 import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
 import com.wudi.model.admin.TDvo;
+import com.wudi.model.admin.TDvoTwo;
 import com.wudi.model.admin.TaskModel;
 import com.wudi.model.admin.UserInfoModel;
 import com.wudi.util.StringUtil;
@@ -1651,6 +1652,10 @@ public class AdminController extends Controller {
 		 List<DTModel> list=DTModel.getList();
 		 //解析数据，放到图表中
 		 List<TDvo> tdList=new ArrayList<TDvo>();
+		 List<TDvoTwo> ncList=new ArrayList<TDvoTwo>();//未完成
+		 List<TDvoTwo> cList=new ArrayList<TDvoTwo>();//完成
+		 List<TDvoTwo> allList=new ArrayList<TDvoTwo>();//所有（）含完成和未完成
+		 
 		 int notcTask=0;//未完成的任务
 		 int ctask=0;//已经完成的任务
 		 for(DTModel a:list) {
@@ -1668,7 +1673,7 @@ public class AdminController extends Controller {
 			 }
 			 if(a.getTaskstatus()==1) {
 				 ctask++;
-			 }else {
+			 }else if(a.getTaskstatus()==0) {
 				 notcTask++;
 			 }
 		 }
@@ -1680,7 +1685,7 @@ public class AdminController extends Controller {
 				 if(b.getId().equals(a.getId())) {
 					 if(a.getTaskstatus()==1) {
 						 c++;
-					 }else {
+					 }else if(a.getTaskstatus()==0) {
 						 nc++;
 					 }
 				 } 
@@ -1688,11 +1693,62 @@ public class AdminController extends Controller {
 			 b.setTotalTask(c+nc); 
 			 b.setNotCompleted(nc);
 			 b.setCompleted(c);
+			 
+			 TDvoTwo wei=new TDvoTwo();
+			 TDvoTwo wan=new TDvoTwo();
+			 wei.setName(b.getId());
+			 wei.setValue(nc);
+			 wan.setName(b.getId());
+			 wan.setValue(c);
+			 ncList.add(wei);
+			 cList.add(wan);
 		 }
-		 setAttr("notcTask", notcTask);
-		 setAttr("ctask", ctask);
+		 
+		 TDvoTwo weiwanczong=new TDvoTwo();
+		 weiwanczong.setName("未完成");
+		 weiwanczong.setValue(notcTask);
+		 TDvoTwo wanczong=new TDvoTwo();
+		 wanczong.setName("已完成");
+		 wanczong.setValue(ctask);
+		 allList.add(weiwanczong);
+		 allList.add(wanczong);
+		 ///////////////////////////////
+		 
+		 setAttr("allList", allList);
 		 setAttr("names", tdList);
-		 setAttr("result", list);
+		 setAttr("ncList", ncList);
+		 setAttr("cList", cList);
 		 renderJson();
+	}
+	/**
+	 * 打开开发者任务
+	* @Title: openStuTask
+	* @Description:???
+	* @param     参数
+	* @return void    返回类型
+	* @throws
+	 */
+	public void openStuTask() {
+		String stuId=getPara("stuid");
+		setAttr("stuid", stuId);
+		renderFreeMarker("task/taskinfoforstu.html");
+	}
+	public void getStuTask() {
+		String stuId=getPara("stuid");
+		// 获取页面查询的关键字
+		String key = getPara("key");
+		int limit=getParaToInt("limit");
+		int page=getParaToInt("page");
+		Page<TaskModel> list = TaskModel.getListForStu(page, limit, key,stuId);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
+	}
+	public void openStuTasksee() {
+		String id=getPara("id");
+		setAttr("id", id);
+		renderFreeMarker("task/tasksee.html");
 	}
 }

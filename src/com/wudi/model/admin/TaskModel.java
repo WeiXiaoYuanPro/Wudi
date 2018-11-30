@@ -117,6 +117,12 @@ public class TaskModel extends Model<TaskModel> {
 		* @throws
 		 */
 	public static boolean saveModel(String title,Date deadline, String content,String executor) {
+		if(StringUtil.isBlankOrEmpty(executor)) {
+			return false;
+		}
+		if("-1".equals(executor)) {
+			return false;
+		}
 		TaskModel m=new TaskModel();
 		m.setTitle(title);
 		m.setId(StringUtil.getId());
@@ -159,4 +165,21 @@ public class TaskModel extends Model<TaskModel> {
 		List<TaskModel> list=dao.find(sql,executor);
 		return list;
 	}
+	/**
+	 * 分页查询显示，就是查找
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param key
+	 * @return
+	 */
+	public static Page<TaskModel> getListForStu(int pageNumber, int pageSize,String key,String stuid) {
+		String sele_sql="select a.*, b.depname ";
+		StringBuffer from_sql=new StringBuffer();
+		from_sql.append("from ").append(tableName).append(" AS a left join ").append(DepmanModel.tableName).append(" AS b ON a.executor = b.id ");
+		from_sql.append(" where executor='"+stuid+"' ");
+		if(!StringUtil.isBlankOrEmpty(key)) {
+			from_sql.append(" and a.title like '%"+key+"%'");
+		}
+		return dao.paginate(pageNumber,pageSize,sele_sql,from_sql.toString());
+	} 
 }

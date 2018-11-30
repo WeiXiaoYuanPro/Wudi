@@ -26,7 +26,7 @@ public class DTModel extends Model<DTModel> {
 		return get("status",0);
 	}
 	public int getTaskstatus() {
-		return get("taskstatus",0);
+		return get("taskstatus",-1);
 	}
 	/**
 	 * TODO:xiao 根据id查找信息

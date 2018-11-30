@@ -177,7 +177,7 @@ layui.config({
           		            		 label: {
           		            			 show: true,
           		            			 position: 'top',
-          		            			 formatter: '{b}\n已完成：{c}'
+          		            			 formatter: '{a}\n{c}'
           		            		 }
           		            	 }
            		            },
@@ -211,18 +211,14 @@ layui.config({
         		};
          // 使用刚指定的配置项和数据显示图表。
  myChart.setOption(option);
- var names=[];    //成员名单数组
- var completed=[];    //已完成数组
- var notCompleted=[];    //未完成数组
- var totalTask=[];    //总完成数组
-//异步加载数据
+ var names=[];    // 成员名单数组
+ var totalTask=[];    // 总完成数组
+// 异步加载数据
  $.get('getTaskTubiaoinfo').done(function (data) {
 		 var list = data.names;
          for(var i=0;i<list.length;i++){
-        	 names.push(list[i].name);    //遍历成员并填入数组
-        	 completed.push(list[i].completed);    //遍历成员并填入数组
-        	 notCompleted.push(list[i].notCompleted);    //遍历成员并填入数组
-        	 totalTask.push(list[i].totalTask);    //遍历成员并填入数组
+        	 names.push(list[i].name);    // 遍历成员并填入数组
+        	 totalTask.push(list[i].totalTask);
          }
 	 
      // 填入数据
@@ -233,12 +229,12 @@ layui.config({
          series: [{
              // 根据名字对应到相应的系列
              name: '未完成',
-             data: notCompleted
+             data:data.ncList
          },
          {
              // 根据名字对应到相应的系列
              name: '已完成',
-             data: completed
+             data: data.cList
          },
          {
              // 根据名字对应到相应的系列
@@ -248,10 +244,28 @@ layui.config({
          {
              // 根据名字对应到相应的系列
              name: '工程任务',
-             data: [{value:data.notcTask, name:'未完成'},
-             {value:data.ctask, name:'已完成'}]
+             data: data.allList
          }
          ]
-     });});})
+     });
+     });
+//处理点击事件并且跳转到相应的百度搜索页面
+ myChart.on('click', 'series', function (params) {
+	 var index = layui.layer.open({
+         title : "查看信息",
+         type : 2,
+         area: ['1000px', '600px'],
+         content : "openStuTask?stuid="+params.name,
+         success : function(layero, index){
+             setTimeout(function(){
+                 layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
+                     tips: 3
+                 });
+             },500)
+         }
+     }) 
+ });
+ 
+ })
 
 
