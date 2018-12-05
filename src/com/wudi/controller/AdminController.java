@@ -28,6 +28,7 @@ import com.wudi.model.admin.TDvo;
 import com.wudi.model.admin.TDvoTwo;
 import com.wudi.model.admin.TaskModel;
 import com.wudi.model.admin.UserInfoModel;
+import com.wudi.model.admin.UserLoginLogModel;
 import com.wudi.util.StringUtil;
 
 /**
@@ -707,6 +708,74 @@ public class AdminController extends Controller {
 		renderJson();
 	}
 
+	/**
+	 * @Title: userloginlog @Description: 打开用户列表页面 @param 参数 @return void 返回类型 @throws
+	 */
+	public void userloginlog() {
+		render("userloginlog/userloginloginfo.html");
+	}
+
+	/**
+	 * @Title: queryCms_User @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
+	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 */
+	public void queryUserLoginLog() {
+		// 获取页面查询的关键字
+		String key = getPara("key");
+		int limit=getParaToInt("limit");
+        int page=getParaToInt("page");
+        Page<UserLoginLogModel> list = UserLoginLogModel.getList(page, limit, key);
+        setAttr("code", 0);
+        setAttr("msg", "你好！");
+        setAttr("count", list.getTotalRow());
+        setAttr("data", list.getList());
+        renderJson();
+	}
+	/**
+	 * @Title: getCms_User @Description:获取需要修改的学生信息 @param 参数 @return void
+	 * 返回类型 @throws
+	 */
+	public void getuserloginlog() {
+		// 接收页面数据
+		String id = getPara("id");
+		// 根据条件查询数据库的数据
+		UserLoginLogModel cms_user = UserLoginLogModel.getById(id);
+		// 放到编辑页面上去
+		setAttr("m", cms_user);
+		// 返回格式是json
+		renderJson();
+	}
+
+	/**
+	 * @Title: saveCms_User @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
+	 * 参数 @return void 返回类型 @throws
+	 */
+	public void saveUserLoginLog() {
+		String username = getPara("username");
+		String login_time = getPara("login_time");
+		String ip = getPara("ip");
+		String addr = getPara("addr");
+		String remark = getPara("remark");
+		int status = getParaToInt("status");
+		// 保存数据
+		boolean result = UserLoginLogModel.saveModel(username, login_time, ip, addr,remark,status);
+		setAttr("result", result);
+		renderJson();
+	}
+
+	/**
+	 * 
+	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
+	 * void 返回类型 @throws
+	 */
+	public void delUserLoginLog() {
+		String id = getPara("id");
+		// 删除
+		boolean result = UserLoginLogModel.delUserLoginLogByID(id);
+		// 返回结果
+		setAttr("result", result);
+		renderJson();
+	}
 	/**
 	 * @Title: classroom @Description: 打开教室信息列表页面 @param 参数 @return void
 	 * 返回类型 @throws
