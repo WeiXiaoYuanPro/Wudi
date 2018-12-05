@@ -116,13 +116,13 @@ public class UserLoginLogModel extends Model<UserLoginLogModel> {
 	 * id @param username @param login_time @param ip @param addr @param
 	 * remark @param status @param @return 参数 @return boolean 返回类型 @throws
 	 */
-	public static boolean saveModel(String id, String username, String login_time, String ip, String addr, String remark,
+	public static boolean saveModel(String username, String login_time, String ip, String addr, String remark,
 			int status) {
 		UserLoginLogModel s = new UserLoginLogModel();
-		s.setId(id);
+		s.setId(StringUtil.getId());
 		s.setUsername(username);
 		s.setLogin_time(login_time);
-		s.setId(ip);
+		s.setIp(ip);
 		s.setAddr(addr);
 		s.setRemark(remark);
 		s.setStatus(status);
@@ -192,6 +192,7 @@ public class UserLoginLogModel extends Model<UserLoginLogModel> {
 			return false;
 		}
 	}
-	
+
+
 
 }

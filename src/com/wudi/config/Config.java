@@ -31,6 +31,7 @@ import com.wudi.model.admin.Stu_familyModel;
 import com.wudi.model.admin.StuinfoModel;
 import com.wudi.model.admin.TaskModel;
 import com.wudi.model.admin.UserInfoModel;
+import com.wudi.model.admin.UserLoginLogModel;
 /**
  * 	系统配置类
  *   @author XIAO
@@ -99,7 +100,8 @@ public class Config extends JFinalConfig {
 			
 			arpMysql.addMapping("school", SchoolModel.class);//学生表
 			
-
+			arpMysql.addMapping("userloginlog", UserLoginLogModel.class);//学生联系信息
+			
 			arpMysql.addMapping("stucontatc", Stu_contatcModel.class);//学生联系信息
 			
 			arpMysql.addMapping("task", TaskModel.class);//任务
