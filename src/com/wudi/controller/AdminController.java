@@ -1109,14 +1109,15 @@ public class AdminController extends Controller {
 	public void queryUserInfo() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		// 开始查询
-		Page<UserInfoModel> date = UserInfoModel.getList(1, 10, key);
-		// 将查到的学生信息列表放到infos，给页面
-		setAttr("infos", date);
-		// 返回格式是json
+		int limit=getParaToInt("limit");
+		int page=getParaToInt("page");
+		Page<UserInfoModel> list = UserInfoModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
 		renderJson();
 	}
-
 	/**
 	 * @Title: getUserInfo @Description:获取需要修改的学生信息 @param 参数 @return void
 	 *         返回类型 @throws

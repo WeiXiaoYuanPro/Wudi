@@ -7,7 +7,7 @@ layui.config({
 		laypage = layui.laypage;
 		$ = layui.jquery;
 		//加载页面选择框数据
-		$.get("getSchoolModels", function(data){
+		$.get("getclassroom", function(data){
 				var ml=data.ml;
 				for(var i=0;i<ml.length;i++){
 	        		$("#selectId").append("<option value='"+ml[i].id+"'>"+ml[i].classroomname+"</option>");
