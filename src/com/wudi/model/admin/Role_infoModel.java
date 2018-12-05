@@ -30,7 +30,7 @@ public class Role_infoModel extends Model<Role_infoModel> {
 	public void setRolename(String rolename) {
 		set("rolename", rolename);
 	}
-	public String getLevel() {
+	public int getLevel() {
 		return get("level");
 	}
 	public void setLevel(int level) {
@@ -174,4 +174,7 @@ public class Role_infoModel extends Model<Role_infoModel> {
 		}
 	}
 
+	public static Role_infoModel findModelbyUserid(String user_id) {
+		return dao.findFirst("select *  from " + tableName + " where user_id = ? " , user_id);
+	}
 }

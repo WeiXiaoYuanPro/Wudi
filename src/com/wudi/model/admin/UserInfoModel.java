@@ -174,4 +174,8 @@ public class UserInfoModel extends Model<UserInfoModel> {
 		}
 	}
 
+	 public static UserInfoModel findModelbyUsername(String username) {
+	    	String sql="select * from "+tableName+" where username=?";
+	    	return dao.findFirst(sql,username);
+	    }
 }
