@@ -33,21 +33,9 @@ public class StuinfoModel extends Model<StuinfoModel> {
 	public int getSex(){
 		return get("sex");
 	}
-	public void setSexS(String value) {
-		  set("sexS", value);
-		}
-
-	public String getSexS() {
-		  return get("sexS");
-	}
 	public void setSex(int sex)
 	{
-		if(sex==1) {
-			setSexS("男");
-		}else {
-			setSexS("女");
-		}
-		set("sex",sex);
+		set("sex" , sex);
 	}
 	public String getBirth() {
 		return get("birth");

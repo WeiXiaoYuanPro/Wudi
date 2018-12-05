@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>用户信息修改--后台管理模板</title>
+	<title>用户信息修改</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,14 +11,11 @@
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
 	<style type="text/css">
-		.layui-form-item .layui-inline{ width:33.333%; float:left; margin-right:0; }
-		@media(max-width:1240px){
-			.layui-form-item .layui-inline{ width:100%; float:none; }
-		}
+		.layui-form { width:60%; float:left; margin-left:5%; margin-top: 3%}
 	</style>
 </head>
 <body class="childrenBody">
-	<form class="layui-form" name="studentform" style="width:80%;">
+	<form class="layui-form layui-form-pane" name="updateform">
 		<div class="layui-form-item">
 			<label class="layui-form-label">用户名</label>
 			<div class="layui-input-block">

@@ -6,19 +6,22 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-		var id=$("input[id='id']").val();
+		var id=$("input[name='id']").val();
 		//加载页面数据
 		$.get("getcms_user?id="+id, function(data){
 			var d=data.m;
-	        	//执行加载数据的方法	
+			var sl=data.sl;
+			var szl=data.szl;
+	        	//执行加载数据的方法
 	        	$("input[name='username']").val(d.username);
 	        	$("input[name='password']").val(d.password);
-	        	$("input[name='img']").val(d.img);
-	        	$("input[name='type']").val(d.type);
-	        	$("input[name='status']").val(d.status);
-		});
+	        	$("textarea[name='img']").val(d.img);
+	        	$("textarea[name='type']").val(d.type);
+	        	$("textarea[name='status']").val(d.status);
+	        	form.render();//必须要再次渲染，要不然option显示不出来
+		})
 
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+ 	form.on("submit(update)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'updateCms_User',
