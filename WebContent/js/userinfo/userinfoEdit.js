@@ -6,7 +6,7 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
-		var id = $("input[name='id']").val();
+		var id=$("input[name='id']").val();
 		// 加载页面数据
 		$.get("getUserInfo?id="+id,function(data){	
 			var d = data.d;
@@ -27,7 +27,7 @@ layui.config({
 	        	$("#rad1").attr("checked",false);
 	        	$("#rad2").attr("checked","checked");
 	        }
-	        
+		
 	        form.render();
 		});
 

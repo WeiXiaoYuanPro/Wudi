@@ -15,48 +15,27 @@
 </head>
 <body class="childrenBody">
 	<blockquote class="layui-elem-quote news_search">
+	搜索用户名字：
 		<div class="layui-inline">
-		    <div class="layui-input-inline">
-		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
-		    </div>
-		    <a class="layui-btn search_btn">查询</a>
+		    <div class="layui-inline">
+    	<input class="layui-input"  id="demoReload" autocomplete="off" placeholder="请输入关键字">
+ 	    </div>
+		    <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+		<div class="layui-inline">
+			<a class="layui-btn layui-btn-normal add_btn"> <i class="layui-icon">&#xe608;</i>添加用户</a>
 		</div>
-		<div class="layui-inline">
-			<a class="layui-btn layui-btn-normal newsAdd_btn">添加用户</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
-		</div>
-		<div class="layui-inline">
-			<div class="layui-form-mid layui-word-aux">本页面刷新后除新添加的文章外所有操作无效，关闭页面所有数据重置</div>
 		</div>
 	</blockquote>
 	<div class="layui-form news_list">
-	  	<table class="layui-table">
-		    <colgroup>
-				<col width="50">
-				<col width="9%">
-				<col width="9%">
-				<col width="9%">
-				<col width="15%">
-		    </colgroup>
-		    <thead>
-				<tr>
-					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th>id</th>
-					<th>用户名</th>
-					<th>登陆密码</th>
-					<th>创建日期</th>
-					<th>头像图片</th>
-					<th>状态</th>
-					<th>操作</th>
-				</tr>
-		    </thead>
-		    <tbody class="news_content"></tbody>
-		</table>
+		<table id="demo" lay-filter="test"></table>
 	</div>
 	<div id="page"></div>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript" src="../js/userinfo/userinfoInfo.js"></script>
+	<script type="text/html" id="barDemo">
+ 		 <a class="layui-btn layui-btn-mini" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+		 <a class="layui-btn layui-btn-mini layui-btn-danger" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+	</script>
+	
 </body>
 </html>
