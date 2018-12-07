@@ -7,10 +7,10 @@ layui.config({
 		laypage = layui.laypage;
 		$ = layui.jquery;
 		//加载页面选择框数据
-		$.get("getSchoolModels", function(data){
-				var ml=data.ml;
-				for(var i=0;i<ml.length;i++){
-	        		$("#selectId").append("<option value='"+ml[i].id+"'>"+ml[i].classroomname+"</option>");
+		$.get("getClassroom", function(data){
+				var cl=data.cl;
+				for(var i=0;i<cl.length;i++){
+	        		$("#selectId").append("<option value='"+cl[i].id+"'>"+cl[i].name+"</option>");
 				}
 				form.render();//必须要再次渲染，要不然option显示不出来
 		});

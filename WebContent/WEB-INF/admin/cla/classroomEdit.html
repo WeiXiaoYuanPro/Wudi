@@ -18,7 +18,7 @@
 	<form class="layui-form" name="studentform" style="width:80%;">
 		<div class="layui-form-item">
 			<label class="layui-form-label">ID</label>
-			<div class="layui-input-block">
+			<div class="layui-input-inline">
 				<input type="text" class="layui-input" name="id"  value="${(id)}"  lay-verify="required" placeholder="请输入ID">
 			</div>
 		</div>
@@ -31,7 +31,9 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">教学楼id</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="building_id" lay-verify="required" placeholder="请输入教学楼id">
+				<select name="building_id"  id="selectId" lay-filter="state">
+			      	<option value="-1">请选择教学楼</option>
+      				</select>
 			</div>
 		</div>
 		<div class="layui-form-item">

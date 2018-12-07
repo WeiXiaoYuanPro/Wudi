@@ -35,10 +35,11 @@ import com.wudi.util.StringUtil;
  * @ClassName: AdminController
  * @Description: TODO 后台管理页面跳转管理类
  * @author xiao
+ * @param <BuildingmModel>
  * @date 2018年10月29日下午4:08:09
  *
  */
-public class AdminController extends Controller {
+public class AdminController<BuildingmModel> extends Controller {
 
 	/**
 	 * 
@@ -753,6 +754,13 @@ public class AdminController extends Controller {
 		setAttr("m", Classroom);
 		// 返回格式是json
 		renderJson();
+		
+	}
+	
+	public void getClassroom() {
+		List<BuildingModel> list=BuildingModel.getListAll();
+		setAttr("cl", list);
+		renderJson();	
 	}
 
 	/**

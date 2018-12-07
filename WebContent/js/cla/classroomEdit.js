@@ -20,18 +20,19 @@ layui.config({
 	        	$("input[name='longitude']").val(d.longitude);
 		})
 		//联动下拉学校
-    	for(var i=0;i<sl.length;i++){
-    		if(sl[i].id==d.classroom_id){
-    			$("#selectId").append("<option selected='true' value='"+sl[i].id+"'>"+sl[i].classroomname+"</option>");
-    		}else{
-    			$("#selectId").append("<option value='"+sl[i].id+"'>"+sl[i].classroomname+"</option>");
-    		}
-    		
-		}
-    	form.render();//必须要再次渲染，要不然option显示不出来
+		var building_id=cl.id;
+	    	for(var i=0;i<cl.length;i++){
+	    		if(cl[i].id==d.building_id){
+	    			$("#selectId").append("<option selected='true' value='"+cl[i].id+"'>"+cl[i].name+"</option>");
+	    		}else{
+	    			$("#selectId").append("<option value='"+cl[i].id+"'>"+cl[i].name+"</option>");
+	    		}
+	    		
+			}
+	    	form.render();//必须要再次渲染，要不然option显示不出来
 	
 
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+ 	form.on("submit(update)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'updateClassroom',

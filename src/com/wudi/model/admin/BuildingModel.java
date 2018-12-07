@@ -1,6 +1,7 @@
 package com.wudi.model.admin;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 import com.jfinal.aop.Before;
@@ -148,6 +149,12 @@ public class BuildingModel extends Model<BuildingModel> {
 				e.printStackTrace();
 				return false;
 			}
+		}
+		
+		public static List<BuildingModel> getListAll() {
+			StringBuffer sql=new StringBuffer();
+			sql.append("select *  from ").append(tableName);
+			return dao.find(sql.toString());
 		}
 		
 }
