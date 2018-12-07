@@ -821,6 +821,8 @@ public class AdminController<BuildingmModel> extends Controller {
 		ClassroomModel Classroom = ClassroomModel.getById(id);
 		// 放到编辑页面上去
 		setAttr("m", Classroom);
+		List<BuildingModel> list=BuildingModel.getListAll();
+		setAttr("cl", list);
 		// 返回格式是json
 		renderJson();
 		

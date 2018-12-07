@@ -10,6 +10,7 @@ layui.config({
 		//加载页面数据
 		$.get("getclassroom?id="+id, function(data){
 			var d=data.m;
+			
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
 	        	$("input[name='building_id']").val(d.building_id);
@@ -18,18 +19,24 @@ layui.config({
 	        	$("input[name='status']").val(d.status);
 	        	$("input[name='latitude']").val(d.latitude);
 	        	$("input[name='longitude']").val(d.longitude);
-		})
-		//联动下拉学校
-		var building_id=cl.id;
-	    	for(var i=0;i<cl.length;i++){
-	    		if(cl[i].id==d.building_id){
-	    			$("#selectId").append("<option selected='true' value='"+cl[i].id+"'>"+cl[i].name+"</option>");
-	    		}else{
-	    			$("#selectId").append("<option value='"+cl[i].id+"'>"+cl[i].name+"</option>");
-	    		}
-	    		
-			}
-	    	form.render();//必须要再次渲染，要不然option显示不出来
+	        	
+	        	$.get("getClassroom", function(data){
+	    			var cl=data.cl;
+	    			var school_id=cl[0].school_id;
+	    			for(var i=0;i<cl.length;i++){
+	    				if(cl[i].id==d.building_id){
+	    					$("#building_id").append("<option selected='true' value='"+cl[i].id+"'>"+cl[i].name+"</option>");
+	    				}else{
+	    					$("#building_id").append("<option value='"+cl[i].id+"'>"+cl[i].name+"</option>");
+	    				}
+	    			}
+	    			form.render();//必须要再次渲染，要不然option显示不出来
+	    	});
+		});
+		
+		
+		
+	
 	
 
  	form.on("submit(update)",function(data){console.log(data.field);
