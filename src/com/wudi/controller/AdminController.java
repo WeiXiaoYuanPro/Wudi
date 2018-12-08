@@ -40,7 +40,7 @@ import com.wudi.util.StringUtil;
  * @date 2018年10月29日下午4:08:09
  *
  */
-public class AdminController<BuildingmModel> extends Controller {
+public class AdminController extends Controller {
 
 	/**
 	 * 
