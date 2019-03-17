@@ -123,14 +123,6 @@ layui.config({
 			}
 		})
 	})
-
-	//退出
-	$(".signOut").click(function(){
-		window.sessionStorage.removeItem("menu");
-		menu = [];
-		window.sessionStorage.removeItem("curmenu");
-	})
-
 	//隐藏左侧导航
 	$(".hideMenu").click(function(){
 		$(".layui-layout-admin").toggleClass("showMenu");

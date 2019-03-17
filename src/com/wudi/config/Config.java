@@ -12,8 +12,6 @@ import com.jfinal.template.Engine;
 import com.wudi.controller.AdminController;
 import com.wudi.controller.FileController;
 import com.wudi.controller.WeixinController;
-import com.wudi.interceptor.AdminInterceptor;
-import com.wudi.interceptor.WeixinIntercepter;
 import com.wudi.model.NavsModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
@@ -120,9 +118,6 @@ public class Config extends JFinalConfig {
 
 	@Override
 	public void configInterceptor(Interceptors me) {
-		//添加拦截器
-		me.add(new AdminInterceptor());//添加后台数据管理访问拦截器
-		me.add(new WeixinIntercepter());//添加微信小程序访问拦截器
 	}
 
 	@Override

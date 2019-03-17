@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
+import com.wudi.interceptor.AdminInterceptor;
 import com.wudi.model.NavsModel;
 import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
@@ -40,7 +43,36 @@ import com.wudi.util.StringUtil;
  * @date 2018年10月29日下午4:08:09
  *
  */
+@Before(AdminInterceptor.class)
 public class AdminController extends Controller {
+	@Clear(AdminInterceptor.class)
+	public void login() {
+		String username = getPara("username");
+		String password = getPara("password");
+		// 如果不正确，就提示什么不正确？
+		// 如果正确，就正常显示系统页面
+		CmsUserModel m = CmsUserModel.getByUsername(username);
+		// 判断用户名和密码是否正确
+		if (m != null) {
+			if (m.getPassword().equals(password)) {
+				setAttr("result", 0);// 可以登录
+				setCookie("cname", username, 36000);
+				setSessionAttr("user", m);
+			} else {
+				setAttr("result", 1);// 密码错误
+			}
+		} else {
+			setAttr("result", 2);// 用户名不存在
+		}
+		renderJson();
+	}
+
+	@Clear(AdminInterceptor.class)
+	public void outLogin() {
+		removeCookie("username");
+		removeSessionAttr("user");
+		redirect("/admin");
+	}
 
 	/**
 	 * 
@@ -49,6 +81,7 @@ public class AdminController extends Controller {
 	public void index() {
 		render("index.html");
 	}
+
 	public void main() {
 		render("main.html");
 	}
@@ -76,8 +109,8 @@ public class AdminController extends Controller {
 	public void getNavsList() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		int limit=getParaToInt("limit");
-		int page=getParaToInt("page");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
 		Page<NavsModel> list = NavsModel.getList(page, limit, key);
 		setAttr("code", 0);
 		setAttr("msg", "你好！");
@@ -155,7 +188,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: stu_contatc @Description: 打开学生家庭信息列表页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void stu_contatc() {
 		render("stu_contatc/stu_contatcinfo.html");
@@ -167,24 +200,21 @@ public class AdminController extends Controller {
 	 */
 	public void queryStu_contatc() {
 		// 获取页面查询的关键字
-        String key = getPara("key");
-        int limit=getParaToInt("limit");
-        int page=getParaToInt("page");
-        Page<Stu_contatcModel> list = Stu_contatcModel.getList(page, limit, key);
-        setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", list.getTotalRow());
-        setAttr("data", list.getList());
-        renderJson();
-	
+		String key = getPara("key");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<Stu_contatcModel> list = Stu_contatcModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
+
 	}
 
 	/**
-	 * @Title: openStu_contatcAdd
-	 * @Description:打开添加信息页面
-	 * @param 参数
-	 * @return void 返回类型
-	 * @throws
+	 * @Title: openStu_contatcAdd @Description:打开添加信息页面 @param 参数 @return void
+	 * 返回类型 @throws
 	 */
 	public void openStu_contatcAdd() {
 		render("stu_contatc/stu_contatcAdd.html");
@@ -192,7 +222,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: getstu_contatc @Description:获取需要修改的学生家庭信息 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void getStu_contatc() {
 		// 接收页面数据
@@ -207,7 +237,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: openStu_familyEdit @Description:打开修改信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openStu_contatcEdit() {
 		// 接收页面数据
@@ -261,10 +291,6 @@ public class AdminController extends Controller {
 		renderJson();
 	}
 
-	
-	
-	
-	
 	/**
 	 * @Title: students @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
 	 */
@@ -274,7 +300,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: queryStudents @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
-	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryStudents() {
 		// 获取页面查询的关键字
@@ -289,7 +315,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: openStudentAdd @Description:打开添加信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openStudentAdd() {
 		render("stu/studentAdd.html");
@@ -297,7 +323,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: getstudent @Description:获取需要修改的学生信息 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void getstudent() {
 		// 接收页面数据
@@ -312,7 +338,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: openStudentEdit @Description:打开修改信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openStudentEdit() {
 		// 接收页面数据
@@ -323,7 +349,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: saveStudent @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void saveStudent() {
 		String no = getPara("no");
@@ -340,7 +366,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: updateStudent @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void updateStudent() {
 		String no = getPara("no");
@@ -357,7 +383,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: delStudent @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void delStudent() {
 		String no = getPara("id");
@@ -370,7 +396,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: dormitory @Description: 打开学生宿舍信息列表页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void dormitory() {
 		render("dor/dormitoryinfo.html");
@@ -378,7 +404,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: queryDormitory @Description: 获取学生宿舍信息列表信息（查询），在这里，我们是用异步加载方式，
-	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryDormitory() {
 		// 获取页面查询的关键字
@@ -389,16 +415,16 @@ public class AdminController extends Controller {
 		setAttr("infos", Dormitory);
 		// 返回格式是json
 		setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", Dormitory.getTotalRow());
-        setAttr("data", Dormitory.getList());
-        renderJson();
-		
+		setAttr("msg", "你好！");
+		setAttr("count", Dormitory.getTotalRow());
+		setAttr("data", Dormitory.getList());
+		renderJson();
+
 	}
 
 	/**
 	 * @Title: openDormitoryAdd @Description:打开添加信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openDormitoryAdd() {
 		render("dor/dormitoryAdd.html");
@@ -406,7 +432,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: getdormitory @Description:获取需要修改的学生宿舍信息 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void getdormitory() {
 		// 接收页面数据
@@ -421,7 +447,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: openDormitoryEdit @Description:打开修改信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openDormitoryEdit() {
 		// 接收页面数据
@@ -432,7 +458,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: saveDormitory @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void saveDormitory() {
 		String id = getPara("id");
@@ -458,7 +484,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: updateDormitory @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void updateDormitory() {
 		String id = getPara("id");
@@ -483,7 +509,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void delDormitory() {
 		String id = getPara("id");
@@ -496,7 +522,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: building @Description: 打开学校楼房信息列表页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void building() {
 		render("bui/buildinginfo.html");
@@ -504,56 +530,52 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: queryBuilding @Description: 获取学校楼房信息列表信息（查询），在这里，我们是用异步加载方式，
-	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryBuilding() {
 		// 获取页面查询的关键字
-        String key = getPara("key");
-        int limit=getParaToInt("limit");
-        int page=getParaToInt("page");
-        Page<BuildingModel> list = BuildingModel.getList(page, limit, key);
-        setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", list.getTotalRow());
-        setAttr("data", list.getList());
-        renderJson();
+		String key = getPara("key");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<BuildingModel> list = BuildingModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
 	}
+
 	/**
 	 * 返回类型 @throws
 	 */
 	public void openBuildingAdd() {
 		render("bui/buildingAdd.html");
 	}
+
 	/**
-	 * 获取
-	* @Title: getSchoolModels
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * 获取 @Title: getSchoolModels @Description:??? @param 参数 @return void
+	 * 返回类型 @throws
 	 */
 	public void getSchoolModels() {
-		List<SchoolModel> list=SchoolModel.getListAll();
+		List<SchoolModel> list = SchoolModel.getListAll();
 		setAttr("ml", list);
 		renderJson();
 	}
+
 	/**
-	 * 获取
-	* @Title: getSchoolModels
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * 获取 @Title: getSchoolModels @Description:??? @param 参数 @return void
+	 * 返回类型 @throws
 	 */
 	public void getSchoolzoneModels() {
 		String school_id = getPara("school_id");
-		List<SchoolZoneModel> list=SchoolZoneModel.getListBySchoolId(school_id);
+		List<SchoolZoneModel> list = SchoolZoneModel.getListBySchoolId(school_id);
 		setAttr("ml", list);
 		renderJson();
 	}
+
 	/**
 	 * @Title: getbuilding @Description:获取需要修改的学校楼房信息 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void getbuilding() {
 		// 接收页面数据
@@ -562,11 +584,11 @@ public class AdminController extends Controller {
 		BuildingModel Building = BuildingModel.getById(id);
 		// 放到编辑页面上去
 		setAttr("m", Building);
-		//联动下拉框学校
-		List<SchoolModel> school_list=SchoolModel.getListAll();
+		// 联动下拉框学校
+		List<SchoolModel> school_list = SchoolModel.getListAll();
 		setAttr("sl", school_list);
-		//联动下拉框学校分校
-		List<SchoolZoneModel> schoolzone_list=SchoolZoneModel.getListById(Building.getSchoolzone_id());
+		// 联动下拉框学校分校
+		List<SchoolZoneModel> schoolzone_list = SchoolZoneModel.getListById(Building.getSchoolzone_id());
 		setAttr("szl", schoolzone_list);
 		// 返回格式是json
 		renderJson();
@@ -574,7 +596,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: opeBuildingEdit @Description:打开修改信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openBuildingEdit() {
 		// 接收页面数据
@@ -585,7 +607,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: saveBuilding @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void saveBuilding() {
 		String name = getPara("name");
@@ -601,7 +623,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: updateBuildingt @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void updateBuilding() {
 		String id = getPara("id");
@@ -619,7 +641,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: delBuilding @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void delBuilding() {
 		String id = getPara("id");
@@ -643,15 +665,15 @@ public class AdminController extends Controller {
 
 	public void queryStuinfos() {
 		// 获取页面查询的关键字
-        String key = getPara("key");
-        int limit=getParaToInt("limit");
-        int page=getParaToInt("page");
-        Page<StuinfoModel> list = StuinfoModel.getList(page, limit, key);
-        setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", list.getTotalRow());
-        setAttr("data", list.getList());
-        renderJson();
+		String key = getPara("key");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<StuinfoModel> list = StuinfoModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
 	}
 
 	public void openStuinfoAdd() {
@@ -710,7 +732,8 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: userloginlog @Description: 打开用户列表页面 @param 参数 @return void 返回类型 @throws
+	 * @Title: userloginlog @Description: 打开用户列表页面 @param 参数 @return void
+	 *         返回类型 @throws
 	 */
 	public void userloginlog() {
 		render("userloginlog/userloginloginfo.html");
@@ -718,23 +741,24 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: queryCms_User @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
-	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryUserLoginLog() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		int limit=getParaToInt("limit");
-        int page=getParaToInt("page");
-        Page<UserLoginLogModel> list = UserLoginLogModel.getList(page, limit, key);
-        setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", list.getTotalRow());
-        setAttr("data", list.getList());
-        renderJson();
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<UserLoginLogModel> list = UserLoginLogModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
 	}
+
 	/**
 	 * @Title: getCms_User @Description:获取需要修改的学生信息 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void getuserloginlog() {
 		// 接收页面数据
@@ -749,7 +773,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: saveCms_User @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void saveUserLoginLog() {
 		String username = getPara("username");
@@ -759,7 +783,7 @@ public class AdminController extends Controller {
 		String remark = getPara("remark");
 		int status = getParaToInt("status");
 		// 保存数据
-		boolean result = UserLoginLogModel.saveModel(username, login_time, ip, addr,remark,status);
+		boolean result = UserLoginLogModel.saveModel(username, login_time, ip, addr, remark, status);
 		setAttr("result", result);
 		renderJson();
 	}
@@ -767,7 +791,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void delUserLoginLog() {
 		String id = getPara("id");
@@ -777,9 +801,10 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
+
 	/**
 	 * @Title: classroom @Description: 打开教室信息列表页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void classroom() {
 		render("cla/classroominfo.html");
@@ -787,24 +812,24 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: queryClass @Description: 获取学生宿舍信息列表信息（查询），在这里，我们是用异步加载方式，
-	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryClassroom() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		int limit=getParaToInt("limit");
-        int page=getParaToInt("page");
-        Page<ClassroomModel> list = ClassroomModel.getList(page, limit, key);
-        setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", list.getTotalRow());
-        setAttr("data", list.getList());
-        renderJson();
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<ClassroomModel> list = ClassroomModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
 	}
 
 	/**
 	 * @Title: openDormitoryAdd @Description:打开添加信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openClassroomAdd() {
 		render("cla/classroomAdd.html");
@@ -812,7 +837,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: getdormitory @Description:获取需要修改的学生宿舍信息 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void getclassroom() {
 		// 接收页面数据
@@ -821,22 +846,22 @@ public class AdminController extends Controller {
 		ClassroomModel Classroom = ClassroomModel.getById(id);
 		// 放到编辑页面上去
 		setAttr("m", Classroom);
-		List<BuildingModel> list=BuildingModel.getListAll();
+		List<BuildingModel> list = BuildingModel.getListAll();
 		setAttr("cl", list);
 		// 返回格式是json
 		renderJson();
-		
+
 	}
-	
+
 	public void getClassroom() {
-		List<BuildingModel> list=BuildingModel.getListAll();
+		List<BuildingModel> list = BuildingModel.getListAll();
 		setAttr("cl", list);
-		renderJson();	
+		renderJson();
 	}
 
 	/**
 	 * @Title: openDormitoryEdit @Description:打开修改信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openClassroomEdit() {
 		// 接收页面数据
@@ -847,7 +872,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: saveDormitory @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void saveClassroom() {
 		String id = getPara("id");
@@ -873,7 +898,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: updateDormitory @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void updateClassroom() {
 		String id = getPara("id");
@@ -898,7 +923,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void delClassroom() {
 		String id = getPara("id");
@@ -924,14 +949,14 @@ public class AdminController extends Controller {
 	public void queryStu_family() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		int limit=getParaToInt("limit");
-        int page=getParaToInt("page");
-        Page<Stu_familyModel> list = Stu_familyModel.getList(page, limit, key);
-        setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", list.getTotalRow());
-        setAttr("data", list.getList());
-        renderJson();
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<Stu_familyModel> list = Stu_familyModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
 	}
 
 	/**
@@ -1018,24 +1043,24 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: queryCms_User @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
-	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryCms_User() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		int limit=getParaToInt("limit");
-        int page=getParaToInt("page");
-        Page<CmsUserModel> list = CmsUserModel.getList(page, limit, key);
-        setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", list.getTotalRow());
-        setAttr("data", list.getList());
-        renderJson();
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<CmsUserModel> list = CmsUserModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
 	}
 
 	/**
 	 * @Title: openCms_UserAdd @Description:打开添加信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openCms_UserAdd() {
 		render("cms/cms_userAdd.html");
@@ -1043,7 +1068,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: getCms_User @Description:获取需要修改的学生信息 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void getcms_user() {
 		// 接收页面数据
@@ -1058,7 +1083,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: openCms_UserEdit @Description:打开修改信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void opencms_userEdit() {
 		// 接收页面数据
@@ -1069,7 +1094,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: saveCms_User @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void saveCms_User() {
 		String username = getPara("username");
@@ -1086,7 +1111,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: updateDormitory @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void updateCms_User() {
 		String id = getPara("id");
@@ -1106,7 +1131,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void delCms_User() {
 		String id = getPara("id");
@@ -1126,12 +1151,12 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: queryCms_User @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
-	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryCmslogin_Log() {
 		String key = getPara("key");
-		int limit=getParaToInt("limit");
-		int page=getParaToInt("page");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
 		Page<CmsloginLogModel> list = CmsloginLogModel.getList(page, limit, key);
 		setAttr("code", 0);
 		setAttr("msg", "你好！");
@@ -1143,7 +1168,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void delCmslogin_Log() {
 		String id = getPara("id");
@@ -1188,8 +1213,8 @@ public class AdminController extends Controller {
 	public void queryUserInfo() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		int limit=getParaToInt("limit");
-		int page=getParaToInt("page");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
 		Page<UserInfoModel> list = UserInfoModel.getList(page, limit, key);
 		setAttr("code", 0);
 		setAttr("msg", "你好！");
@@ -1197,6 +1222,7 @@ public class AdminController extends Controller {
 		setAttr("data", list.getList());
 		renderJson();
 	}
+
 	/**
 	 * @Title: getUserInfo @Description:获取需要修改的学生信息 @param 参数 @return void
 	 *         返回类型 @throws
@@ -1277,7 +1303,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: queryRole @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
-	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void queryRole() {
 		// 获取页面查询的关键字
@@ -1313,7 +1339,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: openRoleEdit @Description:打开修改信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openRoleEdit() {
 		// 接收页面数据
@@ -1324,7 +1350,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: saveRole @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void saveRole() {
 		String id = getPara("id");
@@ -1343,7 +1369,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: updateRole @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void updateRole() {
 		String id = getPara("id");
@@ -1362,7 +1388,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: delRole @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void delRole() {
 		String id = getPara("id");
@@ -1386,16 +1412,16 @@ public class AdminController extends Controller {
 	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void querySchools() {
-        // 获取页面查询的关键字
-        String key = getPara("key");
-        int limit=getParaToInt("limit");
-        int page=getParaToInt("page");
-        Page<SchoolModel> list = SchoolModel.getList(page, limit, key);
-        setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", list.getTotalRow());
-        setAttr("data", list.getList());
-        renderJson();
+		// 获取页面查询的关键字
+		String key = getPara("key");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<SchoolModel> list = SchoolModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
 	}
 
 	/**
@@ -1476,7 +1502,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: schoolzone @Description: 打开学校分校信息列表页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void schoolzone() {
 		render("sch/schoolzoneinfo.html");
@@ -1484,34 +1510,34 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: querySchoolZone @Description: 获取学校分校信息列表信息（查询），在这里，我们是用异步加载方式，
-	 * 就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
 	 */
 	public void querySchoolZone() {
-        // 获取页面查询的关键字
-        String key = getPara("key");
-        int limit=getParaToInt("limit");
-        int page=getParaToInt("page");
-        Page<SchoolZoneModel> list = SchoolZoneModel.getList(page, limit, key);
-        setAttr("code", 0);
-        setAttr("msg", "你好！");
-        setAttr("count", list.getTotalRow());
-        setAttr("data", list.getList());
-        renderJson();
+		// 获取页面查询的关键字
+		String key = getPara("key");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<SchoolZoneModel> list = SchoolZoneModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
 	}
 
 	/**
 	 * @Title: openBuilding @Description:打开添加信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openSchoolZoneAdd() {
-		List<SchoolModel> list=SchoolModel.getListAll();
+		List<SchoolModel> list = SchoolModel.getListAll();
 		setAttr("ml", list);
 		render("sch/schoolzoneAdd.html");
 	}
 
 	/**
 	 * @Title: getschoolzone @Description:获取需要修改的学校楼房信息 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void getschoolzone() {
 		// 接收页面数据
@@ -1520,7 +1546,7 @@ public class AdminController extends Controller {
 		SchoolZoneModel schoolzone = SchoolZoneModel.getById(id);
 		// 放到编辑页面上去
 		setAttr("m", schoolzone);
-		List<SchoolModel> list=SchoolModel.getListAll();
+		List<SchoolModel> list = SchoolModel.getListAll();
 		setAttr("sl", list);
 		// 返回格式是json
 		renderJson();
@@ -1528,7 +1554,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: opeSchoolZoneEdit @Description:打开修改信息页面 @param 参数 @return void
-	 * 返回类型 @throws
+	 *         返回类型 @throws
 	 */
 	public void openSchoolZoneEdit() {
 		// 接收页面数据
@@ -1539,7 +1565,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * @Title: saveSchoolZone @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void saveSchoolZone() {
 		String id = getPara("id");
@@ -1557,7 +1583,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: updateSchoolZone @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 * 参数 @return void 返回类型 @throws
+	 *         参数 @return void 返回类型 @throws
 	 */
 	public void updateSchoolZone() {
 		String id = getPara("id");
@@ -1575,7 +1601,7 @@ public class AdminController extends Controller {
 	/**
 	 * 
 	 * @Title: delSchoolZone @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 * void 返回类型 @throws
+	 *         void 返回类型 @throws
 	 */
 	public void delSchoolZone() {
 		String id = getPara("id");
@@ -1585,60 +1611,52 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
-	
+
 	/**
 	 * 登录判断
 	 */
 	public void Login() {
 		Date date = new Date();
-		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		String login_time=(dateFormat.format(date));
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String login_time = (dateFormat.format(date));
 		String ip = getRequest().getRemoteHost();
 		String addr = getRequest().getRemoteAddr();
 		String username = getPara("username");
 		String password = getPara("password");
 		CmsUserModel n = CmsUserModel.test(username);
-		int result ;
-		if(n==null) {
+		int result;
+		if (n == null) {
 			result = 0;
-		}
-		else {
-			if(n.getPassword().equals(password)) {
+		} else {
+			if (n.getPassword().equals(password)) {
 				boolean results = CmsloginLogModel.save(username, ip, addr, login_time);
 				setAttr("results", results);
+				setSessionAttr(username, "username");
 				result = 1;
-			}
-			else {
+			} else {
 				result = 2;
-			}	
+			}
 		}
 		setAttr("result", result);
 		renderJson();
 	}
+
 	/**
-	 * 打开任务列表
-	* @Title: openTaskList
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * 打开任务列表 @Title: openTaskList @Description:??? @param 参数 @return void
+	 * 返回类型 @throws
 	 */
 	public void openTaskList() {
 		render("task/taskinfo.html");
 	}
+
 	/**
-	 * 任务列表
-	* @Title: getTaskList
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * 任务列表 @Title: getTaskList @Description:??? @param 参数 @return void 返回类型 @throws
 	 */
 	public void getTaskList() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		int limit=getParaToInt("limit");
-		int page=getParaToInt("page");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
 		Page<TaskModel> list = TaskModel.getList(page, limit, key);
 		setAttr("code", 0);
 		setAttr("msg", "你好！");
@@ -1646,41 +1664,31 @@ public class AdminController extends Controller {
 		setAttr("data", list.getList());
 		renderJson();
 	}
+
 	/**
-	* @Title: openTaskAdd
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * @Title: openTaskAdd @Description:??? @param 参数 @return void 返回类型 @throws
 	 */
 	public void openTaskAdd() {
 		render("task/taskAdd.html");
 	}
+
 	/**
-	 * 获取执行者列表下拉框
-	* @Title: getexecutors
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * 获取执行者列表下拉框 @Title: getexecutors @Description:??? @param 参数 @return void
+	 * 返回类型 @throws
 	 */
 	public void getexecutors() {
-		List<DepmanModel> list=DepmanModel.getList();
+		List<DepmanModel> list = DepmanModel.getList();
 		setAttr("sl", list);
 		renderJson();
 	}
+
 	/**
-	 * 保存
-	* @Title: savaTask
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * 保存 @Title: savaTask @Description:??? @param 参数 @return void 返回类型 @throws
 	 */
 	public void savaTask() {
 		String title = getPara("title");
 		String det = getPara("deadline");
-		Date deadline=new Date();
+		Date deadline = new Date();
 		try {
 			deadline = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(det.trim());
 		} catch (ParseException e) {
@@ -1693,144 +1701,139 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
+
 	/**
-	 * 打开任务详情
-	* @Title: openTaskShow
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * 打开任务详情 @Title: openTaskShow @Description:??? @param 参数 @return void
+	 * 返回类型 @throws
 	 */
-	public void openTaskShow(){
-		String id=getPara("id");
+	public void openTaskShow() {
+		String id = getPara("id");
 		setAttr("id", id);
 		renderFreeMarker("task/taskEdit.html");
 	}
+
 	/**
-	 * 查看任务列表
-	* @Title: openTaskShow
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * 查看任务列表 @Title: openTaskShow @Description:??? @param 参数 @return void
+	 * 返回类型 @throws
 	 */
 	public void getTaskShow() {
-		String id=getPara("id");
-		TaskModel m=TaskModel.getModeShowById(id);
+		String id = getPara("id");
+		TaskModel m = TaskModel.getModeShowById(id);
 		setAttr("m", m);
 		renderJson();
 	}
+
 	public void updateTask() {
-		String id=getPara("id");
+		String id = getPara("id");
 		// 保存数据
 		boolean result = TaskModel.updateModel(id);
 		setAttr("result", result);
 		renderJson();
 	}
+
 	/**
 	 * 显示到图表
 	 */
 	public void getTaskTubiaoinfo() {
-		//获取开发者名单
-		 List<DTModel> list=DTModel.getList();
-		 //解析数据，放到图表中
-		 List<TDvo> tdList=new ArrayList<TDvo>();
-		 List<TDvoTwo> ncList=new ArrayList<TDvoTwo>();//未完成
-		 List<TDvoTwo> cList=new ArrayList<TDvoTwo>();//完成
-		 List<TDvoTwo> allList=new ArrayList<TDvoTwo>();//所有（）含完成和未完成
-		 
-		 int notcTask=0;//未完成的任务
-		 int ctask=0;//已经完成的任务
-		 for(DTModel a:list) {
-			 TDvo t=new TDvo();
-			 t.setName(a.getDepname());
-			 t.setId(a.getId());
-			 boolean r=true;
-			 for(TDvo b:tdList) {
-				 if(b.getId().equals(a.getId())) {
-					 r=false;
-				 }
-			 }
-			 if(r) {
-				 tdList.add(t);
-			 }
-			 if(a.getTaskstatus()==1) {
-				 ctask++;
-			 }else if(a.getTaskstatus()==0) {
-				 notcTask++;
-			 }
-		 }
-		 
-		 for(TDvo b:tdList) {
-			 int nc=0;//记录未完成任务
-			 int c=0;//记录完成完成任务
-			 for(DTModel a:list) {
-				 if(b.getId().equals(a.getId())) {
-					 if(a.getTaskstatus()==1) {
-						 c++;
-					 }else if(a.getTaskstatus()==0) {
-						 nc++;
-					 }
-				 } 
-			 }
-			 b.setTotalTask(c+nc); 
-			 b.setNotCompleted(nc);
-			 b.setCompleted(c);
-			 
-			 TDvoTwo wei=new TDvoTwo();
-			 TDvoTwo wan=new TDvoTwo();
-			 wei.setName(b.getId());
-			 wei.setValue(nc);
-			 wan.setName(b.getId());
-			 wan.setValue(c);
-			 ncList.add(wei);
-			 cList.add(wan);
-		 }
-		 
-		 TDvoTwo weiwanczong=new TDvoTwo();
-		 weiwanczong.setName("未完成");
-		 weiwanczong.setValue(notcTask);
-		 TDvoTwo wanczong=new TDvoTwo();
-		 wanczong.setName("已完成");
-		 wanczong.setValue(ctask);
-		 allList.add(weiwanczong);
-		 allList.add(wanczong);
-		 ///////////////////////////////
-		 
-		 setAttr("allList", allList);
-		 setAttr("names", tdList);
-		 setAttr("ncList", ncList);
-		 setAttr("cList", cList);
-		 renderJson();
+		// 获取开发者名单
+		List<DTModel> list = DTModel.getList();
+		// 解析数据，放到图表中
+		List<TDvo> tdList = new ArrayList<TDvo>();
+		List<TDvoTwo> ncList = new ArrayList<TDvoTwo>();// 未完成
+		List<TDvoTwo> cList = new ArrayList<TDvoTwo>();// 完成
+		List<TDvoTwo> allList = new ArrayList<TDvoTwo>();// 所有（）含完成和未完成
+
+		int notcTask = 0;// 未完成的任务
+		int ctask = 0;// 已经完成的任务
+		for (DTModel a : list) {
+			TDvo t = new TDvo();
+			t.setName(a.getDepname());
+			t.setId(a.getId());
+			boolean r = true;
+			for (TDvo b : tdList) {
+				if (b.getId().equals(a.getId())) {
+					r = false;
+				}
+			}
+			if (r) {
+				tdList.add(t);
+			}
+			if (a.getTaskstatus() == 1) {
+				ctask++;
+			} else if (a.getTaskstatus() == 0) {
+				notcTask++;
+			}
+		}
+
+		for (TDvo b : tdList) {
+			int nc = 0;// 记录未完成任务
+			int c = 0;// 记录完成完成任务
+			for (DTModel a : list) {
+				if (b.getId().equals(a.getId())) {
+					if (a.getTaskstatus() == 1) {
+						c++;
+					} else if (a.getTaskstatus() == 0) {
+						nc++;
+					}
+				}
+			}
+			b.setTotalTask(c + nc);
+			b.setNotCompleted(nc);
+			b.setCompleted(c);
+
+			TDvoTwo wei = new TDvoTwo();
+			TDvoTwo wan = new TDvoTwo();
+			wei.setName(b.getId());
+			wei.setValue(nc);
+			wan.setName(b.getId());
+			wan.setValue(c);
+			ncList.add(wei);
+			cList.add(wan);
+		}
+
+		TDvoTwo weiwanczong = new TDvoTwo();
+		weiwanczong.setName("未完成");
+		weiwanczong.setValue(notcTask);
+		TDvoTwo wanczong = new TDvoTwo();
+		wanczong.setName("已完成");
+		wanczong.setValue(ctask);
+		allList.add(weiwanczong);
+		allList.add(wanczong);
+		///////////////////////////////
+
+		setAttr("allList", allList);
+		setAttr("names", tdList);
+		setAttr("ncList", ncList);
+		setAttr("cList", cList);
+		renderJson();
 	}
+
 	/**
-	 * 打开开发者任务
-	* @Title: openStuTask
-	* @Description:???
-	* @param     参数
-	* @return void    返回类型
-	* @throws
+	 * 打开开发者任务 @Title: openStuTask @Description:??? @param 参数 @return void
+	 * 返回类型 @throws
 	 */
 	public void openStuTask() {
-		String stuId=getPara("stuid");
+		String stuId = getPara("stuid");
 		setAttr("stuid", stuId);
 		renderFreeMarker("task/taskinfoforstu.html");
 	}
+
 	public void getStuTask() {
-		String stuId=getPara("stuid");
+		String stuId = getPara("stuid");
 		// 获取页面查询的关键字
 		String key = getPara("key");
-		int limit=getParaToInt("limit");
-		int page=getParaToInt("page");
-		Page<TaskModel> list = TaskModel.getListForStu(page, limit, key,stuId);
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<TaskModel> list = TaskModel.getListForStu(page, limit, key, stuId);
 		setAttr("code", 0);
 		setAttr("msg", "你好！");
 		setAttr("count", list.getTotalRow());
 		setAttr("data", list.getList());
 		renderJson();
 	}
+
 	public void openStuTasksee() {
-		String id=getPara("id");
+		String id = getPara("id");
 		setAttr("id", id);
 		renderFreeMarker("task/tasksee.html");
 	}
