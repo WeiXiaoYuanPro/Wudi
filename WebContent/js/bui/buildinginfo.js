@@ -21,7 +21,6 @@ layui.config({//框架的固定，配置的使用
 	      ,{field: 'name', title: '楼房名称',lign:'center'}
 	      ,{field: 'addr', title: '经度纬度', lign:'center'}
 	      ,{field: 'remark', title: '备注', lign:'center'} 
-	      ,{field: 'schoolname', title: '校区',align:'center' }
 	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
 	    ]]
 	  });

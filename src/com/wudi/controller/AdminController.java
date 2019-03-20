@@ -51,7 +51,7 @@ public class AdminController extends Controller {
 		String password = getPara("password");
 		// 如果不正确，就提示什么不正确？
 		// 如果正确，就正常显示系统页面
-		CmsUserModel m = CmsUserModel.getByUsername(username);
+		UserInfoModel m = UserInfoModel.getByUsername(username);
 		// 判断用户名和密码是否正确
 		if (m != null) {
 			if (m.getPassword().equals(password)) {
@@ -1034,114 +1034,8 @@ public class AdminController extends Controller {
 		renderJson();
 	}
 
-	/**
-	 * @Title: cms_user @Description: 打开用户列表页面 @param 参数 @return void 返回类型 @throws
-	 */
-	public void cms_user() {
-		render("cms/cms_userinfo.html");
-	}
-
-	/**
-	 * @Title: queryCms_User @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
-	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
-	 */
-	public void queryCms_User() {
-		// 获取页面查询的关键字
-		String key = getPara("key");
-		int limit = getParaToInt("limit");
-		int page = getParaToInt("page");
-		Page<CmsUserModel> list = CmsUserModel.getList(page, limit, key);
-		setAttr("code", 0);
-		setAttr("msg", "你好！");
-		setAttr("count", list.getTotalRow());
-		setAttr("data", list.getList());
-		renderJson();
-	}
-
-	/**
-	 * @Title: openCms_UserAdd @Description:打开添加信息页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void openCms_UserAdd() {
-		render("cms/cms_userAdd.html");
-	}
-
-	/**
-	 * @Title: getCms_User @Description:获取需要修改的学生信息 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void getcms_user() {
-		// 接收页面数据
-		String id = getPara("id");
-		// 根据条件查询数据库的数据
-		CmsUserModel cms_user = CmsUserModel.getById(id);
-		// 放到编辑页面上去
-		setAttr("m", cms_user);
-		// 返回格式是json
-		renderJson();
-	}
-
-	/**
-	 * @Title: openCms_UserEdit @Description:打开修改信息页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void opencms_userEdit() {
-		// 接收页面数据
-		String id = getPara("id");
-		setAttr("id", id);
-		renderFreeMarker("cms/cms_userEdit.html");
-	}
-
-	/**
-	 * @Title: saveCms_User @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 *         参数 @return void 返回类型 @throws
-	 */
-	public void saveCms_User() {
-		String username = getPara("username");
-		String password = getPara("password");
-		String img = getPara("img");
-		int type = getParaToInt("type");
-		// 保存数据
-		boolean result = CmsUserModel.save(username, password, img, type);
-
-		setAttr("result", result);
-		renderJson();
-	}
-
-	/**
-	 * 
-	 * @Title: updateDormitory @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 *         参数 @return void 返回类型 @throws
-	 */
-	public void updateCms_User() {
-		String id = getPara("id");
-		String username = getPara("username");
-		String password = getPara("password");
-		// Date create_time=getPara("create_time");
-		String img = getPara("img");
-		int type = getParaToInt("type");
-		int status = getParaToInt("status");
-
-		boolean result = CmsUserModel.update(id, username, password, img, type, status);
-
-		setAttr("result", result);
-		renderJson();
-	}
-
-	/**
-	 * 
-	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 *         void 返回类型 @throws
-	 */
-	public void delCms_User() {
-		String id = getPara("id");
-		// 删除
-		boolean result = CmsUserModel.delCmsUserByID(id);
-		// 返回结果
-		setAttr("result", result);
-		renderJson();
-	}
-
+	
+	
 	/**
 	 * @Title: students @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
 	 */
@@ -1180,15 +1074,32 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: userInfo @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
+	 * 打开用户信息
+	 * 20190320
 	 */
 	public void userInfo() {
 		render("userinfo/userinfoInfo.html");
 	}
-
+	/**
+	 * 获取用户列表数据
+	 * 20190320
+	 */
+	public void queryUserInfo() {
+		// 获取页面查询的关键字
+		String key = getPara("key");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<UserInfoModel> list = UserInfoModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
+	}
 	/**
 	 * @Title: openUserInfoAdd @Description:打开添加信息页面 @param 参数 @return void
-	 *         返回类型 @throws
+	 *        返回类型 @throws
+	 *    20190320   
 	 */
 	public void openUserInfoAdd() {
 		render("userinfo/userinfoAdd.html");
@@ -1204,23 +1115,6 @@ public class AdminController extends Controller {
 
 		setAttr("id", id);
 		renderFreeMarker("userinfo/userinfoEdit.html");
-	}
-
-	/**
-	 * @Title: queryUserInfo @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
-	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
-	 */
-	public void queryUserInfo() {
-		// 获取页面查询的关键字
-		String key = getPara("key");
-		int limit = getParaToInt("limit");
-		int page = getParaToInt("page");
-		Page<UserInfoModel> list = UserInfoModel.getList(page, limit, key);
-		setAttr("code", 0);
-		setAttr("msg", "你好！");
-		setAttr("count", list.getTotalRow());
-		setAttr("data", list.getList());
-		renderJson();
 	}
 
 	/**

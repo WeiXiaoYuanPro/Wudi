@@ -1,6 +1,7 @@
 package com.wudi.model.admin;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -46,7 +47,13 @@ public class UserInfoModel extends Model<UserInfoModel> {
 	public String getCreatetime() {
 		return get("create_time");
 	}
+	public void setBirth(Date birth) {
+		set("birth", birth);
+	}
 
+	public Date getBirth() {
+		return get("birth");
+	}
 	public void setImg(String img) {
 		set("img", img);
 	}
@@ -62,6 +69,35 @@ public class UserInfoModel extends Model<UserInfoModel> {
 	public int getStatus() {
 		return get("status");
 	}
+	public void setSex(int sex) {
+		set("sex", sex);
+	}
+
+	public int getSex() {
+		return get("sex");
+	}
+	
+	public String getremark() {
+		return get("remark");
+	}
+
+	public void setremark(String remark) {
+		set("remark", remark);
+	}
+	
+	/**
+	 * 根据username查找正常用户
+	 * @param username
+	 * 190320
+	 * @return
+	 */
+	public static UserInfoModel getByUsername(String username){
+		return dao.findFirst("select * from " + tableName + " where username = ? and status=0" , username);
+	}
+	
+	
+	
+	
 	/**
 	 * 分页查询显示，就是查找
 	 * 

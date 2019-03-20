@@ -10,24 +10,25 @@ layui.config({//框架的固定，配置的使用
 //==================一个table实例================================//table怎么设置
 	  table.render({
 	    elem: '#demo',//渲染对象
-	    height: 400,//表格高度
+	    height: 'full-88',//表格高度
 	    url: 'queryUserInfo', //数据接口
 	    where: {key: ''},//给后台传的参数
 	    page: true, //开启分页
 	    limit: 10,//每页显示信息条数
 	    id: 'testReload',
 	    cols: [[ //表头
-	      {field: 'id', title: 'ID', sort: true, fixed: 'left'}
+	      {field: 'id', title: '学工号', sort: true, fixed: 'left'}
 	      ,{field: 'username', title: '用户名',lign:'center'}
 	      ,{field: 'password', title: '登陆密码', lign:'center'}
+	      ,{field: 'birth', title: '出生年月', lign:'center'} 
 	      ,{field: 'create_time', title: '创建日期', lign:'center'} 
-	      ,{field: 'img', title: '头像图片',align:'center' }
+	      ,{field: 'img', title: '头像',align:'center' }
 	      ,{field: 'status', title: '状态',align:'center',
 	    	  templet: function(d){
     		  if(d.status==1){
-    			  return '<span >异常</span>';
+    			  return '<span class="layui-badge layui-bg-orange">异常</span>';
     		  }else{
-    			  return '<span style="color: #c00;">正常</span>';
+    			  return '<span class="layui-badge layui-bg-blue">正常</span>';
     		  }}
 	      }	      
 	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
@@ -45,6 +46,17 @@ layui.config({//框架的固定，配置的使用
 					  where : {//要查询的字段
 						  key : demoReload.val(),
 						  id : 11
+						  }
+					  });
+			  }
+  };
+  var active_op = {
+		  reload : function() {
+			  var demoReload = $('#demoReload');
+							// 执行重载
+			  table.reload('testReload', {//reload重新加载
+					  where : {//要查询的字段
+						  key : demoReload.val(),
 						  }
 					  });
 			  }
@@ -104,10 +116,9 @@ layui.config({//框架的固定，配置的使用
 			    		  top.layer.close(msgid);
 			    		  if(d.result){
 			    			//弹出loading
-						   		layer.closeAll("iframe");
-						   		obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+						   	obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 						  	 //刷新父页面
-						  	 	parent.location.reload();
+						   	active_op.reload();
 			    		  }else{
 			    			  top.layer.msg("操作失败！，数据库操作有问题！！");
 			    		  }
