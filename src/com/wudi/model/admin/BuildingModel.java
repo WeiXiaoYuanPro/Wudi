@@ -59,7 +59,7 @@ public class BuildingModel extends Model<BuildingModel> {
 		public static Page<BuildingModel> getList(int pageNumber, int pageSize,String key) {
 			String sele_sql="SELECT  a.*, b.`name` AS schoolname ";
 			StringBuffer from_sql=new StringBuffer();
-			from_sql.append("from ").append(tableName).append(" AS a LEFT JOIN ").append(SchoolZoneModel.tableName).append(" AS b ON a.schoolzone_id = b.id ");
+			from_sql.append("from ").append(tableName).append(" AS a LEFT JOIN ").append(" AS b ON a.schoolzone_id = b.id ");
 			if(!StringUtil.isBlankOrEmpty(key)) {
 				from_sql.append(" where a.name like '%"+key+"%'");
 			}

@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.jfinal.core.Controller;
-import com.wudi.model.admin.Role_infoModel;
+import com.wudi.model.admin.RoleInfoModel;
 import com.wudi.model.admin.UserInfoModel;
-import com.wudi.model.admin.UserLoginLogModel;
 /**
  * 微信小程序数据访问
  * @author 橙色
@@ -95,11 +94,11 @@ public class WeixinController extends Controller {
 	    	if(m.getPassword().equals(password)) {
 	    		//如果正确
 	    		//匹配username，根据另外一张表匹配到的相同user_id，进入表中查找需要相应的数据
-	    		Role_infoModel n=Role_infoModel.findModelbyUserid(m.getUsername());
+	    		RoleInfoModel n=RoleInfoModel.findModelbyUserid(m.getUsername());
 	    		user_name=m.getUsername();
 	    		username=m.getUsername();
 	    		status=n.getLevel();
-	    		boolean result=UserLoginLogModel.saveModel(username, login_time, ip, addr, remark, status);
+	    		boolean result=false;//LogModel.saveModel(username, login_time, ip, addr, remark, status);
 	    		setAttr("result", result);
 	    		renderJson();
 	    		code="0";
@@ -142,9 +141,9 @@ public class WeixinController extends Controller {
     		logout_status="1";
     	}else if(e.getUsername().equals(username)){
     		//传值匹配用户名，查找数据
-    		Role_infoModel ex=Role_infoModel.findModelbyUserid(e.getUsername());
+    		RoleInfoModel ex=RoleInfoModel.findModelbyUserid(e.getUsername());
     		status=ex.getLevel();
-    		boolean result=UserLoginLogModel.saveModel(username, login_time, ip, addr, remark, status);
+    		boolean result=false;//LogModel.saveModel(username, login_time, ip, addr, remark, status);
     		setAttr("result", result);
     		renderJson();
     		logout_status="0";

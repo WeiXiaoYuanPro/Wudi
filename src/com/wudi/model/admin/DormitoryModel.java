@@ -2,7 +2,6 @@ package com.wudi.model.admin;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.UUID;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -10,7 +9,6 @@ import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
-import com.wudi.model.StudentModel;
 import com.wudi.util.StringUtil;
 
 public class DormitoryModel extends Model<DormitoryModel> {

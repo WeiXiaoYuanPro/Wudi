@@ -4,43 +4,71 @@
 	"href" : "page/main.html",
 	"spread" : false
 },{
-	"title" : "学生列表",
-	"icon" : "icon-text",
-	"href" : "/hello/students",
-	"spread" : false
-},{
-	"title" : "文章列表",
-	"icon" : "icon-text",
-	"href" : "page/news/newsList.html",
-	"spread" : false
-},{
-	"title" : "友情链接",
-	"icon" : "&#xe64c;",
-	"href" : "page/links/linksList.html",
-	"spread" : false
-},{
-	"title" : "系统基本参数",
-	"icon" : "&#xe631;",
-	"href" : "page/systemParameter/systemParameter.html",
-	"spread" : false
-},{
-	"title" : "其他页面",
+	"title" : "基础信息",
 	"icon" : "&#xe630;",
 	"href" : "",
 	"spread" : true,
 	"children" : [
+	{
+			"title" : "用户信息列表",
+			"icon" : "&#xe61c;",
+			"href" : "admin/userInfo",
+			"spread" : false
+		},
+		{
+			"title" : "学校信息列表",
+			"icon" : "&#xe61c;",
+			"href" : "admin/schools",
+			"spread" : false
+		},
+		{
+			"title" : "教室信息列表",
+			"icon" : "&#xe609;",
+			"href" : "admin/classroom",
+			"spread" : false,
+			"target" : "_blank"
+		},{
+			"title" : "任务列表",
+			"icon" : "&#xe61c;",
+			"href" : "admin/openTaskList",
+			"spread" : false
+		}
+	]
+},{
+	"title" : "系统信息",
+	"icon" : "&#xe630;",
+	"href" : "",
+	"spread" : true,
+	"children" : [
+	{
+			"title" : "用户登录记录",
+			"icon" : "&#xe61c;",
+			"href" : "admin/cmslogin_log",
+			"spread" : false
+		},
+		{
+			"title" : "角色列表",
+			"icon" : "&#xe61c;",
+			"href" : "admin/role",
+			"spread" : false
+		},
+		{
+			"title" : "开发人员信息",
+			"icon" : "&#xe609;",
+			"href" : "admin/openDepms",
+			"spread" : false,
+			"target" : "_blank"
+		},{
+			"title" : "任务列表",
+			"icon" : "&#xe61c;",
+			"href" : "admin/openTaskList",
+			"spread" : false
+		},
 		{
 			"title" : "404页面",
 			"icon" : "&#xe61c;",
 			"href" : "page/404.html",
 			"spread" : false
-		},
-		{
-			"title" : "登录",
-			"icon" : "&#xe609;",
-			"href" : "page/login/login.html",
-			"spread" : false,
-			"target" : "_blank"
 		}
 	]
 }]

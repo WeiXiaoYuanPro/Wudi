@@ -12,24 +12,18 @@ import com.jfinal.template.Engine;
 import com.wudi.controller.AdminController;
 import com.wudi.controller.FileController;
 import com.wudi.controller.WeixinController;
-import com.wudi.model.NavsModel;
-import com.wudi.model.StudentModel;
 import com.wudi.model.admin.BuildingModel;
-import com.wudi.model.admin.ClassroomModel;
-import com.wudi.model.admin.CmsUserModel;
-import com.wudi.model.admin.CmsloginLogModel;
 import com.wudi.model.admin.DTModel;
 import com.wudi.model.admin.DepmanModel;
 import com.wudi.model.admin.DormitoryModel;
-import com.wudi.model.admin.Role_infoModel;
+import com.wudi.model.admin.LogModel;
+import com.wudi.model.admin.RoleInfoModel;
+import com.wudi.model.admin.RoomModel;
 import com.wudi.model.admin.SchoolModel;
-import com.wudi.model.admin.SchoolZoneModel;
-import com.wudi.model.admin.Stu_contatcModel;
-import com.wudi.model.admin.Stu_familyModel;
-import com.wudi.model.admin.StuinfoModel;
+import com.wudi.model.admin.StuContatcModel;
+import com.wudi.model.admin.StuFamilyModel;
 import com.wudi.model.admin.TaskModel;
 import com.wudi.model.admin.UserInfoModel;
-import com.wudi.model.admin.UserLoginLogModel;
 /**
  * 	系统配置类
  *   @author XIAO
@@ -78,29 +72,18 @@ public class Config extends JFinalConfig {
 		arpMysql.setShowSql(showSql);
 		{
 			//将数据库表，绑定到这来来，注意，表名和类要相对应
-			arpMysql.addMapping("navs", NavsModel.class);//主页面左侧菜单显示的表
-			arpMysql.addMapping("student", StudentModel.class);//学生表
 			arpMysql.addMapping("dormitory", DormitoryModel.class);//宿舍表
-			arpMysql.addMapping("stu_family_info", Stu_familyModel.class);//学生家庭信息表
+			arpMysql.addMapping("stu_family_info", StuFamilyModel.class);//学生家庭信息表
 			arpMysql.addMapping("building", BuildingModel.class);//学校楼房信息表
-			arpMysql.addMapping("classroom", ClassroomModel.class);//教室信息表
-			arpMysql.addMapping("stuinfo", StuinfoModel.class);//学生表		
-			arpMysql.addMapping("cms_user", CmsUserModel.class);//用户信息表		
-			arpMysql.addMapping("cmslogin_log", CmsloginLogModel.class);//登陆日志信息表
+			arpMysql.addMapping("classroom", RoomModel.class);//教室信息表
+			arpMysql.addMapping("cmslogin_log", LogModel.class);//登陆日志信息表
 			arpMysql.addMapping("user_info", UserInfoModel.class);//用户信息表
 
-			arpMysql.addMapping("school_zone", SchoolZoneModel.class);//学校楼房信息表
-
-
-			arpMysql.addMapping("stuinfo", StuinfoModel.class);//学生表
-			
-			arpMysql.addMapping("role_info", Role_infoModel.class);//学生表
+			arpMysql.addMapping("role_info", RoleInfoModel.class);//学生表
 			
 			arpMysql.addMapping("school", SchoolModel.class);//学生表
 			
-			arpMysql.addMapping("userloginlog", UserLoginLogModel.class);//学生联系信息
-			
-			arpMysql.addMapping("stucontatc", Stu_contatcModel.class);//学生联系信息
+			arpMysql.addMapping("stucontatc", StuContatcModel.class);//学生联系信息
 			
 			arpMysql.addMapping("task", TaskModel.class);//任务
 			

@@ -23,7 +23,7 @@ public class AdminInterceptor implements Interceptor {
 		// cookie 登录未成功，证明该 cookie 已经没有用处，删之
 		c.removeCookie("cname");
 		c.removeSessionAttr("user");
-		c.render("login.html");
+		c.render("login/login.html");
         
 	}
 }
