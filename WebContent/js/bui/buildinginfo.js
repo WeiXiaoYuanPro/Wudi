@@ -122,7 +122,7 @@ layui.config({//框架的固定，配置的使用
               content : "openBuildingEdit?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){
-                      layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
+                      layui.layer.tips('点击此处返回列表', '.layui-btn layui-btn-xs layui-btn-normal', {
                           tips: 3
                       });
                   },500)

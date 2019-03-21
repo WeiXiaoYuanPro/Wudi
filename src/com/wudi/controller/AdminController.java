@@ -49,7 +49,7 @@ public class AdminController extends Controller {
 		String password = getPara("password");
 		// 如果不正确，就提示什么不正确？
 		// 如果正确，就正常显示系统页面
-		UserInfoModel m = UserInfoModel.getByUsername(username);
+		UserInfoModel m = UserInfoModel.getByID(username);
 		// 判断用户名和密码是否正确
 		if (m != null) {
 			if (m.getPassword().equals(password)) {
@@ -83,7 +83,8 @@ public class AdminController extends Controller {
 	 *  作者： xiao
 	 */
 	public void index() {
-		render("index.html");
+		setAttr("username", getCookie("cname"));
+		renderFreeMarker("index.html");
 	}
 
 	/**
@@ -94,8 +95,30 @@ public class AdminController extends Controller {
 	public void main() {
 		render("main.html");
 	}
-
-	
+	/**
+	 *  功能：打开修改密码页面
+	 *  修改时间：2019年3月21日20:47:23
+	 *  作者： xiao
+	 */
+	public void openUppassword() {
+		setAttr("user", getSessionAttr("user"));
+		renderFreeMarker("userinfo/uppassword.html");
+	}
+	/**
+	 *  功能：保存修改密码
+	 *  修改时间：2019年3月21日20:47:23
+	 *  作者： xiao
+	 */
+	public void updatePassword() {
+		String id=getPara("id");
+		String password=getPara("password");
+		boolean result=UserInfoModel.updatePassword(id, password);
+		setAttr("result", result);
+		//情况cookie
+		removeCookie("username");
+		removeSessionAttr("user");
+		renderJson();
+	}
 	
 	/**
 	 * @Title: stu_contatc @Description: 打开学生家庭信息列表页面 @param 参数 @return void
