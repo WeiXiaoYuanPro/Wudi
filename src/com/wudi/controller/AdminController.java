@@ -26,7 +26,6 @@ import com.wudi.model.admin.StuContatcModel;
 import com.wudi.model.admin.StuFamilyModel;
 import com.wudi.model.admin.TaskModel;
 import com.wudi.model.admin.UserInfoModel;
-import com.wudi.util.StringUtil;
 
 /**
  * 
@@ -1062,15 +1061,106 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * 打开任务列表 @Title: openTaskList @Description:??? @param 参数 @return void
-	 * 返回类型 @throws
+	 *  功能：打开开发者列表页面
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
+	 */
+	public void openDepms() {
+		render("task/depmers.html");
+	}
+	/**
+	 *  功能：获取开发者列表信息
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
+	 */
+	public void getDepms() {
+		// 获取页面查询的关键字
+		String key = getPara("key");
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<DepmanModel> list = DepmanModel.getList(page, limit, key);
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", list.getTotalRow());
+		setAttr("data", list.getList());
+		renderJson();
+	}
+	/**
+	 *  功能：打开开发者添加页面
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
+	 */
+	public void openDepmerAdd() {
+		render("task/depmerAdd.html");
+	}
+	/**
+	 *  功能：打开开发者修改页面
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
+	 */
+	public void openDepmerEdit() {
+		String id = getPara("id");
+		DepmanModel m=DepmanModel.getModeById(id);
+		setAttr("m", m);
+		renderFreeMarker("task/depmerEdit.html");
+	}
+	/**
+	 *  功能：保存开发者信息
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
+	*/
+	public void saveDepmer() {
+		String depname=getPara("depname");
+		boolean result=DepmanModel.save(depname);
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 *  功能：更新开发者信息
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
+	*/
+	public void updataDepmer() {
+		String id=getPara("id");
+		String depname=getPara("depname");
+		boolean result=DepmanModel.updata(id,depname);
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 *  功能：删除开发者信息，其实只是吧状态修改一下
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
+	*/
+	public void delDepmer() {
+		String id=getPara("id");
+		boolean result=DepmanModel.del(id);
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 *  功能：开发者列表
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
+	 */
+	public void getexecutors() {
+		List<DepmanModel> list = DepmanModel.getList();
+		setAttr("sl", list);
+		renderJson();
+	}
+	
+	/**
+	 *  功能：打开任务列表页面
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
 	 */
 	public void openTaskList() {
 		render("task/taskinfo.html");
 	}
-
 	/**
-	 * 任务列表 @Title: getTaskList @Description:??? @param 参数 @return void 返回类型 @throws
+	 *  功能：获取任务列表信息
+	 *  修改时间：2019年3月21日22:47:23
+	 *  作者： xiao
 	 */
 	public void getTaskList() {
 		// 获取页面查询的关键字
@@ -1092,15 +1182,9 @@ public class AdminController extends Controller {
 		render("task/taskAdd.html");
 	}
 
-	/**
-	 * 获取执行者列表下拉框 @Title: getexecutors @Description:??? @param 参数 @return void
-	 * 返回类型 @throws
-	 */
-	public void getexecutors() {
-		List<DepmanModel> list = DepmanModel.getList();
-		setAttr("sl", list);
-		renderJson();
-	}
+	
+	
+
 
 	/**
 	 * 保存 @Title: savaTask @Description:??? @param 参数 @return void 返回类型 @throws
@@ -1123,8 +1207,9 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * 打开任务详情 @Title: openTaskShow @Description:??? @param 参数 @return void
-	 * 返回类型 @throws
+	 *  功能：打开开发者任务详情
+	 *  修改时间：2019年3月20日22:47:23
+	 *  作者： xiao
 	 */
 	public void openTaskShow() {
 		String id = getPara("id");
@@ -1133,8 +1218,9 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * 查看任务列表 @Title: openTaskShow @Description:??? @param 参数 @return void
-	 * 返回类型 @throws
+	 *  功能：查看任务列表
+	 *  修改时间：2019年3月20日22:47:23
+	 *  作者： xiao
 	 */
 	public void getTaskShow() {
 		String id = getPara("id");

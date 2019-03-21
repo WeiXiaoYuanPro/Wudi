@@ -1,5 +1,6 @@
 package com.wudi.model.admin;
 
+import java.util.Date;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Model;
@@ -30,11 +31,22 @@ public class DepmanModel extends Model<DepmanModel> {
 	public void setDepname(String depname) {
 		set("depname", depname);
 	}
+	/**
+	 * 0正常，1，异常
+	 * @return
+	 */
 	public int getStatus() {
 		return get("status");
 	}
 	public void setStatus(int status) {
 		set("status", status);
+	}
+	public void setCreatetime(Date create_time) {
+		set("create_time", create_time);
+	}
+
+	public Date getCreatetime() {
+		return get("create_time");
 	}
 	/**
 	 * TODO:xiao 根据id查找信息
@@ -72,4 +84,46 @@ public class DepmanModel extends Model<DepmanModel> {
 			}
 			return dao.paginate(pageNumber,pageSize,sele_sql,from_sql.toString());
 		} 
+		/**
+		 *  功能：保存开发者信息
+		 *  修改时间：2019年3月21日22:47:23
+		 *  作者： xiao
+		*/
+		public static boolean save(String depname) {
+			DepmanModel m=new DepmanModel();
+			m.setId(StringUtil.getId());
+			m.setDepname(depname);
+			m.setCreatetime(new Date());
+			m.setStatus(0);
+			return m.save();
+		}
+		/**
+		 *  功能：修改开发者信息
+		 *  修改时间：2019年3月21日22:47:23
+		 *  作者： xiao
+		*/
+		public static boolean updata(String id,String depname) {
+			DepmanModel m=getModeById(id);
+			if(m==null) {
+				return false;
+			}else {
+				m.setDepname(depname);
+				return m.update();
+			}
+		}
+			/**
+			 *  功能：修改开发者信息
+			 *  修改时间：2019年3月21日22:47:23
+			 *  作者： xiao
+			*/
+			public static boolean del(String id) {
+				DepmanModel m=getModeById(id);
+				if(m==null) {
+					return false;
+				}else {
+					m.setStatus(1);
+					return m.update();
+				}
+			
+		}
 }

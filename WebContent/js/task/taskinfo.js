@@ -10,7 +10,7 @@ layui.config({
 //==================一个table实例================================
 	  table.render({
 	    elem: '#demo',//渲染对象
-	    height: 600,//表格高度
+	    height: 'full-88',//表格高度
 	    url: 'getTaskList', //数据接口
 	    where: {key: ''},//给后台传的参数
 	    page: true, //开启分页
@@ -86,7 +86,7 @@ layui.config({
 		 var index = layui.layer.open({
               title : "查看信息",
               type : 2,
-              area: ['1000px', '600px'],
+              skin: 'layui-layer-lan',
               content : "openTaskShow?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){
@@ -95,7 +95,8 @@ layui.config({
                       });
                   },500)
               }
-          })          
+          });
+          layui.layer.full(index);
 	  } else if(layEvent === 'del'){
 		  
 	  } else if(layEvent === 'edit'){

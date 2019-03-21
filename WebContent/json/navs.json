@@ -56,8 +56,7 @@
 			"title" : "开发人员信息",
 			"icon" : "&#xe609;",
 			"href" : "admin/openDepms",
-			"spread" : false,
-			"target" : "_blank"
+			"spread" : false
 		},{
 			"title" : "任务列表",
 			"icon" : "&#xe61c;",

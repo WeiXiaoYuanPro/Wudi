@@ -45,6 +45,17 @@
 								</div>
 							</div>
 							<div class="layui-form-item">
+								<label class="layui-form-label">状态</label>
+								<div class="layui-input-inline">
+									<input type="text" class="layui-input layui-disabled" name='status'>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-form-item">
 								<label class="layui-form-label">执行人</label>
 								<div class="layui-input-inline">
 									<input type="text" class="layui-input layui-disabled" name='executor' >
@@ -56,28 +67,17 @@
 									<input type="text" class="layui-input layui-disabled" name='finish_time'>
 								</div>
 							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">状态</label>
-								<div class="layui-input-inline">
-									<input type="text" class="layui-input layui-disabled" name='status'>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="layui-col-md6">
-					<div class="layui-card">
 						<div class="layui-card-header">任务内容</div>
 						<div class="layui-card-body">
 		   				   <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
 						</div>
+						<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn" lay-submit="" lay-filter="update">完成任务</button>
+						</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="update">完成任务</button>
 			</div>
 		</div>
 	</form>
