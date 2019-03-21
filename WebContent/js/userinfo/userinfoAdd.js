@@ -4,18 +4,20 @@ layui.config({
 }).use(['form','layer','jquery'],function(){
 	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
-		laypage = layui.laypage;
 		$ = layui.jquery;
-		//加载页面选择框数据
-		$.get("getUserInfo", function(data){
-				var ml=data.ml;
-				for(var i=0;i<ml.length;i++){
-	        		$("#selectId").append("<option value='"+ml[i].id+"'>"+ml[i].userinfoname+"</option>");
-				}
-				form.render();//必须要再次渲染，要不然option显示不出来
-		});
-
- 	form.on("submit(addUser)",function(data){console.log(data.field);
+	/**
+	 * 密码验证
+	 */
+	form.verify({
+		password: [/(.+){6,12}$/, '密码必须6到12位']
+		,repassword: function(value){
+			var passvalue = $('#password').val();
+			if(value != passvalue){
+				return '两次输入的密码不一致!';
+			}
+		}
+	});
+ 	form.on("submit(addUser)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
 	    	  url:'saveUserInfo',

@@ -20,10 +20,9 @@ layui.config({//框架的固定，配置的使用
 	      {field: 'id', title: '学工号', sort: true, fixed: 'left'}
 	      ,{field: 'username', title: '用户名',lign:'center'}
 	      ,{field: 'password', title: '登陆密码', lign:'center'}
-	      ,{field: 'birth', title: '出生年月', lign:'center'} 
-	      ,{field: 'create_time', title: '创建日期', lign:'center'} 
-	      ,{field: 'img', title: '头像',align:'center' }
-	      ,{field: 'status', title: '状态',align:'center',
+	      ,{field: 'birth', title: '角色', lign:'center'} 
+	      ,{field: 'create_time', title: '录入日期', lign:'center'} 
+	      ,{field: 'status', title: '状态',align:'center',width:80,
 	    	  templet: function(d){
     		  if(d.status==1){
     			  return '<span class="layui-badge layui-bg-orange">异常</span>';
@@ -50,6 +49,9 @@ layui.config({//框架的固定，配置的使用
 					  });
 			  }
   };
+  /**
+   * 点击操作后刷新数据
+   */
   var active_op = {
 		  reload : function() {
 			  var demoReload = $('#demoReload');
@@ -72,10 +74,11 @@ layui.config({//框架的固定，配置的使用
 	$(window).one("resize",function(){//基于框架做的
 		$(".add_btn").click(function(){
 			var index = layui.layer.open({
-				title : "【添加信息】",
+				title : "【添加用户信息】",
 				icon: 2,
 				type : 2,
-				area: ['800px', '600px'],
+				skin: 'layui-layer-lan',
+				area: ['600px', '400px'],
 				content : "openUserInfoAdd",//加载某一张页面
 				success : function(layero, index){//等同于js异步提交
 					setTimeout(function(){
@@ -85,7 +88,6 @@ layui.config({//框架的固定，配置的使用
 					},500)
 				}
 			})			
-			layui.layer.full(index);
 		})
 	}).resize();
   

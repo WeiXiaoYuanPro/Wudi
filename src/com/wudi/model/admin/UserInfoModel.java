@@ -40,11 +40,11 @@ public class UserInfoModel extends Model<UserInfoModel> {
 		set("password", password);
 	}
 
-	public void setCreatetime(String create_time) {
+	public void setCreatetime(Date create_time) {
 		set("create_time", create_time);
 	}
 
-	public String getCreatetime() {
+	public Date getCreatetime() {
 		return get("create_time");
 	}
 	public void setBirth(Date birth) {
@@ -125,24 +125,19 @@ public class UserInfoModel extends Model<UserInfoModel> {
 	public static UserInfoModel getById(String id) {
 		return dao.findFirst("select * from " + tableName + " where id = ? ", id);
 	}
-
 	/**
-	 * 
-	 * @Title: save @Description:保存，这里是以分别参数传下来的，你们还可以用对象的信息传下来，喜欢这么写就怎么写 @param @param
-	 *         no @param @param name @param @param cls @param @param
-	 *         sex @param @return 参数 @return boolean 返回类型 @throws
+	 *  功能：保存用户信息
+	 *  修改时间：2019年3月20日22:47:23
+	 *  作者： xiao
 	 */
-	public static boolean save(String id, String username, String password, String create_time, String img,
-			int status) {
+	public static boolean save(String id, String username, String password,int sex) {
 		UserInfoModel model = new UserInfoModel();
-
 		model.setId(id);
 		model.setUsername(username);
 		model.setPassword(password);
-		model.setCreatetime(create_time);
-		model.setImg(img);
-		model.setStatus(status);
-
+		model.setSex(sex);
+		model.setCreatetime(new Date());
+		model.setStatus(0);//默认开启	0:正常，1异常
 		return model.save();
 	}
 
@@ -178,7 +173,7 @@ public class UserInfoModel extends Model<UserInfoModel> {
 		model.setId(id);
 		model.setUsername(username);
 		model.setPassword(password);
-		model.setCreatetime(create_time);
+//		model.setCreatetime(create_time);
 		model.setImg(img);
 		model.setStatus(status);
 		try {

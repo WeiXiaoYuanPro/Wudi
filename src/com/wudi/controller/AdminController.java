@@ -782,21 +782,17 @@ public class AdminController extends Controller {
 
 	/**
 	 *  功能：保存用户信息
-	 *  修改时间：2019年3月20日22:47:23
-	 *  作者： xiao
+	 *  修改时间：2019年3月21日18:47:23
+	   *      作者： xiao
 	 */
 	public void saveUserInfo() {
 		// 获取系统时间
-		Date time = new Date();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String id = StringUtil.getId();
+		String id = getPara("id");
 		String username = getPara("username");
 		String password = getPara("password");
-		String create_time = df.format(time.getTime());
-		String img = getPara("img");
-		String status = getPara("status");
+		int sex = getParaToInt("sex");
 		// 保存数据
-		boolean result = UserInfoModel.save(id, username, password, create_time, img, Integer.parseInt(status));
+		boolean result = UserInfoModel.save(id, username, password,sex);
 
 		setAttr("result", result);
 		renderJson();
