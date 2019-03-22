@@ -1,6 +1,8 @@
 package com.wudi.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,18 +53,21 @@ public class AdminController extends Controller {
 		// 如果不正确，就提示什么不正确？
 		// 如果正确，就正常显示系统页面
 		UserInfoModel m = UserInfoModel.getByID(username);
+		int status=1;
 		// 判断用户名和密码是否正确
 		if (m != null) {
 			if (m.getPassword().equals(password)) {
 				setAttr("result", 0);// 可以登录
-				setCookie("cname", username, 36000);
+				setCookie("cname",m.getUsername(), 36000);
 				setSessionAttr("user", m);
+				status=0;
 			} else {
 				setAttr("result", 1);// 密码错误
 			}
 		} else {
 			setAttr("result", 2);// 用户名不存在
 		}
+		LogModel.saveLog(m.getUsername(), status,"PC端",getRequest());
 		renderJson();
 	}
 
@@ -84,7 +89,7 @@ public class AdminController extends Controller {
 	 *  作者： xiao
 	 */
 	public void index() {
-		setAttr("username", getCookie("cname"));
+		setAttr("user", getSessionAttr("user"));
 		renderFreeMarker("index.html");
 	}
 
@@ -890,17 +895,19 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: students @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
+	 *  功能：打开日志列表页面
+	 *  修改时间：2019年3月22日22:26:30
+	 *  作者： xiao
 	 */
-	public void cmslogin_log() {
-		render("cms1/cmslogin_loginfo.html");
+	public void loginLog() {
+		render("login/loginfo.html");
 	}
-
 	/**
-	 * @Title: queryCms_User @Description: 获取学生信息列表信息（查询），在这里，我们是用异步加载方式，
-	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
+	 *  功能：获取日志信息列表
+	 *  修改时间：2019年3月22日22:26:07
+	 *  作者： xiao
 	 */
-	public void queryCmslogin_Log() {
+	public void queryloginLog() {
 		String key = getPara("key");
 		int limit = getParaToInt("limit");
 		int page = getParaToInt("page");
@@ -911,16 +918,15 @@ public class AdminController extends Controller {
 		setAttr("data", list.getList());
 		renderJson();
 	}
-
 	/**
-	 * 
-	 * @Title: delDepartment @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 *         void 返回类型 @throws
+	 *  功能：删除日志
+	 *  修改时间：2019年3月22日22:25:39
+	 *  作者： xiao
 	 */
-	public void delCmslogin_Log() {
+	public void delloginLog() {
 		String id = getPara("id");
 		// 删除
-		boolean result = LogModel.delCmslogin_LogByID(id);
+		boolean result = LogModel.delLoginLogByID(id);
 		// 返回结果
 		setAttr("result", result);
 		renderJson();

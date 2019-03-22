@@ -172,25 +172,4 @@ layui.config({//框架的固定，配置的使用
           })          
 	  }
 	});
-	
-	//添加
-	//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-	$(window).one("resize",function(){
-		$(".newsAdd_btn").click(function(){
-			var index = layui.layer.open({
-				title : "添加信息",
-				type : 2,
-				content : "openUserInfoAdd",
-				success : function(layero, index){
-					setTimeout(function(){
-						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
-							tips: 3
-						});
-					},500)
-				}
-			})			
-			layui.layer.full(index);
-		})
-	}).resize();
-	
 })

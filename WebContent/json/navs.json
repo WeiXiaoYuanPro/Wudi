@@ -59,7 +59,7 @@
 	{
 			"title" : "用户登录记录",
 			"icon" : "&#xe61c;",
-			"href" : "admin/cmslogin_log",
+			"href" : "admin/loginLog",
 			"spread" : false
 		},
 		{

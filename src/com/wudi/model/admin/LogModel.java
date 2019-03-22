@@ -1,7 +1,14 @@
 package com.wudi.model.admin;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.sql.SQLException;
-import java.util.UUID;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -9,7 +16,6 @@ import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
-import com.mysql.fabric.xmlrpc.base.Data;
 import com.wudi.util.StringUtil;
 /**
  * 学生信息
@@ -24,7 +30,6 @@ public class LogModel extends Model<LogModel> {
 		return get("id");
 	}
 	public void setId(String id) {
-		UUID.randomUUID().toString();
 		set("id", id);
 	}
 	public String getUserName() {
@@ -33,10 +38,10 @@ public class LogModel extends Model<LogModel> {
 	public void setName(String username) {
 		set("username" , username);
 	}
-	public String getLogin_Time() {
+	public Date getLogin_Time() {
 		return get("login_time");
 	}
-	public void setLogin_Time(String login_time){
+	public void setLogin_Time(Date login_time){
 		set("login_time" , login_time);
 	}
 	
@@ -61,15 +66,7 @@ public class LogModel extends Model<LogModel> {
 	public int getstatus(){
 		return get("status");
 	}
-	public String getStatusStr(){
-		int status=getstatus();
-		if(status==1){
-			return "异常";
-		}
-		else{
-			return "正常";
-		}
-	}
+
 	public void setStatus(int status)
 	{
 		set("status",status);
@@ -114,7 +111,7 @@ public class LogModel extends Model<LogModel> {
 	 * @param no
 	 * @return
 	 */
-	public static boolean delCmslogin_LogByID(String id) {
+	public static boolean delLoginLogByID(String id) {
 		try {
 			String delsql="DELETE FROM "+tableName+" WHERE id=?";
 			int iRet=Db.update(delsql, id);
@@ -131,17 +128,104 @@ public class LogModel extends Model<LogModel> {
 			return false;
 		}
 	}
-	
-	public static boolean save(String username,String ip,String addr,String login_time) {
-		LogModel cl = new LogModel();
-		cl.setId(StringUtil.getId());
-		cl.setName(username);
-		cl.setLogin_Time(login_time);
-		cl.setIp(ip);
-		cl.setAddr(addr);
-		cl.setRemark("0");
-		cl.setStatus(0);
-		return cl.save();
+	@Before(Tx.class)
+	private static boolean save(final LogModel m){
+		boolean succeed = Db.tx(new IAtom() {
+					
+					@Override
+					public boolean run() throws SQLException {
+						m.save();
+						return true;
+					}
+					});
+				return succeed;
 	}
 
+	public static boolean save(String name,String ip,String addr,String remark,int status) {
+		LogModel c = new LogModel();
+		c.setId(StringUtil.getId());
+		c.setName(name);
+		c.setLogin_Time(new Date());
+		c.setIp(ip);
+		c.setAddr(addr);
+		c.setRemark(remark);
+		c.setStatus(status);
+		return LogModel.save(c);
+	}
+	public static boolean saveLog(String name,int status,String remark,HttpServletRequest request) {
+		LogModel c = new LogModel();
+		c.setId(StringUtil.getId());
+		c.setName(name);
+		c.setLogin_Time(new Date());
+		c.setIp(getIpAddr(request));
+		c.setAddr(getIpAddr(request));
+		c.setRemark(remark);
+		c.setStatus(status);
+		return LogModel.save(c);
+	}
+	public static String getIpAddr(HttpServletRequest request) {
+		String ip = request.getHeader("X-Forwarded-For");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
+	}
+	public static String getMACAddress(String ip) throws Exception {
+		String line = "";
+		String macAddress = "";
+		final String MAC_ADDRESS_PREFIX = "MAC Address = ";
+		final String LOOPBACK_ADDRESS = "127.0.0.1";
+		// 如果为127.0.0.1,则获取本地MAC地址。
+		if (LOOPBACK_ADDRESS.equals(ip)) {
+			InetAddress inetAddress = InetAddress.getLocalHost();
+			// 貌似此方法需要JDK1.6。
+			byte[] mac = NetworkInterface.getByInetAddress(inetAddress)
+					.getHardwareAddress();
+			// 下面代码是把mac地址拼装成String
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < mac.length; i++) {
+				if (i != 0) {
+					sb.append("-");
+				}
+				// mac[i] & 0xFF 是为了把byte转化为正整数
+				String s = Integer.toHexString(mac[i] & 0xFF);
+				sb.append(s.length() == 1 ? 0 + s : s);
+			}
+			// 把字符串所有小写字母改为大写成为正规的mac地址并返回
+			macAddress = sb.toString().trim().toUpperCase();
+			return macAddress;
+		}
+		// 获取非本地IP的MAC地址
+		try {
+			Process p = Runtime.getRuntime().exec("nbtstat -A " + ip);
+			InputStreamReader isr = new InputStreamReader(p.getInputStream());
+			BufferedReader br = new BufferedReader(isr);
+			while ((line = br.readLine()) != null) {
+				if (line != null) {
+					int index = line.indexOf(MAC_ADDRESS_PREFIX);
+					if (index != -1) {
+						macAddress = line
+								.substring(index + MAC_ADDRESS_PREFIX.length())
+								.trim().toUpperCase();
+					}
+				}
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace(System.out);
+		}
+		return macAddress;
+	}
 }
