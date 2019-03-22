@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>任务信息添加</title>
+	<title>班级信息添加</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,30 +17,39 @@
 <body class="childrenBody">
 	<form class="layui-form layui-form-pane" name="addform">
 		<div class="layui-form-item">
-			<label class="layui-form-label">任务标题</label>
+			<label class="layui-form-label">班级名称</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="title" lay-verify="required" placeholder="请输入任务标题"  autocomplete="off">
+				<input type="text" class="layui-input" name="name" lay-verify="required" placeholder="请输入学校名称"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">截止时间</label>
+			<label class="layui-form-label">年级</label>
 			<div class="layui-input-inline">
-				<input type="text" name="deadline" id="date1" autocomplete="off" class="layui-input">			
+				 <select name="grade">
+		         	<option value="2019">2019</option>
+		            <option value="2018">2018</option>
+		            <option value="2017">2017</option>
+		            <option value="2016">2016</option>
+        		</select>
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">执行者</label>
+			<label class="layui-form-label">所属分院</label>
 			<div class="layui-input-inline">
-			      	<select name="executor"  id="selectId" lay-filter="state">
-			      	<option value="-1">请选择</option>
-      				</select>
+				<input type="text" class="layui-input" name="no" lay-verify="required" placeholder="请输入学校代码"  autocomplete="off">
 			</div>
 		</div>
-		<div class="layui-form-item layui-form-text">
-		    <label class="layui-form-label">任务内容</label>
-		    <div class="layui-input-block">
-		      <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
-		    </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">所属专业</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input" name="no" lay-verify="required" placeholder="请输入学校代码"  autocomplete="off">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">班主任</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input" name="addr" lay-verify="required" placeholder="请输入地址"  autocomplete="off">
+			</div>
 		</div>
 	
 		<div class="layui-form-item">
@@ -51,6 +60,6 @@
 		</div>
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="../js/task/taskAdd.js"></script>
+	<script type="text/javascript" src="../js/cla/classAdd.js"></script>
 </body>
 </html>

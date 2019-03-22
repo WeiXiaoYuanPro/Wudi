@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-03-22 12:52:07
+Date: 2019-03-22 17:56:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,22 +34,20 @@ CREATE TABLE `building` (
 INSERT INTO `building` VALUES ('1553225054784', '三号教学楼', '10.00', '大数据', '001');
 
 -- ----------------------------
--- Table structure for `cms_user`
+-- Table structure for `class`
 -- ----------------------------
-DROP TABLE IF EXISTS `cms_user`;
-CREATE TABLE `cms_user` (
+DROP TABLE IF EXISTS `class`;
+CREATE TABLE `class` (
   `id` varchar(100) NOT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  `create_time` varchar(100) DEFAULT NULL,
-  `img` varchar(100) DEFAULT NULL,
-  `type` int(1) DEFAULT NULL COMMENT '0超级管理员，1普通管理员',
-  `status` int(1) DEFAULT NULL COMMENT '0:正常，1异常',
+  `name` varchar(100) DEFAULT NULL,
+  `user_no` varchar(100) DEFAULT NULL,
+  `major_no` varchar(100) DEFAULT NULL,
+  `grade` int(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of cms_user
+-- Records of class
 -- ----------------------------
 
 -- ----------------------------
@@ -88,7 +86,7 @@ INSERT INTO `depman` VALUES ('1544148462109', '王驰', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462110', '卢英剑', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462131q', '陈糠杰', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462132', '龙明涛', '0', '2019-03-22');
-INSERT INTO `depman` VALUES ('1544148462134', '蒋霜', '0', '2019-03-22');
+INSERT INTO `depman` VALUES ('1544148462134', '蒋霜', '1', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462135', '陈凤朝', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462136', '肖老师', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462137', '梁老师', '0', '2019-03-22');
@@ -97,7 +95,10 @@ INSERT INTO `depman` VALUES ('1544148462139', '李颖鹏', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462178', '李金鹏', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462188', '李洋', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462195', '杨正旺', '1', '2019-03-22');
-INSERT INTO `depman` VALUES ('1553185306063', '刘德华', '1', '2019-03-22');
+INSERT INTO `depman` VALUES ('1553185306063', '庭国继', '0', '2019-03-22');
+INSERT INTO `depman` VALUES ('1553247425605', '吴海', '0', '2019-03-22');
+INSERT INTO `depman` VALUES ('1553247484509', '龙本银', '0', '2019-03-22');
+INSERT INTO `depman` VALUES ('1553247511726', '孟凡胜', '0', '2019-03-22');
 
 -- ----------------------------
 -- Table structure for `login_log`
@@ -352,6 +353,22 @@ CREATE TABLE `task` (
 -- Records of task
 -- ----------------------------
 INSERT INTO `task` VALUES ('1553187551450', '测试', null, '1', '2019-03-22 00:59:11', '2019-03-22 01:16:35', '1544148462136', '2019-03-22 00:00:00');
+INSERT INTO `task` VALUES ('1553246650132', '完成用户信息列表功能', null, '0', '2019-03-22 17:24:10', null, '1544148462136', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553246856599', '完成学校信息列表功能', null, '0', '2019-03-22 17:27:36', null, '1544148462110', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553247287007', '学校楼房信息', null, '0', '2019-03-22 17:34:47', null, '1544148462109', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553247332019', '房间楼房信息', null, '0', '2019-03-22 17:35:32', null, '1544148462178', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553247369707', '部门信息', null, '0', '2019-03-22 17:36:09', null, '1544148462139', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553247387139', '班级信息', null, '0', '2019-03-22 17:36:27', null, '1544148462135', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553247540611', '用户登录记录', null, '0', '2019-03-22 17:39:00', null, '1553247425605', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553247575797', '专业信息', null, '0', '2019-03-22 17:39:35', null, '1553247484509', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553247745421', '主页显示设计', null, '0', '2019-03-22 17:42:25', null, '1553247511726', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553247815525', '主页面设计', null, '0', '2019-03-22 17:43:35', null, '1544148462188', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553247963635', '微信小程序页面设计', null, '0', '2019-03-22 17:46:03', null, '1544148462138', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553248016546', '微信小程序页面设计', null, '0', '2019-03-22 17:46:56', null, '1544148462131q', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553248032170', '微信小程序页面设计', null, '0', '2019-03-22 17:47:12', null, '1544148462132', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553248126508', '微信小程序页面设计', null, '0', '2019-03-22 17:48:46', null, '1553185306063', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553248172436', '高校微信小程序比赛', null, '0', '2019-03-22 17:49:32', null, '1544148462137', '2019-03-31 00:00:00');
+INSERT INTO `task` VALUES ('1553248446040', '模块测试', '每个模块测试一下', '0', '2019-03-22 17:54:06', null, '1553247484509', '2019-03-31 00:00:00');
 
 -- ----------------------------
 -- Table structure for `user_info`

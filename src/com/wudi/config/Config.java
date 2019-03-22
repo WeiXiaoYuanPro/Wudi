@@ -13,6 +13,7 @@ import com.wudi.controller.AdminController;
 import com.wudi.controller.FileController;
 import com.wudi.controller.WeixinController;
 import com.wudi.model.admin.BuildingModel;
+import com.wudi.model.admin.ClassModel;
 import com.wudi.model.admin.DTModel;
 import com.wudi.model.admin.DepartmentModel;
 import com.wudi.model.admin.DepmanModel;
@@ -84,7 +85,7 @@ public class Config extends JFinalConfig {
 			
 			arpMysql.addMapping("school", SchoolModel.class);//学生表
 			arpMysql.addMapping("major", MajorModel.class);//专业表
-			
+			arpMysql.addMapping("class", ClassModel.class);//专业表
 			arpMysql.addMapping("stucontatc", StuContatcModel.class);//学生联系信息
 			
 			arpMysql.addMapping("task", TaskModel.class);//任务

@@ -15,6 +15,7 @@ import com.wudi.bean.TDvo;
 import com.wudi.bean.TDvoTwo;
 import com.wudi.interceptor.AdminInterceptor;
 import com.wudi.model.admin.BuildingModel;
+import com.wudi.model.admin.ClassModel;
 import com.wudi.model.admin.DTModel;
 import com.wudi.model.admin.DepartmentModel;
 import com.wudi.model.admin.DepmanModel;
@@ -242,7 +243,9 @@ public class AdminController extends Controller {
 		// 获取页面查询的关键字
 		String key = getPara("key");
 		// 开始查询
-		Page<DepartmentModel> Department = DepartmentModel.getList(1, 10, key);
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<DepartmentModel> Department = DepartmentModel.getList(page, limit, key);
 		// 将查到的学生信息列表放到infos，给页面
 		setAttr("infos", Department);
 		// 返回格式是json
@@ -353,7 +356,9 @@ public class AdminController extends Controller {
 		// 获取页面查询的关键字
 		String key = getPara("key");
 		// 开始查询
-		Page<MajorModel> Major = MajorModel.getList(1, 10, key);
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<MajorModel> Major = MajorModel.getList(page, limit, key);
 		// 将查到的专业信息列表放到infos，给页面
 		setAttr("infos", Major);
 		// 返回格式是json
@@ -441,6 +446,119 @@ public class AdminController extends Controller {
 		String id = getPara("id");
 		// 删除
 		boolean result = MajorModel.delMajorByID(id);
+		// 返回结果
+		setAttr("result", result);
+		renderJson();
+	}
+/***************************************************************/
+	/**
+	 *  功能：打开专业信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void classes() {
+		render("cla/classinfo.html");
+	}
+
+	/**
+	 *  功能：获取班级信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void queryClass() {
+		// 获取页面查询的关键字
+		String key = getPara("key");
+		// 开始查询
+		int limit = getParaToInt("limit");
+		int page = getParaToInt("page");
+		Page<ClassModel> c = ClassModel.getList(page, limit, key);
+		// 将查到的专业信息列表放到infos，给页面
+		setAttr("infos", c);
+		// 返回格式是json
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", c.getTotalRow());
+		setAttr("data", c.getList());
+		renderJson();
+
+	}
+
+	/**
+	 *  功能：打开添加班级信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void openClassAdd() {
+		render("cla/classAdd.html");
+	}
+
+	/**
+	 *  功能：获取班级信息对象
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void getClasses() {
+		// 接收页面数据
+		String id = getPara("id");
+		// 根据条件查询数据库的数据
+		ClassModel c = ClassModel.getById(id);
+		// 放到编辑页面上去
+		setAttr("m", c);
+		// 返回格式是json
+		renderJson();
+	}
+	/**
+	 *  功能：打开修改班级信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void openClassEdit() {
+		// 接收页面数据
+		String id = getPara("id");
+		setAttr("id", id);
+		renderFreeMarker("cla/classEdit.html");
+	}
+	/**
+	 *  功能：保存班级信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void saveClass() {
+		String name = getPara("name");
+		String remark = getPara("remark");
+		String no = getPara("no");
+		// 保存数据
+		boolean result = ClassModel.save(name,remark,no);
+
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 *  功能：更新班级信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void updateClass() {
+		String id = getPara("id");
+		String name = getPara("name");
+		String remark = getPara("remark");
+		String no = getPara("no");
+
+		boolean result = ClassModel.update(id,name,remark,no);
+
+		setAttr("result", result);
+		renderJson();
+	}
+
+	/**
+	 *  功能：删除班级信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void delClass() {
+		String id = getPara("id");
+		// 删除
+		boolean result = ClassModel.delByID(id);
 		// 返回结果
 		setAttr("result", result);
 		renderJson();

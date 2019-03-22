@@ -46,7 +46,7 @@
 		},{
 			"title" : "班级信息列表",
 			"icon" : "&#xe61c;",
-			"href" : "admin/stuCla",
+			"href" : "admin/classes",
 			"spread" : false
 		}
 	]

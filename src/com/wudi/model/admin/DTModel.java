@@ -44,7 +44,7 @@ public class DTModel extends Model<DTModel> {
 	* @throws
 	 */
 		public static List<DTModel> getList() {
-			String sql="select * from "+tableName+"";
+			String sql="select * from "+tableName+" where status=0";
 			List<DTModel> list=dao.find(sql);
 			return list;
 		}
