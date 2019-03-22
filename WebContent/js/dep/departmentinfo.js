@@ -11,17 +11,15 @@ layui.config({
 	  table.render({
 	    elem: '#demo',//渲染对象
 	    height: 'full-88',//表格高度
-	    url: 'querySchools', //数据接口
+	    url: 'queryDepartment', //数据接口
 	    where: {key: ''},//给后台传的参数
 	    page: true, //开启分页
 	    limit: 10,//每页显示信息条数
 	    id: 'testReload',
 	    cols: [[ //表头
 	      {field: 'id', title: 'ID', sort: true, fixed: 'left'}
-	      ,{field: 'schoolname', title: '学校名称',align:'center'}
-	      ,{field: 'no', title: '学校代码', align:'center'}
-	      ,{field: 'addr', title: '学校地址', align:'center'} 
-	      ,{field: 'img', title: '图标',align:'center' }
+	      ,{field: 'no', title: '部门编号', align:'center'}
+	      ,{field: 'name', title: '部门名称', align:'center'} 
 	      ,{field: 'remark', title: '备注',align:'center' }
 	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
 	    ]]
@@ -58,7 +56,7 @@ layui.config({
 				type : 2,
 				skin: 'layui-layer-lan',
 				area: ['800px', '600px'],
-				content : "openSchoolAdd",
+				content : "openDepartmentAdd",
 				success : function(layero, index){
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -87,7 +85,7 @@ layui.config({
               type : 2,
               skin: 'layui-layer-lan',
               area: ['800px', '600px'],
-              content : "openSchoolEdit?id="+data.id,
+              content : "openDepartmentEdit?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){
                       layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {

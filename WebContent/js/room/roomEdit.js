@@ -8,9 +8,8 @@ layui.config({
 		$ = layui.jquery;
 		var id=$("input[name='id']").val();
 		//加载页面数据
-		$.get("getclassroom?id="+id, function(data){
+		$.get("getRoom?id="+id, function(data){
 			var d=data.m;
-			
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
 	        	$("input[name='building_id']").val(d.building_id);
@@ -42,7 +41,7 @@ layui.config({
  	form.on("submit(update)",function(data){console.log(data.field);
  		var index;
  		 $.ajax({//异步请求返回给后台
-	    	  url:'updateClassroom',
+	    	  url:'updateRoom',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',

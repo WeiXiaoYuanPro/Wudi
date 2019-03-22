@@ -10,7 +10,7 @@ layui.config({//框架的固定，配置的使用
 //==================一个table实例================================//table怎么设置
 	  table.render({
 	    elem: '#demo',//渲染对象
-	    height: 400,//表格高度
+	    height: 'full-88',//表格高度
 	    url: 'queryBuilding', //数据接口
 	    where: {key: ''},//给后台传的参数
 	    page: true, //开启分页
@@ -19,7 +19,7 @@ layui.config({//框架的固定，配置的使用
 	    cols: [[ //表头
 	      {field: 'id', title: 'ID', sort: true, fixed: 'left'}
 	      ,{field: 'name', title: '楼房名称',lign:'center'}
-	      ,{field: 'addr', title: '经度纬度', lign:'center'}
+	      ,{field: 'schoolname', title: '所属学校', lign:'center'}
 	      ,{field: 'remark', title: '备注', lign:'center'} 
 	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
 	    ]]

@@ -2,6 +2,7 @@ package com.wudi.model.admin;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Map;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -12,18 +13,34 @@ import com.jfinal.plugin.activerecord.tx.Tx;
 import com.wudi.util.StringUtil;
 
 public class UserInfoModel extends Model<UserInfoModel> {
+
 	private static final long serialVersionUID = 1L;
 	public static final String tableName = "user_info";
 	public static final UserInfoModel dao = new UserInfoModel();
-
+	//本方法是将自定义属性添加到json中
+	@Override
+	protected Map<String, Object> _getAttrs() {
+		Map<String, Object> attrs=super._getAttrs();
+		Object id=attrs.get("id");
+		if(id!=null) {
+			if(id.toString().contains("001")) {
+				attrs.put("role","教师");//自定义属性
+			}else {
+				attrs.put("role","学生");
+			}
+		}
+		
+		return attrs;
+	}
 	public String getId() {
 		return get("id");
 	}
-
+	public String getRole() {
+		return get("role");
+	}
 	public void setId(String id) {
 		set("id", id);
 	}
-
 	public String getUsername() {
 		return get("username");
 	}
@@ -85,6 +102,7 @@ public class UserInfoModel extends Model<UserInfoModel> {
 		set("remark", remark);
 	}
 	
+
 	/**
 	 * 根据username查找正常用户
 	 * @param username

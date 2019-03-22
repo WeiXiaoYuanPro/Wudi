@@ -16,9 +16,10 @@ import com.wudi.bean.TDvoTwo;
 import com.wudi.interceptor.AdminInterceptor;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.DTModel;
+import com.wudi.model.admin.DepartmentModel;
 import com.wudi.model.admin.DepmanModel;
-import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.LogModel;
+import com.wudi.model.admin.MajorModel;
 import com.wudi.model.admin.RoleInfoModel;
 import com.wudi.model.admin.RoomModel;
 import com.wudi.model.admin.SchoolModel;
@@ -223,152 +224,243 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
-
 	/**
-	 * @Title: students @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
-	 */
-	public void students() {
-		render("stu/studentinfo.html");
+	 *  功能：打开楼房信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void department() {
+		render("dep/departmentinfo.html");
 	}
 
 	/**
-	 * @Title: dormitory @Description: 打开学生宿舍信息列表页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void dormitory() {
-		render("dor/dormitoryinfo.html");
-	}
-
-	/**
-	 * @Title: queryDormitory @Description: 获取学生宿舍信息列表信息（查询），在这里，我们是用异步加载方式，
-	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
-	 */
-	public void queryDormitory() {
+	 *  功能：获取部门信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void queryDepartment() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
 		// 开始查询
-		Page<DormitoryModel> Dormitory = DormitoryModel.getList(1, 10, key);
+		Page<DepartmentModel> Department = DepartmentModel.getList(1, 10, key);
 		// 将查到的学生信息列表放到infos，给页面
-		setAttr("infos", Dormitory);
+		setAttr("infos", Department);
 		// 返回格式是json
 		setAttr("code", 0);
 		setAttr("msg", "你好！");
-		setAttr("count", Dormitory.getTotalRow());
-		setAttr("data", Dormitory.getList());
+		setAttr("count", Department.getTotalRow());
+		setAttr("data", Department.getList());
 		renderJson();
 
 	}
 
 	/**
-	 * @Title: openDormitoryAdd @Description:打开添加信息页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void openDormitoryAdd() {
-		render("dor/dormitoryAdd.html");
+	 *  功能：打开添加部门信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void openDepartmentAdd() {
+		render("dep/departmentAdd.html");
 	}
 
 	/**
-	 * @Title: getdormitory @Description:获取需要修改的学生宿舍信息 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void getdormitory() {
+	 *  功能：获取部门信息对象
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void getDepartment() {
 		// 接收页面数据
 		String id = getPara("id");
 		// 根据条件查询数据库的数据
-		DormitoryModel Dormitory = DormitoryModel.getById(id);
+		DepartmentModel Department = DepartmentModel.getById(id);
 		// 放到编辑页面上去
-		setAttr("m", Dormitory);
+		setAttr("m", Department);
 		// 返回格式是json
 		renderJson();
 	}
-
 	/**
-	 * @Title: openDormitoryEdit @Description:打开修改信息页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void openDormitoryEdit() {
+	 *  功能：打开修改部门信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void openDepartmentEdit() {
 		// 接收页面数据
 		String id = getPara("id");
 		setAttr("id", id);
-		renderFreeMarker("dor/dormitoryEdit.html");
+		renderFreeMarker("dep/departmentEdit.html");
 	}
-
 	/**
-	 * @Title: saveDormitory @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 *         参数 @return void 返回类型 @throws
-	 */
-	public void saveDormitory() {
-		String id = getPara("id");
+	 *  功能：保存部门信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void saveDepartment() {
 		String name = getPara("name");
-		String building_id = getPara("building_id");
-		int capacity = getParaToInt("capacity");
-		int type = getParaToInt("type");
-		int status = getParaToInt("status");
-		String latitud = getPara("latitude");
-		BigDecimal latitude = new BigDecimal(latitud);
-		latitude = latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
-		String longitud = getPara("longitude");
-		BigDecimal longitude = new BigDecimal(longitud);
-		longitude = longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
-
+		String remark = getPara("remark");
+		String no = getPara("no");
 		// 保存数据
-		boolean result = DormitoryModel.save(id, name, building_id, capacity, type, status, latitude, longitude);
+		boolean result = DepartmentModel.save(name,remark,no);
 
 		setAttr("result", result);
 		renderJson();
 	}
-
 	/**
-	 * 
-	 * @Title: updateDormitory @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 *         参数 @return void 返回类型 @throws
-	 */
-	public void updateDormitory() {
+	 *  功能：更新部门信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void updateDepartment() {
 		String id = getPara("id");
 		String name = getPara("name");
-		String building_id = getPara("building_id");
-		int capacity = getParaToInt("capacity");
-		int type = getParaToInt("type");
-		int status = getParaToInt("status");
-		String latitud = getPara("latitude");
-		BigDecimal latitude = new BigDecimal(latitud);
-		latitude = latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
-		String longitud = getPara("longitude");
-		BigDecimal longitude = new BigDecimal(longitud);
-		longitude = longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
+		String remark = getPara("remark");
+		String no = getPara("no");
 
-		boolean result = DormitoryModel.update(id, name, building_id, capacity, type, status, latitude, longitude);
+		boolean result = DepartmentModel.update(id,name,remark,no);
 
 		setAttr("result", result);
 		renderJson();
 	}
 
 	/**
-	 * 
-	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 *         void 返回类型 @throws
-	 */
-	public void delDormitory() {
+	 *  功能：删除部门信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void delDepartment() {
 		String id = getPara("id");
 		// 删除
-		boolean result = DormitoryModel.delDormitoryByID(id);
+		boolean result = DepartmentModel.delDepartmentByID(id);
+		// 返回结果
+		setAttr("result", result);
+		renderJson();
+	}
+/***************************************************************/
+	/**
+	 *  功能：打开专业信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void major() {
+		render("major/majorinfo.html");
+	}
+
+	/**
+	 *  功能：获取专业信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void queryMajor() {
+		// 获取页面查询的关键字
+		String key = getPara("key");
+		// 开始查询
+		Page<MajorModel> Major = MajorModel.getList(1, 10, key);
+		// 将查到的专业信息列表放到infos，给页面
+		setAttr("infos", Major);
+		// 返回格式是json
+		setAttr("code", 0);
+		setAttr("msg", "你好！");
+		setAttr("count", Major.getTotalRow());
+		setAttr("data", Major.getList());
+		renderJson();
+
+	}
+
+	/**
+	 *  功能：打开添加专业信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void openMajorAdd() {
+		render("major/majorAdd.html");
+	}
+
+	/**
+	 *  功能：获取专业信息对象
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void getMajor() {
+		// 接收页面数据
+		String id = getPara("id");
+		// 根据条件查询数据库的数据
+		MajorModel Major = MajorModel.getById(id);
+		// 放到编辑页面上去
+		setAttr("m", Major);
+		// 返回格式是json
+		renderJson();
+	}
+	/**
+	 *  功能：打开修改专业信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void openMajorEdit() {
+		// 接收页面数据
+		String id = getPara("id");
+		setAttr("id", id);
+		renderFreeMarker("major/majorEdit.html");
+	}
+	/**
+	 *  功能：保存专业信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void saveMajor() {
+		String name = getPara("name");
+		String remark = getPara("remark");
+		String no = getPara("no");
+		// 保存数据
+		boolean result = MajorModel.save(name,remark,no);
+
+		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 *  功能：更新专业信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void updateMajor() {
+		String id = getPara("id");
+		String name = getPara("name");
+		String remark = getPara("remark");
+		String no = getPara("no");
+
+		boolean result = MajorModel.update(id,name,remark,no);
+
+		setAttr("result", result);
+		renderJson();
+	}
+
+	/**
+	 *  功能：删除专业信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void delMajor() {
+		String id = getPara("id");
+		// 删除
+		boolean result = MajorModel.delMajorByID(id);
 		// 返回结果
 		setAttr("result", result);
 		renderJson();
 	}
 
+/**************************************************************/
 	/**
-	 * @Title: building @Description: 打开学校楼房信息列表页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
+	 *  功能：打开楼房信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void building() {
 		render("bui/buildinginfo.html");
 	}
 
 	/**
-	 * @Title: queryBuilding @Description: 获取学校楼房信息列表信息（查询），在这里，我们是用异步加载方式，
-	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
-	 */
+	 *  功能：获取楼房信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void queryBuilding() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
@@ -383,21 +475,28 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * 返回类型 @throws
-	 */
+	 *  功能：打开添加楼房信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void openBuildingAdd() {
 		render("bui/buildingAdd.html");
 	}
-
 	/**
-	 * 获取 @Title: getSchoolModels @Description:??? @param 参数 @return void
-	 * 返回类型 @throws
-	 */
+	 *  功能：获取学校信息列表，生成下列列表选择框
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void getSchoolModels() {
 		List<SchoolModel> list = SchoolModel.getListAll();
 		setAttr("ml", list);
 		renderJson();
 	}
+	/**
+	 *  功能：获取楼房信息对象，为编辑楼房信息使用
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void getbuilding() {
 		// 接收页面数据
 		String id = getPara("id");
@@ -413,75 +512,64 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: opeBuildingEdit @Description:打开修改信息页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
+	 *  功能：打开修改楼房信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void openBuildingEdit() {
 		// 接收页面数据
 		String id = getPara("id");
 		setAttr("id", id);
 		renderFreeMarker("bui/buildingEdit.html");
 	}
-
 	/**
-	 * @Title: saveBuilding @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 *         参数 @return void 返回类型 @throws
-	 */
+	 *  功能：保存楼房信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void saveBuilding() {
 		String name = getPara("name");
-		String schoolzone_id = getPara("schoolzone_id");
+		String school_id = getPara("school_id");
 		String addr = getPara("addr");
 		String remark = getPara("remark");
 		// 保存数据
-		boolean result = BuildingModel.save(name, addr, remark, schoolzone_id);
+		boolean result = BuildingModel.save(name, addr, remark, school_id);
 		setAttr("result", result);
 		renderJson();
 	}
 
 	/**
-	 * 
-	 * @Title: updateBuildingt @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 *         参数 @return void 返回类型 @throws
-	 */
+	 *  功能：更新楼房信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void updateBuilding() {
 		String id = getPara("id");
 		String name = getPara("name");
-		String schoolzone_id = getPara("schoolzone_id");
+		String school_id = getPara("school_id");
 		String addr = getPara("addr");
 		String remark = getPara("remark");
 
-		boolean result = BuildingModel.update(id, name, addr, remark, schoolzone_id);
+		boolean result = BuildingModel.update(id, name, addr, remark, school_id);
 
 		setAttr("result", result);
 		renderJson();
 	}
-
 	/**
-	 * 
-	 * @Title: delBuilding @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 *         void 返回类型 @throws
-	 */
-	public void delBuilding() {
-		String id = getPara("id");
-		// 删除
-		boolean result = BuildingModel.delBuildingByID(id);
-		// 返回结果
-		setAttr("result", result);
-		renderJson();
-	}
-	/**
-	 * @Title: classroom @Description: 打开教室信息列表页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void classroom() {
-		render("cla/classroominfo.html");
+	 *  功能：打开房间信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void room() {
+		render("room/roominfo.html");
 	}
 
 	/**
-	 * @Title: queryClass @Description: 获取学生宿舍信息列表信息（查询），在这里，我们是用异步加载方式，
-	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
-	 */
-	public void queryClassroom() {
+	 *  功能：获取房间列表信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void queryRooms() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
 		int limit = getParaToInt("limit");
@@ -495,53 +583,49 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: openDormitoryAdd @Description:打开添加信息页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void openClassroomAdd() {
-		render("cla/classroomAdd.html");
+	 *  功能：打开添加房间信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void openRoomAdd() {
+		render("room/roomAdd.html");
 	}
 
 	/**
-	 * @Title: getdormitory @Description:获取需要修改的学生宿舍信息 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void getclassroom() {
+	 *  功能：获取房间信息对象
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void getRoom() {
 		// 接收页面数据
 		String id = getPara("id");
 		// 根据条件查询数据库的数据
-		RoomModel Classroom = RoomModel.getById(id);
+		RoomModel room = RoomModel.getById(id);
 		// 放到编辑页面上去
-		setAttr("m", Classroom);
+		setAttr("m", room);
 		List<BuildingModel> list = BuildingModel.getListAll();
 		setAttr("cl", list);
 		// 返回格式是json
 		renderJson();
 
 	}
-
-	public void getClassroom() {
-		List<BuildingModel> list = BuildingModel.getListAll();
-		setAttr("cl", list);
-		renderJson();
-	}
-
 	/**
-	 * @Title: openDormitoryEdit @Description:打开修改信息页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
-	public void openClassroomEdit() {
+	 *  功能：打开修改房间信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void openRoomEdit() {
 		// 接收页面数据
 		String id = getPara("id");
 		setAttr("id", id);
-		renderFreeMarker("cla/classroomEdit.html");
+		renderFreeMarker("room/roomEdit.html");
 	}
-
 	/**
-	 * @Title: saveDormitory @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param
-	 *         参数 @return void 返回类型 @throws
-	 */
-	public void saveClassroom() {
+	 *  功能：保存房间信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void saveRoom() {
 		String id = getPara("id");
 		String name = getPara("name");
 		String building_id = getPara("building_id");
@@ -563,11 +647,11 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * 
-	 * @Title: updateDormitory @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 *         参数 @return void 返回类型 @throws
-	 */
-	public void updateClassroom() {
+	 *  功能：更新房间信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void updateRoom() {
 		String id = getPara("id");
 		String name = getPara("name");
 		String building_id = getPara("building_id");
@@ -583,20 +667,6 @@ public class AdminController extends Controller {
 
 		boolean result = RoomModel.update(id, name, building_id, capacity, type, status, latitude, longitude);
 
-		setAttr("result", result);
-		renderJson();
-	}
-
-	/**
-	 * 
-	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
-	 *         void 返回类型 @throws
-	 */
-	public void delClassroom() {
-		String id = getPara("id");
-		// 删除
-		boolean result = RoomModel.delClassroomByID(id);
-		// 返回结果
 		setAttr("result", result);
 		renderJson();
 	}
@@ -726,7 +796,7 @@ public class AdminController extends Controller {
 
 	/**
 	 * 
-	 * @Title: delDormitory @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
+	 * @Title: delDepartment @Description:删除信息，这个我们是根据唯一主键id来删除的。 @param 参数 @return
 	 *         void 返回类型 @throws
 	 */
 	public void delCmslogin_Log() {
@@ -853,6 +923,17 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
+	/**
+	 *  功能：打开修改用户密码页面
+	 *  修改时间：2019年3月22日22:47:23
+	 *  作者： xiao
+	 */
+	public void openUpdateUserPassword() {
+		String id = getPara("id");
+		UserInfoModel m = UserInfoModel.getByID(id);
+		setAttr("user", m);
+		renderFreeMarker("userinfo/uppassword.html");
+	}
 /****************************************************************
 	/**
 	 * @Title: role @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
@@ -961,16 +1042,19 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: schools @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
+	 *  功能：打开学校信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
 	 */
-	public void schools() {
+	public void school() {
 		render("school/schoolinfo.html");
 	}
 
 	/**
-	 * @Title: querySchools @Description: 获取学校信息列表信息（查询），在这里，我们是用异步加载方式，
-	 *         就是说，页面先打开了，然后在用js向后台获取数据，这个就是。 @param 参数 @return void 返回类型 @throws
-	 */
+	 *  功能：获取学校信息列表
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void querySchools() {
 		// 获取页面查询的关键字
 		String key = getPara("key");
@@ -985,17 +1069,19 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: openSchoolAdd @Description:打开添加信息页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
+	 *  功能：打开添加学校信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void openSchoolAdd() {
 		render("school/schoolAdd.html");
 	}
 
 	/**
-	 * @Title: getSchool @Description:获取需要修改的学校信息 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
+	 *  功能：获取学校对象信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void getSchool() {
 		// 获取需要修改的学校信息
 		String id = getPara("id");
@@ -1008,9 +1094,10 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: openSchoolEdit @Description:打开修改信息页面 @param 参数 @return void
-	 *         返回类型 @throws
-	 */
+	 *  功能：打开修改学校信息页面
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void openSchoolEdit() {
 		// 获取页面
 		String id = getPara("id");
@@ -1019,9 +1106,10 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: saveSchool @Description:数据保存，在添加信息页面上，点击保存的那个按键做的事情 @param 参数 @return
-	 *         void 返回类型 @throws
-	 */
+	 *  功能：保存学校信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void saveSchool() {
 		String id = getPara("id");
 		String schoolname = getPara("schoolname");
@@ -1035,9 +1123,10 @@ public class AdminController extends Controller {
 	}
 
 	/**
-	 * @Title: updateSchool @Description:更新信息，就是修改信息页面，点击保存的那个按钮做的事情 @param
-	 *         参数 @return void 返回类型 @throws
-	 */
+	 *  功能：修改学校信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
 	public void updateSchool() {
 		String id = getPara("id");
 		String schoolname = getPara("schoolname");
@@ -1049,17 +1138,6 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
-
-	/**
-	 * @Title:delSchool @Description:删除信息，根据主键id进行删除
-	 */
-	public void delSchool() {
-		String id = getPara("id");
-		boolean result = SchoolModel.delSchoolById(id);
-		setAttr("result", result);
-		renderJson();
-	}
-
 	/**
 	 *  功能：打开开发者列表页面
 	 *  修改时间：2019年3月21日22:47:23

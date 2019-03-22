@@ -14,9 +14,10 @@ import com.wudi.controller.FileController;
 import com.wudi.controller.WeixinController;
 import com.wudi.model.admin.BuildingModel;
 import com.wudi.model.admin.DTModel;
+import com.wudi.model.admin.DepartmentModel;
 import com.wudi.model.admin.DepmanModel;
-import com.wudi.model.admin.DormitoryModel;
 import com.wudi.model.admin.LogModel;
+import com.wudi.model.admin.MajorModel;
 import com.wudi.model.admin.RoleInfoModel;
 import com.wudi.model.admin.RoomModel;
 import com.wudi.model.admin.SchoolModel;
@@ -72,16 +73,17 @@ public class Config extends JFinalConfig {
 		arpMysql.setShowSql(showSql);
 		{
 			//将数据库表，绑定到这来来，注意，表名和类要相对应
-			arpMysql.addMapping("dormitory", DormitoryModel.class);//宿舍表
+			arpMysql.addMapping("department", DepartmentModel.class);//宿舍表
 			arpMysql.addMapping("stu_family_info", StuFamilyModel.class);//学生家庭信息表
 			arpMysql.addMapping("building", BuildingModel.class);//学校楼房信息表
-			arpMysql.addMapping("classroom", RoomModel.class);//教室信息表
-			arpMysql.addMapping("cmslogin_log", LogModel.class);//登陆日志信息表
+			arpMysql.addMapping("room", RoomModel.class);//教室信息表
+			arpMysql.addMapping("login_log", LogModel.class);//登陆日志信息表
 			arpMysql.addMapping("user_info", UserInfoModel.class);//用户信息表
 
 			arpMysql.addMapping("role_info", RoleInfoModel.class);//学生表
 			
 			arpMysql.addMapping("school", SchoolModel.class);//学生表
+			arpMysql.addMapping("major", MajorModel.class);//专业表
 			
 			arpMysql.addMapping("stucontatc", StuContatcModel.class);//学生联系信息
 			

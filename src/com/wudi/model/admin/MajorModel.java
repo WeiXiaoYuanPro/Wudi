@@ -1,7 +1,6 @@
 package com.wudi.model.admin;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -11,42 +10,37 @@ import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
 import com.wudi.util.StringUtil;
 
-public class BuildingModel extends Model<BuildingModel> {
+public class MajorModel extends Model<MajorModel> {
 	private static final long serialVersionUID = 1L;
-	public static final String tableName = "building";
+	public static final String tableName = "major";
 	public String getId() {
 		return get("id");
 	}
 	public void setId(String id) {
 		set("id", id);
 	}
+	
 	public String getName() {
 		return get("name");
 	}
 	public void setName(String name) {
 		set("name" , name);
 	}
-	public String getAddr() {
-		return get("addr");
+	public String getDep_no() {
+		return get("dep_no");
 	}
-	public void setAddr(String addr) {
-		set("addr" , addr);
+	public void setDep_no(String dep_no) {
+		set("dep_no" , dep_no);
 	}
 	public String getRemark() {
 		return get("remark");
 	}
-	public void setRemark(String remark) {
-		set("remark" , remark);
-	}
-	public String getSchool_id() {
-		return get("school_id");
-	}
-	public void setSchool_id(String school_id) {
-		set("school_id" , school_id);
+	public void setRemark(String Remark) {
+		set("remark" , Remark);
 	}
 	
 	//因为经常用他，所以干脆给他一个静态的，让他一直存在，免得我们每次new
-		public static final BuildingModel dao = new BuildingModel();
+		public static final MajorModel dao = new MajorModel();
 		
 		/**
 		 * 分页查询显示，就是查找
@@ -55,12 +49,12 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * @param key
 		 * @return
 		 */
-		public static Page<BuildingModel> getList(int pageNumber, int pageSize,String key) {
-			String sele_sql="SELECT  *  ";
+		public static Page<MajorModel> getList(int pageNumber, int pageSize,String key) {
+			String sele_sql="select * ";
 			StringBuffer from_sql=new StringBuffer();
-			from_sql.append("from ").append(tableName).append(" AS a LEFT JOIN ").append(SchoolModel.tableName).append(" AS b ON a.school_id = b.id ");
+			from_sql.append("from ").append(tableName);
 			if(!StringUtil.isBlankOrEmpty(key)) {
-				from_sql.append(" where a.name like '%"+key+"%'");
+				from_sql.append(" where name like '%"+key+"%'");
 			}
 			return dao.paginate(pageNumber,pageSize,sele_sql,from_sql.toString());
 		}  
@@ -69,24 +63,15 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * @param id
 		 * @return
 		 */
-		public static BuildingModel getById(Object id){
+		public static MajorModel getById(Object id){
 			return dao.findFirst("select *  from " + tableName + " where id = ? " , id);
 		}
-	/**
-	 * 
-	* @Title: save
-	* @Description:保存，这里是以分别参数传下来的，你们还可以用对象的信息传下来，喜欢这么写就怎么写
-	* @param @return    参数
-	* @return boolean    返回类型
-	* @throws
-	 */
-		public static boolean save(String name,String addr,String remark,String school_id) {
-			BuildingModel s=new BuildingModel();
-			s.setAddr(addr);
-			s.setName(name);
-			s.setRemark(remark);
-			s.setSchool_id(school_id);
+		public static boolean save(String name,String Remark,String no) {
+			MajorModel s=new MajorModel();
 			s.setId(StringUtil.getId());
+			s.setName(name);
+			s.setDep_no(no);
+			s.setRemark(Remark);
 			return s.save();
 		}
 		
@@ -97,12 +82,12 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * @return
 		 */
 		@Before(Tx.class)
-		public static boolean save(final BuildingModel building){
+		public static boolean save(final MajorModel dormitory){
 			boolean succeed = Db.tx(new IAtom() {
 						
 						@Override
 						public boolean run() throws SQLException {
-							building.save();
+							dormitory.save();
 							return true;
 						}
 						});
@@ -111,15 +96,15 @@ public class BuildingModel extends Model<BuildingModel> {
 		/**
 		 * 更新
 		 */
-		public static boolean update(String id,String name,String addr,String remark,String school_id){
-			BuildingModel model=BuildingModel.getById(id);
+		public static boolean update(String id,String name,String Remark,String no){
+			MajorModel model=MajorModel.getById(id);
 			if(model==null){
 				return false;
 			}
-			model.setAddr(addr);
+			model.setId(id);
 			model.setName(name);
-			model.setRemark(remark);
-			model.setSchool_id(school_id);
+			model.setDep_no(no);
+			model.setRemark(Remark);
 			try {
 				model.update();
 			} catch (Exception e) {
@@ -132,7 +117,7 @@ public class BuildingModel extends Model<BuildingModel> {
 		 * @param no
 		 * @return
 		 */
-		public static boolean delBuildingByID(String id) {
+		public static boolean delMajorByID(String id) {
 			try {
 				String delsql="DELETE FROM "+tableName+" WHERE id=?";
 				int iRet=Db.update(delsql, id);
@@ -149,11 +134,4 @@ public class BuildingModel extends Model<BuildingModel> {
 				return false;
 			}
 		}
-		
-		public static List<BuildingModel> getListAll() {
-			StringBuffer sql=new StringBuffer();
-			sql.append("select *  from ").append(tableName);
-			return dao.find(sql.toString());
-		}
-		
 }

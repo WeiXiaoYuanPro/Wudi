@@ -18,19 +18,35 @@
 		{
 			"title" : "学校信息列表",
 			"icon" : "&#xe61c;",
-			"href" : "admin/schools",
+			"href" : "admin/school",
 			"spread" : false
 		},
 		{
-			"title" : "教室信息列表",
-			"icon" : "&#xe609;",
-			"href" : "admin/classroom",
-			"spread" : false,
-			"target" : "_blank"
-		},{
-			"title" : "任务列表",
+			"title" : "学校楼房信息列表",
 			"icon" : "&#xe61c;",
-			"href" : "admin/openTaskList",
+			"href" : "admin/building",
+			"spread" : false
+		},
+		{
+			"title" : "房间/教室信息列表",
+			"icon" : "&#xe61c;",
+			"href" : "admin/room",
+			"spread" : false
+		},
+		{
+			"title" : "部门信息列表",
+			"icon" : "&#xe609;",
+			"href" : "admin/department",
+			"spread" : false
+		},{
+			"title" : "专业信息列表",
+			"icon" : "&#xe61c;",
+			"href" : "admin/major",
+			"spread" : false
+		},{
+			"title" : "班级信息列表",
+			"icon" : "&#xe61c;",
+			"href" : "admin/stuCla",
 			"spread" : false
 		}
 	]
@@ -47,12 +63,6 @@
 			"spread" : false
 		},
 		{
-			"title" : "角色列表",
-			"icon" : "&#xe61c;",
-			"href" : "admin/role",
-			"spread" : false
-		},
-		{
 			"title" : "开发人员信息",
 			"icon" : "&#xe609;",
 			"href" : "admin/openDepms",
@@ -61,6 +71,12 @@
 			"title" : "任务列表",
 			"icon" : "&#xe61c;",
 			"href" : "admin/openTaskList",
+			"spread" : false
+		},
+		{
+			"title" : "角色列表",
+			"icon" : "&#xe61c;",
+			"href" : "admin/role",
 			"spread" : false
 		},
 		{

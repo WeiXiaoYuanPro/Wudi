@@ -18,10 +18,10 @@ layui.config({//框架的固定，配置的使用
 	    id: 'testReload',
 	    cols: [[ //表头
 	      {field: 'id', title: '学工号', sort: true, fixed: 'left'}
-	      ,{field: 'username', title: '用户名',lign:'center'}
-	      ,{field: 'password', title: '登陆密码', lign:'center'}
-	      ,{field: 'birth', title: '角色', lign:'center'} 
-	      ,{field: 'create_time', title: '录入日期', lign:'center'} 
+	      ,{field: 'username', title: '用户名',align:'center'}
+	      ,{field: 'password', title: '登陆密码', align:'center'}
+	      ,{field: 'role', title: '角色', align:'center'} 
+	      ,{field: 'create_time', title: '录入日期', align:'center'} 
 	      ,{field: 'status', title: '状态',align:'center',width:80,
 	    	  templet: function(d){
     		  if(d.status==1){
@@ -29,7 +29,12 @@ layui.config({//框架的固定，配置的使用
     		  }else{
     			  return '<span class="layui-badge layui-bg-blue">正常</span>';
     		  }}
-	      }	      
+	      }
+	      ,{field:'status', title:'是否锁定', width:110,unresize: true, 
+	    	  templet:function(d){
+	    		  return "<input type='checkbox' name='lock' value="+d.status+" title='锁定'  lay-filter='lockDemo' {{ d.id == 1 ? 'checked' : '' }}>"
+	    	  }
+	      }
 	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
 	    ]]
 	  });
@@ -100,7 +105,22 @@ layui.config({//框架的固定，配置的使用
 	  var tr = obj.tr; //获得当前行 tr 的DOM对象
 	 
 	  if(layEvent === 'detail'){ //查看
-	    //do somehing
+		  //编辑
+		  var index = layui.layer.open({
+              title : "【修改信息】",
+              type : 2,
+              area: ['800px', '600px'],
+              content : "openUserInfoEdit?id="+data.id,
+              success : function(layero, index){
+                  setTimeout(function(){
+                      layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
+                          tips: 3
+                      });
+                  },500)
+              }
+          })          
+          layui.layer.full(index);
+	  
 		  
 	  } else if(layEvent === 'del'){ //删除
 		  layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
@@ -138,10 +158,10 @@ layui.config({//框架的固定，配置的使用
 	    });
 	  } else if(layEvent === 'edit'){ //编辑
 		  var index = layui.layer.open({
-              title : "【修改信息】",
+              title : "【修改密码信息】",
               type : 2,
-              area: ['800px', '600px'],
-              content : "openUserInfoEdit?id="+data.id,
+              area: ['600px', '400px'],
+              content : "openUpdateUserPassword?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){
                       layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -150,7 +170,6 @@ layui.config({//框架的固定，配置的使用
                   },500)
               }
           })          
-          layui.layer.full(index);
 	  }
 	});
 	

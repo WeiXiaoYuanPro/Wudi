@@ -10,8 +10,8 @@ layui.config({
 //==================一个table实例================================
 	  table.render({
 	    elem: '#demo',//渲染对象
-	    height: 315,//表格高度
-	    url: 'queryClassroom', //数据接口
+	    height:'full-88',//表格高度
+	    url: 'queryRooms', //数据接口
 	    where: {key: ''},//给后台传的参数
 	    page: true, //开启分页
 	    limit: 10,//每页显示信息条数
@@ -59,7 +59,7 @@ layui.config({
 					icon: 2,
 					type : 2,
 					area: ['800px', '600px'],
-					content : "openClassroomAdd",
+					content : "openRoomAdd",
 					success : function(layero, index){
 						setTimeout(function(){
 							layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
@@ -80,47 +80,14 @@ layui.config({
 		  if(layEvent === 'detail'){ //查看
 		    //do somehing
 			  
-		  } else if(layEvent === 'del'){ //删除
-			  layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
-					var msgid;
-					//向服务端发送删除指令
-			 		 $.ajax({//异步请求返回给后台
-				    	  url:'delClassroom',
-				    	  type:'POST',
-				    	  data:{"id":data.id},
-				    	  dataType:'json',
-				    	  beforeSend: function(re){
-				    		  msgid = top.layer.msg('数据处理中，请稍候',{icon: 16,time:false,shade:0.8});
-				          },
-				    	  success:function(d){
-				    		  top.layer.close(msgid);
-				    		  if(d.result){
-				    			//弹出loading
-							   		layer.closeAll("iframe");
-							   		obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-							  	 //刷新父页面
-							  	 	parent.location.reload();
-				    		  }else{
-				    			  top.layer.msg("操作失败！，数据库操作有问题！！");
-				    		  }
-					    		
-				    	  },
-				    	  error:function(XMLHttpRequest, textStatus, errorThrown){
-				    		  top.layer.msg('操作失败！！！服务器有问题！！！！<br>请检测服务器是否启动？', {
-				    		        time: 20000, //20s后自动关闭
-				    		        btn: ['知道了']
-				    		      });
-				           }
-				      });
-			 //关闭当前提示
-		      layer.close(index);
-		    });
+		  } else if(layEvent === 'del'){
+			  
 		  } else if(layEvent === 'edit'){ //编辑
 			  var index = layui.layer.open({
 	              title : "修改信息",
 	              type : 2,
 	              area: ['800px', '600px'],
-	              content : "openClassroomEdit?id="+data.id,
+	              content : "openRoomEdit?id="+data.id,
 	              success : function(layero, index){
 	                  setTimeout(function(){
 	                      layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {

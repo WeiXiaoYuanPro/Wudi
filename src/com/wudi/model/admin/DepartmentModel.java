@@ -1,6 +1,5 @@
 package com.wudi.model.admin;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import com.jfinal.aop.Before;
@@ -11,9 +10,9 @@ import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
 import com.wudi.util.StringUtil;
 
-public class DormitoryModel extends Model<DormitoryModel> {
+public class DepartmentModel extends Model<DepartmentModel> {
 	private static final long serialVersionUID = 1L;
-	public static final String tableName = "dormitory";
+	public static final String tableName = "department";
 	public String getId() {
 		return get("id");
 	}
@@ -27,56 +26,21 @@ public class DormitoryModel extends Model<DormitoryModel> {
 	public void setName(String name) {
 		set("name" , name);
 	}
-	
-	public String getBuilding_id() {
-		return get("building_id");
+	public String getNo() {
+		return get("no");
 	}
-	public void setBuilding_id(String building_id) {
-		set("building_id" , building_id);
+	public void setNo(String no) {
+		set("no" , no);
 	}
-	
-	public int getCapacity(){
-		return get("capacity");
+	public String getRemark() {
+		return get("remark");
 	}
-	public void setCapacity(int capacity)
-	{
-		set("capacity",capacity);
-	}
-	
-	public int getType(){
-		return get("type");
-	}
-	public void setType(int type)
-	{
-		set("type",type);
-	}
-	
-	public int getStatus(){
-		return get("status");
-	}
-	public void setStatus(int status)
-	{
-		set("status",status);
-	}
-	
-	public BigDecimal getLatitudes(){
-		return get("latitude");
-	}
-	public void setLatitude(BigDecimal latitude)
-	{
-		set("latitude",latitude);
-	}
-	public BigDecimal getLongitude(){
-		return get("longitude");
-	}
-	
-	public void setLongitude(BigDecimal longitude)
-	{
-		set("longitude",longitude);
+	public void setRemark(String Remark) {
+		set("remark" , Remark);
 	}
 	
 	//因为经常用他，所以干脆给他一个静态的，让他一直存在，免得我们每次new
-		public static final DormitoryModel dao = new DormitoryModel();
+		public static final DepartmentModel dao = new DepartmentModel();
 		
 		/**
 		 * 分页查询显示，就是查找
@@ -85,7 +49,7 @@ public class DormitoryModel extends Model<DormitoryModel> {
 		 * @param key
 		 * @return
 		 */
-		public static Page<DormitoryModel> getList(int pageNumber, int pageSize,String key) {
+		public static Page<DepartmentModel> getList(int pageNumber, int pageSize,String key) {
 			String sele_sql="select * ";
 			StringBuffer from_sql=new StringBuffer();
 			from_sql.append("from ").append(tableName);
@@ -99,31 +63,15 @@ public class DormitoryModel extends Model<DormitoryModel> {
 		 * @param id
 		 * @return
 		 */
-		public static DormitoryModel getById(Object id){
+		public static DepartmentModel getById(Object id){
 			return dao.findFirst("select *  from " + tableName + " where id = ? " , id);
 		}
-	/**
-	 * 
-	* @Title: save
-	* @Description:保存，这里是以分别参数传下来的，你们还可以用对象的信息传下来，喜欢这么写就怎么写
-	* @param @param no
-	* @param @param name
-	* @param @param cls
-	* @param @param sex
-	* @param @return    参数
-	* @return boolean    返回类型
-	* @throws
-	 */
-		public static boolean save(String id,String name,String building_id,int capacity,int type,int status,BigDecimal latitude,BigDecimal longitude) {
-			DormitoryModel s=new DormitoryModel();
+		public static boolean save(String name,String Remark,String no) {
+			DepartmentModel s=new DepartmentModel();
 			s.setId(StringUtil.getId());
 			s.setName(name);
-			s.setBuilding_id(building_id);
-			s.setCapacity(capacity);
-			s.setType(type);
-			s.setStatus(status);
-			s.setLatitude(latitude);
-			s.setLongitude(longitude);
+			s.setNo(no);
+			s.setRemark(Remark);
 			return s.save();
 		}
 		
@@ -134,7 +82,7 @@ public class DormitoryModel extends Model<DormitoryModel> {
 		 * @return
 		 */
 		@Before(Tx.class)
-		public static boolean save(final DormitoryModel dormitory){
+		public static boolean save(final DepartmentModel dormitory){
 			boolean succeed = Db.tx(new IAtom() {
 						
 						@Override
@@ -148,19 +96,15 @@ public class DormitoryModel extends Model<DormitoryModel> {
 		/**
 		 * 更新
 		 */
-		public static boolean update(String id,String name,String building_id,int capacity,int type,int status,BigDecimal latitude,BigDecimal longitude){
-			DormitoryModel model=DormitoryModel.getById(id);
+		public static boolean update(String id,String name,String Remark,String no){
+			DepartmentModel model=DepartmentModel.getById(id);
 			if(model==null){
 				return false;
 			}
 			model.setId(id);
 			model.setName(name);
-			model.setBuilding_id(building_id);
-			model.setCapacity(capacity);
-			model.setType(type);
-			model.setStatus(status);
-			model.setLatitude(latitude);
-			model.setLongitude(longitude);
+			model.setNo(no);
+			model.setRemark(Remark);
 			try {
 				model.update();
 			} catch (Exception e) {
@@ -173,7 +117,7 @@ public class DormitoryModel extends Model<DormitoryModel> {
 		 * @param no
 		 * @return
 		 */
-		public static boolean delDormitoryByID(String id) {
+		public static boolean delDepartmentByID(String id) {
 			try {
 				String delsql="DELETE FROM "+tableName+" WHERE id=?";
 				int iRet=Db.update(delsql, id);

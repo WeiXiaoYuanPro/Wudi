@@ -15,7 +15,7 @@ import com.wudi.util.StringUtil;
 
 public class RoomModel extends Model<RoomModel> {
 	private static final long serialVersionUID = 1L;
-	public static final String tableName = "classroom";
+	public static final String tableName = "room";
 	public String getId() {
 		return get("id");
 	}
