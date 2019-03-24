@@ -64,7 +64,7 @@ public class DepmanModel extends Model<DepmanModel> {
 	* @throws
 	 */
 		public static List<DepmanModel> getList() {
-			String sql="select * from "+tableName+"";
+			String sql="select * from "+tableName+" where status=0";
 			List<DepmanModel> list=dao.find(sql);
 			return list;
 		}
