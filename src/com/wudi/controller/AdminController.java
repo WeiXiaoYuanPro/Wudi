@@ -1537,10 +1537,4 @@ public class AdminController extends Controller {
 		setAttr("data", list.getList());
 		renderJson();
 	}
-
-	public void openStuTasksee() {
-		String id = getPara("id");
-		setAttr("id", id);
-		renderFreeMarker("task/tasksee.html");
-	}
 }

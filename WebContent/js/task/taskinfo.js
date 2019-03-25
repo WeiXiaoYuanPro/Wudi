@@ -88,6 +88,7 @@ layui.config({
               title : "查看信息",
               type : 2,
               skin: 'layui-layer-lan',
+              area: ['1000px', '400px'],
               content : "openTaskShow?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){

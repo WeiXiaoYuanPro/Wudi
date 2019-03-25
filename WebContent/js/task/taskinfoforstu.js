@@ -10,7 +10,7 @@ layui.config({
 //==================一个table实例================================
 	  table.render({
 	    elem: '#demo',//渲染对象
-	    height: 315,//表格高度
+	    height: 'full-88',//表格高度
 	    url: 'getStuTask', //数据接口
 	    where: {key: '',stuid:$('#stuid').val()},//给后台传的参数
 	    page: true, //开启分页
@@ -18,9 +18,9 @@ layui.config({
 	    id: 'testReload',
 	    cols: [[ //表头
 	      {field: 'id', title: 'ID', sort: true, fixed: 'left'}
-	      ,{field: 'title', title: '任务标题',lign:'center'}
-	      ,{field: 'create_time', title: '开始时间', lign:'center'}
-	      ,{field: 'deadline', title: '截止时间', lign:'center'} 
+	      ,{field: 'title', title: '任务标题',align:'center'}
+	      ,{field: 'create_time', title: '开始时间', align:'center'}
+	      ,{field: 'deadline', title: '截止时间', align:'center'} 
 	      ,{field: 'depname', title: '执行人',align:'center' }
 	      ,{field: 'status', title: '状态',align:'center',
 	    	  templet: function(d){
@@ -63,20 +63,21 @@ layui.config({
 	  var tr = obj.tr; //获得当前行 tr 的DOM对象
 	 
 	  if(layEvent === 'detail'){ //查看
-		 var index = layui.layer.open({
-              title : "查看信息",
-              type : 2,
-              area: ['800px', '500px'],
-              content : "openStuTasksee?id="+data.id,
-              success : function(layero, index){
-                  setTimeout(function(){
-                      layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
-                          tips: 3
-                      });
-                  },500)
-              }
-          })          
-	  } else if(layEvent === 'del'){
+			 var index = layui.layer.open({
+	              title : "查看信息",
+	              type : 2,
+	              skin: 'layui-layer-lan',
+	              area: ['1000px', '400px'],
+	              content : "openTaskShow?id="+data.id,
+	              success : function(layero, index){
+	                  setTimeout(function(){
+	                      layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
+	                          tips: 3
+	                      });
+	                  },500)
+	              }
+	          });
+		  } else if(layEvent === 'del'){
 		  
 	  } else if(layEvent === 'edit'){
 		  

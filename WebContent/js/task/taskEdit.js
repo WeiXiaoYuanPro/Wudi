@@ -18,7 +18,12 @@ layui.config({
 	        	$("input[name='deadline']").val(d.deadline);
 	        	$("input[name='executor']").val(d.executor);
 	        	$("input[name='finish_time']").val(d.finish_time);
-	        	$("input[name='status']").val(d.status);
+	        	if(d.status==1){
+	        		$("input[name='status']").val("已完成");
+	        	}else{
+	        		$("input[name='status']").val("未完成");
+	        	}
+	        	
 	        	$("textarea[name='content']").val(d.content);
 	        	
 	        	form.render();//必须要再次渲染，要不然option显示不出来
