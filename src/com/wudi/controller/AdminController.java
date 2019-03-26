@@ -284,6 +284,12 @@ public class AdminController extends Controller {
 		// 返回格式是json
 		renderJson();
 	}
+	
+	public void getDepartments() {
+		List<DepartmentModel> list = DepartmentModel.getListAll();
+		setAttr("dp", list);
+		renderJson();
+	}
 	/**
 	 *  功能：打开修改部门信息页面
 	 *  修改时间：2019年3月22日11:05:05
@@ -415,10 +421,10 @@ public class AdminController extends Controller {
 	*/
 	public void saveMajor() {
 		String name = getPara("name");
+		String dep_no = getPara("dep_no");
 		String remark = getPara("remark");
-		String no = getPara("no");
 		// 保存数据
-		boolean result = MajorModel.save(name,remark,no);
+		boolean result = MajorModel.save(name, remark, dep_no);
 
 		setAttr("result", result);
 		renderJson();
@@ -432,9 +438,9 @@ public class AdminController extends Controller {
 		String id = getPara("id");
 		String name = getPara("name");
 		String remark = getPara("remark");
-		String no = getPara("no");
+		String dep_no = getPara("dep_no");
 
-		boolean result = MajorModel.update(id,name,remark,no);
+		boolean result = MajorModel.update(id,name,remark,dep_no);
 
 		setAttr("result", result);
 		renderJson();

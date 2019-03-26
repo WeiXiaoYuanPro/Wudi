@@ -8,15 +8,24 @@ layui.config({
 		$ = layui.jquery;
 		var id=$("input[name='id']").val();
 		//加载页面数据
-		$.get("getSchool?id="+id, function(data){
+		$.get("getMajor?id="+id, function(data){
 			var d=data.m;
 			//执行加载数据的方法
-        	$("input[name='schoolname']").val(d.schoolname);
-        	$("input[name='no']").val(d.no);
-        	$("input[name='addr']").val(d.addr);
-        	$("input[name='img']").val(d.img);
-        	$("input[name='remark']").val(d.remark);
+        	$("input[name='name']").val(d.name);
+        	$("input[name='dep_no']").val(d.dep_no);
 	        $("textarea[name='remark']").val(d.remark);
+	        $.get("getDepartments", function(data){
+				var dp=data.dp;
+				var id=dp[0].id;
+	    		for(var i=0;i<dp.length;i++){
+	    			if(dp[i].id==d.dep_no){
+	    				$("#selectId").append("<option selected='true' value='"+dp[i].id+"'>"+dp[i].id+"</option>");
+	    			}else{
+	    				$("#selectId").append("<option value='"+dp[i].id+"'>"+dp[i].id+"</option>");
+	    			}
+	    			}
+	    			form.render();//必须要再次渲染，要不然option显示不出来
+	        });
 		})
 
  	form.on("submit(update)",function(data){

@@ -1,4 +1,4 @@
-package com.wudi.model.admin;
+  package com.wudi.model.admin;
 
 import java.sql.SQLException;
 
@@ -66,11 +66,11 @@ public class MajorModel extends Model<MajorModel> {
 		public static MajorModel getById(Object id){
 			return dao.findFirst("select *  from " + tableName + " where id = ? " , id);
 		}
-		public static boolean save(String name,String Remark,String no) {
+		public static boolean save(String name,String Remark,String dep_no) {
 			MajorModel s=new MajorModel();
 			s.setId(StringUtil.getId());
 			s.setName(name);
-			s.setDep_no(no);
+			s.setDep_no(dep_no);
 			s.setRemark(Remark);
 			return s.save();
 		}
@@ -96,14 +96,14 @@ public class MajorModel extends Model<MajorModel> {
 		/**
 		 * 更新
 		 */
-		public static boolean update(String id,String name,String Remark,String no){
+		public static boolean update(String id,String name,String Remark,String dep_no){
 			MajorModel model=MajorModel.getById(id);
 			if(model==null){
 				return false;
 			}
 			model.setId(id);
 			model.setName(name);
-			model.setDep_no(no);
+			model.setDep_no(dep_no);
 			model.setRemark(Remark);
 			try {
 				model.update();
