@@ -32,11 +32,17 @@ public class ClassModel extends Model<ClassModel> {
 	public void setUser_no(String user_no) {
 		set("user_no" , user_no);
 	}
-	public String getRemark() {
-		return get("remark");
+	public String getmajor_no() {
+		return get("major_no");
 	}
-	public void setRemark(String Remark) {
-		set("remark" , Remark);
+	public void setmajor_no(String major_no) {
+		set("major_no" , major_no);
+	}
+	public int getgrade() {
+		return get("grade");
+	}
+	public void setgrade(int grade) {
+		set("grade" , grade);
 	}
 	
 	//因为经常用他，所以干脆给他一个静态的，让他一直存在，免得我们每次new
@@ -69,12 +75,12 @@ public class ClassModel extends Model<ClassModel> {
 		public static ClassModel getById(Object id){
 			return dao.findFirst("select *  from " + tableName + " where id = ? " , id);
 		}
-		public static boolean save(String name,String Remark,String no) {
+		public static boolean save(String name,String Remark,String no,int grade) {
 			ClassModel s=new ClassModel();
 			s.setId(StringUtil.getId());
 			s.setName(name);
 			s.setUser_no(no);
-			s.setRemark(Remark);
+			s.setgrade(grade);
 			return s.save();
 		}
 		
@@ -107,7 +113,7 @@ public class ClassModel extends Model<ClassModel> {
 			model.setId(id);
 			model.setName(name);
 			model.setUser_no(no);
-			model.setRemark(Remark);
+//			model.setRemark(Remark);
 			try {
 				model.update();
 			} catch (Exception e) {
