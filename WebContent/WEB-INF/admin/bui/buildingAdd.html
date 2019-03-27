@@ -8,13 +8,36 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="t说elephone=no">
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	
 	<style type="text/css">
 		.layui-form { width:40%; float:left; margin-left:5%; margin-top: 3%}
 	</style>
+	
+	<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=7KMBZ-WT33I-MCSGV-54VOX-IE4GZ-22FWY"></script>
+<script>
+var init = function() {
+    var map = new qq.maps.Map(document.getElementById("container"),{
+        center: new qq.maps.LatLng(26.52591271022147,107.89254426939806),
+        zoom: 14
+         
+    });
+    //绑定单击事件添加参数
+    qq.maps.event.addListener(map, 'click', function(event) {
+         alert('您点击的位置为: [' + event.latLng.getLat() + ', ' +
+        event.latLng.getLng() + ']');
+        
+        $("#latitude").val(""+ event.latLng.getLat());
+        $("#longitude").val(""+ event.latLng.getLng());
+        
+    });
+}
+</script>
+	
 </head>
-<body class="childrenBody">
+<body onload="init()" class="childrenBody">
+
 	<form class="layui-form layui-form-pane" name="addform">
 		<div class="layui-form-item">
 			<label class="layui-form-label">楼房名称</label>
@@ -23,11 +46,26 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">经度纬度</label>
+			<label class="layui-form-label">经度</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="addr" lay-verify="required" placeholder="请输入经度纬度"  autocomplete="off">
+				<input id ="longitude" type="text" class="layui-input" name="longitude" lay-verify="required" placeholder="请输入经度"  autocomplete="off">
 			</div>
+			<div class="layui-input-inline">
+			<input type="button" id ="getlocation" class="layui-btn" value="获取经纬度">
+			</div>
+			
 		</div>
+		
+		<div class="layui-form-item">
+			<label class="layui-form-label">纬度</label>
+			<div class="layui-input-inline">
+				<input id ="latitude" type="text" class="layui-input" name="latitude" lay-verify="required" placeholder="请输入纬度"  autocomplete="off">
+			</div>
+			
+		</div>
+		
+		
+		
 		<div class="layui-form-item">
 			<label class="layui-form-label">所属学校</label>
 			<div class="layui-input-inline">
@@ -52,5 +90,6 @@
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript" src="../js/bui/buildingAdd.js"></script>
-</body>
+	<div id="container" style="min-width:603px;min-height:767px;display:none"></div>
+</body >
 </html>

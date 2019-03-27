@@ -651,14 +651,24 @@ public class AdminController extends Controller {
 	public void saveBuilding() {
 		String name = getPara("name");
 		String school_id = getPara("school_id");
-		String addr = getPara("addr");
+		String longitude = getPara("longitude");
+		String latitude = getPara("latitude");
 		String remark = getPara("remark");
 		// 保存数据
-		boolean result = BuildingModel.save(name, addr, remark, school_id);
+		boolean result = BuildingModel.save(name, longitude,latitude, remark, school_id);
 		setAttr("result", result);
 		renderJson();
 	}
 
+	/*
+	 * 打开地图
+	 */
+	public void openMap() {
+		render("bui/map.html");
+	}
+	
+	
+	
 	/**
 	 *  功能：更新楼房信息
 	 *  修改时间：2019年3月22日11:05:05
@@ -668,10 +678,11 @@ public class AdminController extends Controller {
 		String id = getPara("id");
 		String name = getPara("name");
 		String school_id = getPara("school_id");
-		String addr = getPara("addr");
+		String longitude = getPara("longitude");
+		String latitude = getPara("latitude");
 		String remark = getPara("remark");
 
-		boolean result = BuildingModel.update(id, name, addr, remark, school_id);
+		boolean result = BuildingModel.update(id, name, longitude,latitude, remark, school_id);
 
 		setAttr("result", result);
 		renderJson();

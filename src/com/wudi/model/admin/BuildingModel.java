@@ -44,6 +44,23 @@ public class BuildingModel extends Model<BuildingModel> {
 	public void setSchool_id(String school_id) {
 		set("school_id" , school_id);
 	}
+	public String getLongitude() {
+		return get("longitude");
+	}
+	
+	public void setLongitude(String longitude) {
+		set("longitude",longitude);
+	}
+	
+	
+	public String getLatitude() {
+		return get("latitude");
+	}
+	
+	public void setLatitude(String latitude) {
+		set("latitude",latitude);
+	}
+	
 	
 	//因为经常用他，所以干脆给他一个静态的，让他一直存在，免得我们每次new
 		public static final BuildingModel dao = new BuildingModel();
@@ -58,7 +75,7 @@ public class BuildingModel extends Model<BuildingModel> {
 		public static Page<BuildingModel> getList(int pageNumber, int pageSize,String key) {
 			String sele_sql="SELECT  *  ";
 			StringBuffer from_sql=new StringBuffer();
-			from_sql.append("from ").append(tableName).append(" AS a LEFT JOIN ").append(SchoolModel.tableName).append(" AS b ON a.school_id = b.id ");
+			from_sql.append("from ").append(tableName).append(" AS a RIGHT JOIN ").append(SchoolModel.tableName).append(" AS b ON a.school_id = b.id ");
 			if(!StringUtil.isBlankOrEmpty(key)) {
 				from_sql.append(" where a.name like '%"+key+"%'");
 			}
@@ -80,9 +97,10 @@ public class BuildingModel extends Model<BuildingModel> {
 	* @return boolean    返回类型
 	* @throws
 	 */
-		public static boolean save(String name,String addr,String remark,String school_id) {
+		public static boolean save(String name,String longitude,String latitude,String remark,String school_id) {
 			BuildingModel s=new BuildingModel();
-			s.setAddr(addr);
+			s.setLongitude(longitude);
+			s.setLatitude(latitude);
 			s.setName(name);
 			s.setRemark(remark);
 			s.setSchool_id(school_id);
@@ -111,12 +129,13 @@ public class BuildingModel extends Model<BuildingModel> {
 		/**
 		 * 更新
 		 */
-		public static boolean update(String id,String name,String addr,String remark,String school_id){
+		public static boolean update(String id,String name,String longitude,String latitude,String remark,String school_id){
 			BuildingModel model=BuildingModel.getById(id);
 			if(model==null){
 				return false;
 			}
-			model.setAddr(addr);
+			model.setLatitude(longitude);
+			model.setLatitude(latitude);
 			model.setName(name);
 			model.setRemark(remark);
 			model.setSchool_id(school_id);

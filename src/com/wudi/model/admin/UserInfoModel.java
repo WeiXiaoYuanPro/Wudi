@@ -119,7 +119,7 @@ public class UserInfoModel extends Model<UserInfoModel> {
 	 *  作者： xiao
 	 */
 	public static UserInfoModel getByID(String id){
-		return dao.findFirst("select * from " + tableName + " where id = ? and status=0" , id);
+		return dao.findFirst("select * from " + tableName + " where username = ? and status=0" , id);
 	}
 	/**
 	 *  功能：修改密码
