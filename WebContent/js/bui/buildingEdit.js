@@ -11,15 +11,33 @@ layui.config({
 		$.get("getbuilding?id="+id, function(data){
 			var d=data.m;
 			var sl=data.sl;
-			
+		
 			//var szl=data.szl;
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
 	        	$("input[name='longitude']").val(d.longitude);
-	        	$("input[name='latitude']").val(d.longitude);
+	        	$("input[name='latitude']").val(d.latitude);
 	        	$("textarea[name='remark']").val(d.remark);
+	        	$("#default").val(d.school_id);
 	        	
-	        /*	var school_id=szl[0].school_id;
+	    
+	        	
+	        	
+	        	//下拉学校-----
+	        	for(var i=0;i<sl.length;i++){
+	        		if(d.school_id==sl[i].id){
+	        			$("#default").text(sl[i].schoolname);
+	        		}else{
+	        			$("#selectId").append("<option value='"+sl[i].id+"'>"+sl[i].schoolname+"</option>");
+	        		}
+				}
+	        	
+	        	
+	        	
+	        	
+	        	
+	        	/*
+	        	var school_id=szl[0].school_id;
 	        	//联动下拉学校分校
 	        	for(var i=0;i<szl.length;i++){
 	        		if(szl[i].id==d.schoolzone_id){
