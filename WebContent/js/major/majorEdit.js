@@ -19,9 +19,9 @@ layui.config({
 				var id=dp[0].id;
 	    		for(var i=0;i<dp.length;i++){
 	    			if(dp[i].id==d.dep_no){
-	    				$("#selectId").append("<option selected='true' value='"+dp[i].id+"'>"+dp[i].id+"</option>");
+	    				$("#selectId").append("<option selected='true' value='"+dp[i].id+"'>"+dp[i].no+"</option>");
 	    			}else{
-	    				$("#selectId").append("<option value='"+dp[i].id+"'>"+dp[i].id+"</option>");
+	    				$("#selectId").append("<option value='"+dp[i].id+"'>"+dp[i].no+"</option>");
 	    			}
 	    			}
 	    			form.render();//必须要再次渲染，要不然option显示不出来

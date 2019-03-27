@@ -11,7 +11,7 @@ layui.config({
 		$.get("getDepartments", function(data){
 				var dp=data.dp;
 				for(var i=0;i<dp.length;i++){
-	        		$("#selectId").append("<option value='"+dp[i].id+"'>"+dp[i].id+"</option>");
+	        		$("#selectId").append("<option value='"+dp[i].id+"'>"+dp[i].no+"</option>");
 				}
 				form.render();//必须要再次渲染，要不然option显示不出来
 		});
