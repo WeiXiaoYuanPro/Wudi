@@ -26,6 +26,7 @@
 			<label class="layui-form-label">年级</label>
 			<div class="layui-input-inline">
 				 <select name="grade">
+				 	<option value="2020">2020</option>
 		         	<option value="2019">2019</option>
 		            <option value="2018">2018</option>
 		            <option value="2017">2017</option>
@@ -36,19 +37,22 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">所属分院</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="no" lay-verify="required" placeholder="请输入学校代码"  autocomplete="off">
+				 <select name="dep_no" lay-filter="dep_no" id="dep_no">
+        		</select>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">所属专业</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="no" lay-verify="required" placeholder="请输入学校代码"  autocomplete="off">
+				<select name="major_no">
+        		</select>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">班主任</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="addr" lay-verify="required" placeholder="请输入地址"  autocomplete="off">
+				<select name="user_no" id="user_no">
+        		</select>
 			</div>
 		</div>
 	
