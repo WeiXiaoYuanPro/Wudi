@@ -1,6 +1,7 @@
 package com.wudi.model.admin;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -133,5 +134,10 @@ public class DepartmentModel extends Model<DepartmentModel> {
 				e.printStackTrace();
 				return false;
 			}
+		}
+		public static List<DepartmentModel> getListAll() {
+			StringBuffer sql=new StringBuffer();
+			sql.append("select *  from ").append(tableName);
+			return dao.find(sql.toString());
 		}
 }
