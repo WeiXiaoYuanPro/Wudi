@@ -11,13 +11,15 @@ layui.config({
 		$.get("getbuilding?id="+id, function(data){
 			var d=data.m;
 			var sl=data.sl;
-			var szl=data.szl;
+			
+			//var szl=data.szl;
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
-	        	$("input[name='addr']").val(d.addr);
+	        	$("input[name='longitude']").val(d.longitude);
+	        	$("input[name='latitude']").val(d.longitude);
 	        	$("textarea[name='remark']").val(d.remark);
 	        	
-	        	var school_id=szl[0].school_id;
+	        /*	var school_id=szl[0].school_id;
 	        	//联动下拉学校分校
 	        	for(var i=0;i<szl.length;i++){
 	        		if(szl[i].id==d.schoolzone_id){
@@ -35,7 +37,7 @@ layui.config({
 	        			$("#selectId").append("<option value='"+sl[i].id+"'>"+sl[i].schoolname+"</option>");
 	        		}
 	        		
-				}
+				}*/
 	        	form.render();//必须要再次渲染，要不然option显示不出来
 		})
 		

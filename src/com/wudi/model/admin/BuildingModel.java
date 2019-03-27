@@ -75,9 +75,9 @@ public class BuildingModel extends Model<BuildingModel> {
 		public static Page<BuildingModel> getList(int pageNumber, int pageSize,String key) {
 			String sele_sql="SELECT  *  ";
 			StringBuffer from_sql=new StringBuffer();
-			from_sql.append("from ").append(tableName).append(" AS a RIGHT JOIN ").append(SchoolModel.tableName).append(" AS b ON a.school_id = b.id ");
+			from_sql.append("from ").append(tableName);
 			if(!StringUtil.isBlankOrEmpty(key)) {
-				from_sql.append(" where a.name like '%"+key+"%'");
+				from_sql.append(" where name like '%"+key+"%'");
 			}
 			return dao.paginate(pageNumber,pageSize,sele_sql,from_sql.toString());
 		}  
