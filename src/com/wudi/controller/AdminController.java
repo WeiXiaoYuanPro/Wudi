@@ -306,8 +306,9 @@ public class AdminController extends Controller {
 		String name = getPara("name");
 		String remark = getPara("remark");
 		String no = getPara("no");
+		String school_id=getPara("schoolId");
 		// 保存数据
-		boolean result = DepartmentModel.save(name,remark,no);
+		boolean result = DepartmentModel.save(name,remark,no,school_id);
 
 		setAttr("result", result);
 		renderJson();
@@ -322,8 +323,8 @@ public class AdminController extends Controller {
 		String name = getPara("name");
 		String remark = getPara("remark");
 		String no = getPara("no");
-
-		boolean result = DepartmentModel.update(id,name,remark,no);
+		String school_id=getPara("schoolId");
+		boolean result = DepartmentModel.update(id,name,remark,no,school_id);
 
 		setAttr("result", result);
 		renderJson();
@@ -357,6 +358,7 @@ public class AdminController extends Controller {
 		// 以Json格式返回
 		renderJson();
 	}
+
 /***************************************************************/
 	/**
 	 *  功能：打开专业信息列表
@@ -469,6 +471,21 @@ public class AdminController extends Controller {
 		boolean result = MajorModel.delMajorByID(id);
 		// 返回结果
 		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 *  功能：根据分院（部门id）获取专业列表信息(下拉列表要用)
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void getMajorsByDepID() {
+		// 接收页面数据
+		String dep_id = getPara("dep_id");
+		// 根据条件查询数据库的数据
+		 List<MajorModel> Majors = MajorModel.getMajorsByDepID(dep_id);
+		// 放到编辑页面上去
+		setAttr("d", Majors);
+		// 返回格式是json
 		renderJson();
 	}
 /***************************************************************/

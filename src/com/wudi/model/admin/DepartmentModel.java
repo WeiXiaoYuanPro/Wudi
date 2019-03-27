@@ -39,6 +39,12 @@ public class DepartmentModel extends Model<DepartmentModel> {
 	public void setRemark(String Remark) {
 		set("remark" , Remark);
 	}
+	public String getSchool_id() {
+		return get("school_id");
+	}
+	public void setSchool_id(String School_id) {
+		set("school_id" , School_id);
+	}
 	
 	//因为经常用他，所以干脆给他一个静态的，让他一直存在，免得我们每次new
 		public static final DepartmentModel dao = new DepartmentModel();
@@ -51,11 +57,12 @@ public class DepartmentModel extends Model<DepartmentModel> {
 		 * @return
 		 */
 		public static Page<DepartmentModel> getList(int pageNumber, int pageSize,String key) {
-			String sele_sql="select * ";
+			String sele_sql="select a.* ,b.schoolname ";
 			StringBuffer from_sql=new StringBuffer();
-			from_sql.append("from ").append(tableName);
+			from_sql.append(" from ").append(tableName).append(" a left join ").append(SchoolModel.tableName).append(" b ");
+			from_sql.append(" on a.school_id=b.id ");
 			if(!StringUtil.isBlankOrEmpty(key)) {
-				from_sql.append(" where name like '%"+key+"%'");
+				from_sql.append(" where a.name like '%"+key+"%'");
 			}
 			return dao.paginate(pageNumber,pageSize,sele_sql,from_sql.toString());
 		}  
@@ -67,11 +74,12 @@ public class DepartmentModel extends Model<DepartmentModel> {
 		public static DepartmentModel getById(Object id){
 			return dao.findFirst("select *  from " + tableName + " where id = ? " , id);
 		}
-		public static boolean save(String name,String Remark,String no) {
+		public static boolean save(String name,String Remark,String no,String School_id) {
 			DepartmentModel s=new DepartmentModel();
 			s.setId(StringUtil.getId());
 			s.setName(name);
 			s.setNo(no);
+			s.setSchool_id(School_id);
 			s.setRemark(Remark);
 			return s.save();
 		}
@@ -97,7 +105,7 @@ public class DepartmentModel extends Model<DepartmentModel> {
 		/**
 		 * 更新
 		 */
-		public static boolean update(String id,String name,String Remark,String no){
+		public static boolean update(String id,String name,String Remark,String no,String School_id){
 			DepartmentModel model=DepartmentModel.getById(id);
 			if(model==null){
 				return false;
@@ -105,6 +113,7 @@ public class DepartmentModel extends Model<DepartmentModel> {
 			model.setId(id);
 			model.setName(name);
 			model.setNo(no);
+			model.setSchool_id(School_id);
 			model.setRemark(Remark);
 			try {
 				model.update();

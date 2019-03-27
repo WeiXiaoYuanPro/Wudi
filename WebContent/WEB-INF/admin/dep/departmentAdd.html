@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>学校信息添加</title>
+	<title>部门信息添加</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,34 +17,25 @@
 <body class="childrenBody">
 	<form class="layui-form layui-form-pane" name="addform">
 		<div class="layui-form-item">
-			<label class="layui-form-label">学校名称</label>
+			<label class="layui-form-label">部门名称</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="name" lay-verify="required" placeholder="请输入学校名称"  autocomplete="off">
+				<input type="text" class="layui-input" name="name" lay-verify="required" placeholder="请输入部门名称"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">学校代码</label>
+			<label class="layui-form-label">部门编号</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="no" lay-verify="required" placeholder="请输入学校代码"  autocomplete="off">
+				<input type="text" class="layui-input" name="no" lay-verify="required" placeholder="请输入部门编号"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">地址</label>
+			<label class="layui-form-label">所属学校</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="addr" lay-verify="required" placeholder="请输入地址"  autocomplete="off">
+				 <select name="school_id" lay-filter="school_id" id="school_id">
+        		</select>
 			</div>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">图标</label>
-			<div class="layui-upload">
-  				<button type="button" class="layui-btn" id="test1">上传图片</button>
-  				<input type="hidden" id="img_url" name="img" value=""/>
-  				<div class="layui-upload-list">
-    			<img class="layui-upload-img" id="demo1">
-    			<p id="demoText"></p>
-  				</div>
-			</div> 
-		</div>
+
 		<div class="layui-form-item layui-form-text">
 		    <label class="layui-form-label">备注信息</label>
 		    <div class="layui-input-block">
