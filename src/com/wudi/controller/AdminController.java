@@ -658,10 +658,11 @@ public class AdminController extends Controller {
 		String id = getPara("id");
 		// 根据条件查询数据库的数据
 		BuildingModel Building = BuildingModel.getById(id);
-		// 放到编辑页面上去
-		setAttr("m", Building);
+		
 		// 联动下拉框学校
 		List<SchoolModel> school_list = SchoolModel.getListAll();
+		// 放到编辑页面上去
+		setAttr("m", Building);
 		setAttr("sl", school_list);
 		// 返回格式是json
 		renderJson();

@@ -11,7 +11,7 @@
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
 	<style type="text/css">
-		.layui-form { width:60%; float:left; margin-left:5%; margin-top: 3%}
+		.layui-form { width:40%; float:left; margin-left:5%; margin-top: 3%}
 	</style>
 	<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=7KMBZ-WT33I-MCSGV-54VOX-IE4GZ-22FWY"></script>
 <script>
@@ -34,7 +34,7 @@ var init = function() {
 </script>
 	
 </head>
-<body class="childrenBody">
+<body onload="init()" class="childrenBody">
 	<form class="layui-form layui-form-pane" name="updateform">
 		<div class="layui-form-item">
 			<label class="layui-form-label">ID</label>
@@ -70,7 +70,7 @@ var init = function() {
 			<label class="layui-form-label">所属学校</label>
 			<div class="layui-input-inline">
 			      	<select name="school_id"  id="selectId" lay-filter="state">
-			      	<option value="-1">请选择学校</option>
+			      	<option id ="default" value="">请选择学校</option>
       				</select>
 			</div>
 			<div class="layui-input-inline">
@@ -95,6 +95,6 @@ var init = function() {
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript" src="../js/bui/buildingEdit.js"></script>
-	<div id="container" style="min-width:603px;min-height:767px;display:none"></div>
-</body>
+	<div id="container" style="min-width:603px;min-height:767px ;display:none"></div>
+</body >
 </html>
