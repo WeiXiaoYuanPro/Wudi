@@ -52,6 +52,7 @@ public class AdminController extends Controller {
 		// 如果正确，就正常显示系统页面
 		UserInfoModel m = UserInfoModel.getByID(username);
 		int status=1;
+		String un="";
 		// 判断用户名和密码是否正确
 		if (m != null) {
 			if (m.getPassword().equals(password)) {
@@ -59,13 +60,14 @@ public class AdminController extends Controller {
 				setCookie("cname",m.getUsername(), 36000);
 				setSessionAttr("user", m);
 				status=0;
+				un=m.getUsername();
 			} else {
 				setAttr("result", 1);// 密码错误
 			}
 		} else {
 			setAttr("result", 2);// 用户名不存在
 		}
-		LogModel.saveLog(m.getUsername(), status,"PC端",getRequest());
+		LogModel.saveLog(un, status,"PC端",getRequest());
 		renderJson();
 	}
 
@@ -285,7 +287,7 @@ public class AdminController extends Controller {
 		renderJson();
 	}
 	
-	public void getDepartments() {
+	public void getDepartmentse() {
 		List<DepartmentModel> list = DepartmentModel.getListAll();
 		setAttr("dp", list);
 		renderJson();
@@ -344,6 +346,21 @@ public class AdminController extends Controller {
 		boolean result = DepartmentModel.delDepartmentByID(id);
 		// 返回结果
 		setAttr("result", result);
+		renderJson();
+	}
+	
+	/**
+	 *  功能：获取学校分院列表信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void getDepartments() {
+		// 获取需要修改的学校信息
+		// 根据条件查询数据库的数据
+		List<DepartmentModel> schools = DepartmentModel.getListAll();
+		// 放到编辑页面上
+		setAttr("d", schools);
+		// 以Json格式返回
 		renderJson();
 	}
 /***************************************************************/
@@ -439,7 +456,6 @@ public class AdminController extends Controller {
 		String name = getPara("name");
 		String remark = getPara("remark");
 		String dep_no = getPara("dep_no");
-
 		boolean result = MajorModel.update(id,name,remark,dep_no);
 
 		setAttr("result", result);
@@ -537,7 +553,7 @@ public class AdminController extends Controller {
 		String remark = getPara("remark");
 		String no = getPara("no");
 		// 保存数据
-		boolean result = ClassModel.save(name,remark,no);
+		boolean result = ClassModel.save(name,remark,no,1);
 
 		setAttr("result", result);
 		renderJson();
@@ -629,10 +645,11 @@ public class AdminController extends Controller {
 		String id = getPara("id");
 		// 根据条件查询数据库的数据
 		BuildingModel Building = BuildingModel.getById(id);
-		// 放到编辑页面上去
-		setAttr("m", Building);
+		
 		// 联动下拉框学校
 		List<SchoolModel> school_list = SchoolModel.getListAll();
+		// 放到编辑页面上去
+		setAttr("m", Building);
 		setAttr("sl", school_list);
 		// 返回格式是json
 		renderJson();
@@ -657,14 +674,24 @@ public class AdminController extends Controller {
 	public void saveBuilding() {
 		String name = getPara("name");
 		String school_id = getPara("school_id");
-		String addr = getPara("addr");
+		String longitude = getPara("longitude");
+		String latitude = getPara("latitude");
 		String remark = getPara("remark");
 		// 保存数据
-		boolean result = BuildingModel.save(name, addr, remark, school_id);
+		boolean result = BuildingModel.save(name, longitude,latitude, remark, school_id);
 		setAttr("result", result);
 		renderJson();
 	}
 
+	/*
+	 * 打开地图
+	 */
+	public void openMap() {
+		render("bui/map.html");
+	}
+	
+	
+	
 	/**
 	 *  功能：更新楼房信息
 	 *  修改时间：2019年3月22日11:05:05
@@ -674,10 +701,11 @@ public class AdminController extends Controller {
 		String id = getPara("id");
 		String name = getPara("name");
 		String school_id = getPara("school_id");
-		String addr = getPara("addr");
+		String longitude = getPara("longitude");
+		String latitude = getPara("latitude");
 		String remark = getPara("remark");
 
-		boolean result = BuildingModel.update(id, name, addr, remark, school_id);
+		boolean result = BuildingModel.update(id, name, longitude,latitude, remark, school_id);
 
 		setAttr("result", result);
 		renderJson();
@@ -1062,6 +1090,19 @@ public class AdminController extends Controller {
 		setAttr("user", m);
 		renderFreeMarker("userinfo/uppassword.html");
 	}
+	/**
+	 *  功能：获取班主任的信息列表
+	 *  修改时间：2019年3月27日19:51:43
+	 *  作者： xiao
+	 */
+	public void getHeadmasters() {
+		// 根据条件查询数据库的数据
+		List<UserInfoModel> list = UserInfoModel.getHeadmasters("");
+		// *放到编辑页面上去*
+		setAttr("d", list);
+		// 返回格式是json
+		renderJson();
+	}
 /****************************************************************
 	/**
 	 * @Title: role @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
@@ -1264,6 +1305,20 @@ public class AdminController extends Controller {
 		String remark = getPara("remark");
 		boolean result = SchoolModel.update(id, schoolname, no, addr, img, remark);
 		setAttr("result", result);
+		renderJson();
+	}
+	/**
+	 *  功能：获取学校对象列表信息
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void getListAll() {
+		// 获取需要修改的学校信息
+		// 根据条件查询数据库的数据
+		List<SchoolModel> schools = SchoolModel.getListAll();
+		// 放到编辑页面上
+		setAttr("d", schools);
+		// 以Json格式返回
 		renderJson();
 	}
 	/**

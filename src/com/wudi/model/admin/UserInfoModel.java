@@ -2,6 +2,7 @@ package com.wudi.model.admin;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.jfinal.aop.Before;
@@ -242,5 +243,14 @@ public class UserInfoModel extends Model<UserInfoModel> {
 	 public static UserInfoModel findModelbyUsername(String username) {
 	    	String sql="select * from "+tableName+" where username=?";
 	    	return dao.findFirst(sql,username);
+	    }
+	 /**
+		 *  功能：获取班主任的信息列表
+		 *  修改时间：2019年3月27日19:51:43
+		 *  作者： xiao
+		 */
+	 public static List<UserInfoModel> getHeadmasters(String type) {
+	    	String sql="select id,username from "+tableName+"";
+	    	return dao.find(sql);
 	    }
 }

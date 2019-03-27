@@ -11,7 +11,7 @@ layui.config({
 		$.get("getSchool?id="+id, function(data){
 			var d=data.m;
 			//执行加载数据的方法
-        	$("input[name='schoolname']").val(d.schoolname);
+        	$("input[name='name']").val(d.schoolname);
         	$("input[name='no']").val(d.no);
         	$("input[name='addr']").val(d.addr);
         	$("input[name='img']").val(d.img);

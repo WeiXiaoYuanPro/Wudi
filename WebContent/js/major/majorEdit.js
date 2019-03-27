@@ -14,14 +14,14 @@ layui.config({
         	$("input[name='name']").val(d.name);
         	$("input[name='dep_no']").val(d.dep_no);
 	        $("textarea[name='remark']").val(d.remark);
-	        $.get("getDepartments", function(data){
+	        $.get("getDepartmentse", function(data){
 				var dp=data.dp;
 				var id=dp[0].id;
 	    		for(var i=0;i<dp.length;i++){
 	    			if(dp[i].id==d.dep_no){
-	    				$("#selectId").append("<option selected='true' value='"+dp[i].id+"'>"+dp[i].no+"</option>");
+	    				$("#selectId").append("<option selected='true' value='"+dp[i].no+"'>"+dp[i].no+"</option>");
 	    			}else{
-	    				$("#selectId").append("<option value='"+dp[i].id+"'>"+dp[i].no+"</option>");
+	    				$("#selectId").append("<option value='"+dp[i].no+"'>"+dp[i].no+"</option>");
 	    			}
 	    			}
 	    			form.render();//必须要再次渲染，要不然option显示不出来
