@@ -1,6 +1,7 @@
   package com.wudi.model.admin;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Db;
@@ -133,5 +134,14 @@ public class MajorModel extends Model<MajorModel> {
 				e.printStackTrace();
 				return false;
 			}
+		}
+		/**
+		 *  功能：根据分院（部门id）获取专业列表信息
+		 *  修改时间：2019年3月22日11:05:05
+		 *  作者： xiao
+		*/
+		public static  List<MajorModel> getMajorsByDepID(String dep_no){
+			return dao.find("select *  from " + tableName + " where dep_no = ? " , dep_no);
+
 		}
 }
