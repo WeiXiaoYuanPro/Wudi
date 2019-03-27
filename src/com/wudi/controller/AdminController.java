@@ -414,11 +414,11 @@ public class AdminController extends Controller {
 	 *  作者： xiao
 	*/
 	public void saveMajor() {
+		String dep_no = getPara("dep_no");
 		String name = getPara("name");
-		String remark = getPara("remark");
-		String no = getPara("no");
+		String remark = getPara("remark");		
 		// 保存数据
-		boolean result = MajorModel.save(name,remark,no);
+		boolean result = MajorModel.save(name, remark, dep_no);
 
 		setAttr("result", result);
 		renderJson();
@@ -430,11 +430,12 @@ public class AdminController extends Controller {
 	*/
 	public void updateMajor() {
 		String id = getPara("id");
-		String name = getPara("name");
+		String dep_no = getPara("dep_no");
+		String name = getPara("name");		
 		String remark = getPara("remark");
-		String no = getPara("no");
+		
 
-		boolean result = MajorModel.update(id,name,remark,no);
+		boolean result = MajorModel.update(id, name, remark, dep_no);
 
 		setAttr("result", result);
 		renderJson();
