@@ -52,6 +52,7 @@ public class AdminController extends Controller {
 		// 如果正确，就正常显示系统页面
 		UserInfoModel m = UserInfoModel.getByID(username);
 		int status=1;
+		String un="";
 		// 判断用户名和密码是否正确
 		if (m != null) {
 			if (m.getPassword().equals(password)) {
@@ -59,13 +60,14 @@ public class AdminController extends Controller {
 				setCookie("cname",m.getUsername(), 36000);
 				setSessionAttr("user", m);
 				status=0;
+				un=m.getUsername();
 			} else {
 				setAttr("result", 1);// 密码错误
 			}
 		} else {
 			setAttr("result", 2);// 用户名不存在
 		}
-		LogModel.saveLog(m.getUsername(), status,"PC端",getRequest());
+		LogModel.saveLog(un, status,"PC端",getRequest());
 		renderJson();
 	}
 
