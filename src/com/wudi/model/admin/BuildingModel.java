@@ -134,7 +134,7 @@ public class BuildingModel extends Model<BuildingModel> {
 			if(model==null){
 				return false;
 			}
-			model.setLatitude(longitude);
+			model.setLongitude(longitude);
 			model.setLatitude(latitude);
 			model.setName(name);
 			model.setRemark(remark);
