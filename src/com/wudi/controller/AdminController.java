@@ -473,7 +473,6 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
-<<<<<<< HEAD
 	public void getMajors() {
 		// 获取需要修改的学校信息
 		// 根据条件查询数据库的数据
@@ -481,7 +480,7 @@ public class AdminController extends Controller {
 		// 放到编辑页面上
 		setAttr("d", shool);
 		// 以Json格式返回
-=======
+	}
 	/**
 	 *  功能：根据分院（部门id）获取专业列表信息(下拉列表要用)
 	 *  修改时间：2019年3月22日11:05:05
@@ -495,7 +494,6 @@ public class AdminController extends Controller {
 		// 放到编辑页面上去
 		setAttr("d", Majors);
 		// 返回格式是json
->>>>>>> refs/remotes/origin/master
 		renderJson();
 	}
 /***************************************************************/

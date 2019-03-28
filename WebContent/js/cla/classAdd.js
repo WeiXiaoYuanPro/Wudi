@@ -65,8 +65,8 @@ layui.config({
 					}
 				);
 	 })	
-      //添加 	
->>>>>>> refs/remotes/origin/master
+ 	
+
  	form.on("submit(add)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
