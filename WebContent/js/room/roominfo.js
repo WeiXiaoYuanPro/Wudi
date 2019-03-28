@@ -17,15 +17,25 @@ layui.config({
 	    limit: 10,//每页显示信息条数
 	    id: 'testReload',
 	    cols: [[ //表头
-	      {field: 'id', title: 'ID', sort: true, fixed: 'left'}
-	      ,{field: 'name', title: '教室名',lign:'center'}
-	      ,{field: 'building_id', title: '教学楼ID', lign:'center'} 
-	      ,{field: 'capacity', title: '容量',align:'center' }
-	      ,{field: 'type', title: '种类',align:'center' }
-	      ,{field: 'status', title: '状态',align:'center' }
-	      ,{field: 'latitude', title: '纬度',align:'center' }
-	      ,{field: 'longitude', title: '经度',align:'center' }
-	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo'}//这里的toolbar值是模板元素的选择器
+	      {field: 'id', title: 'ID', sort: true, fixed: 'left',width:'200'}
+	      ,{field: 'name', title: '教室名',lign:'center',width:'250'}
+	      ,{field: 'building_id', title: '教学楼ID', lign:'center',width:'200'} 
+	      ,{field: 'capacity', title: '容量',align:'center' ,width:'100'}
+	      ,{field: 'type', title: '种类',align:'center' ,width:'100'}
+	      ,{field: 'status', title: '状态',align:'center',width:'80' ,
+	      templet: function(d){
+    		  if(d.status==1){
+    			  return '<span class="layui-badge layui-bg-orange">异常</span>';
+    		  }else{
+    			  return '<span class="layui-badge layui-bg-blue">正常</span>';
+    		  }}
+	      }
+	      ,{field:'status', title:'是否锁定', width:110,unresize: true, 
+	    	  templet:function(d){
+	    		  return "<input type='checkbox' name='lock' value="+d.status+" title='锁定'  lay-filter='lockDemo' {{ d.id == 1 ? 'checked' : '' }}>"
+	    	  }
+	      }
+	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo',width:'300'}//这里的toolbar值是模板元素的选择器
 	    ]]
 	  });
 //====================点击【搜索】按钮事件===========================
@@ -81,7 +91,40 @@ layui.config({
 		    //do somehing
 			  
 		  } else if(layEvent === 'del'){
-			  
+			  layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
+					var msgid;
+					//向服务端发送删除指令
+			 		 $.ajax({//异步请求返回给后台
+				    	  url:'repairRoom',
+				    	  type:'POST',
+				    	  data:{"id":data.id},
+				    	  dataType:'json',
+				    	  beforeSend: function(re){
+				    		  msgid = top.layer.msg('数据处理中，请稍候',{icon: 16,time:false,shade:0.8});
+				          },
+				    	  success:function(d){
+				    		  top.layer.close(msgid);
+				    		  if(d.result){
+				    			//弹出loading
+							   		layer.closeAll("iframe");
+							   		obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+							  	 //刷新父页面
+							  	 	parent.location.reload();
+				    		  }else{
+				    			  top.layer.msg("操作失败！，数据库操作有问题！！");
+				    		  }
+					    		
+				    	  },
+				    	  error:function(XMLHttpRequest, textStatus, errorThrown){
+				    		  top.layer.msg('操作失败！！！服务器有问题！！！！<br>请检测服务器是否启动？', {
+				    		        time: 20000, //20s后自动关闭
+				    		        btn: ['知道了']
+				    		      });
+				           }
+				      });
+			 //关闭当前提示	
+		      layer.close(index);
+		    });
 		  } else if(layEvent === 'edit'){ //编辑
 			  var index = layui.layer.open({
 	              title : "修改信息",
@@ -100,5 +143,4 @@ layui.config({
 		  }
 		});
 	})
-
 		

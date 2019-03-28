@@ -16,8 +16,6 @@ layui.config({
 	        	$("input[name='capacity']").val(d.capacity);
 	        	$("input[name='type']").val(d.type);
 	        	$("input[name='status']").val(d.status);
-	        	$("input[name='latitude']").val(d.latitude);
-	        	$("input[name='longitude']").val(d.longitude);
 	        	
 	        	$.get("getClassroom", function(data){
 	    			var cl=data.cl;

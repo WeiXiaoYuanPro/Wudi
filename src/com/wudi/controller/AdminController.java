@@ -567,10 +567,11 @@ public class AdminController extends Controller {
 	*/
 	public void saveClass() {
 		String name = getPara("name");
-		String remark = getPara("remark");
-		String no = getPara("no");
+		String user_no = getPara("user_no");
+		String major_no = getPara("major_no");
+		int grade=getParaToInt("grade");
 		// 保存数据
-		boolean result = ClassModel.save(name,remark,no,1);
+		boolean result = ClassModel.save(name,user_no,major_no,grade);
 
 		setAttr("result", result);
 		renderJson();
@@ -581,12 +582,13 @@ public class AdminController extends Controller {
 	 *  作者： xiao
 	*/
 	public void updateClass() {
-		String id = getPara("id");
+		String id=getPara("id");
 		String name = getPara("name");
-		String remark = getPara("remark");
-		String no = getPara("no");
-
-		boolean result = ClassModel.update(id,name,remark,no);
+		String user_no = getPara("user_no");
+		String major_no = getPara("major_no");
+		int grade=getParaToInt("grade");
+		// 保存数据
+		boolean result = ClassModel.update(id,name,user_no,major_no,grade);
 
 		setAttr("result", result);
 		renderJson();
@@ -804,15 +806,9 @@ public class AdminController extends Controller {
 		int capacity = getParaToInt("capacity");
 		int type = getParaToInt("type");
 		int status = getParaToInt("status");
-		String latitud = getPara("latitude");
-		BigDecimal latitude = new BigDecimal(latitud);
-		latitude = latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
-		String longitud = getPara("longitude");
-		BigDecimal longitude = new BigDecimal(longitud);
-		longitude = longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
 
 		// 保存数据
-		boolean result = RoomModel.save(id, name, building_id, capacity, type, status, latitude, longitude);
+		boolean result = RoomModel.save(id, name, building_id, capacity, type, status);
 
 		setAttr("result", result);
 		renderJson();
@@ -831,13 +827,8 @@ public class AdminController extends Controller {
 		int type = getParaToInt("type");
 		int status = getParaToInt("status");
 		String latitud = getPara("latitude");
-		BigDecimal latitude = new BigDecimal(latitud);
-		latitude = latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
-		String longitud = getPara("longitude");
-		BigDecimal longitude = new BigDecimal(longitud);
-		longitude = longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
 
-		boolean result = RoomModel.update(id, name, building_id, capacity, type, status, latitude, longitude);
+		boolean result = RoomModel.update(id, name, building_id, capacity, type, status);
 
 		setAttr("result", result);
 		renderJson();
@@ -1297,13 +1288,12 @@ public class AdminController extends Controller {
 	 *  作者： xiao
 	*/
 	public void saveSchool() {
-		String id = getPara("id");
 		String schoolname = getPara("schoolname");
 		String no = getPara("no");
 		String addr = getPara("addr");
 		String img = getPara("img");
 		String remark = getPara("remark");
-		boolean result = SchoolModel.save(id, schoolname, no, addr, img, remark);
+		boolean result = SchoolModel.save(schoolname, no, addr, img, remark);
 		setAttr("result", result);
 		renderJson();
 	}

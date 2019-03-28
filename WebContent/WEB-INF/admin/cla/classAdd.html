@@ -19,7 +19,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">班级名称</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="name" lay-verify="required" placeholder="请输入学校名称"  autocomplete="off">
+				<input type="text" class="layui-input" name="name" lay-verify="required" placeholder="请输入班级名称"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -37,21 +37,21 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">所属分院</label>
 			<div class="layui-input-inline">
-				 <select name="dep_no" lay-filter="dep_no" id="dep_no">
+				 <select name="dep_no" lay-filter="dep_no" id="dep_no" lay-verify="required">
         		</select>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">所属专业</label>
 			<div class="layui-input-inline">
-				<select name="major_no" id="major_no">
+				<select name="major_no" id="major_no" lay-verify="required">
         		</select>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">班主任</label>
 			<div class="layui-input-inline">
-				<select name="user_no" id="user_no">
+				<select name="user_no" id="user_no" lay-verify="required">
         		</select>
 			</div>
 		</div>

@@ -11,4 +11,14 @@ public class StringUtil{
 		Long t=new Date().getTime();
 		return t.toString();
 	}
+	  /**
+     * 获取文件后缀
+     * 
+     * @param @param fileName
+     * @param @return 设定文件
+     * @return String 返回类型
+     */
+    public static String getFileExt(String fileName) {
+        return fileName.substring(fileName.lastIndexOf('.'), fileName.length());
+    }
 }
