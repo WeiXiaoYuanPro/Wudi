@@ -33,8 +33,19 @@ layui.config({
 					form.render();//必须要再次渲染，要不然option显示不出来
 				}
 			);
-		
-		
+		//专业的下拉框
+		$.get("getMajors",
+				function(data){
+					var list=data.d;
+					var arr=new Array();
+					for(var j=0;j<list.length;j++){
+						arr.push("<option value='"+list[j].id+"'>"+list[j].name+"</option>")
+					}
+					var select = arr.join('')
+					$("#major_no").append(select);
+					form.render();//必须要再次渲染，要不然option显示不出来
+				}
+			);
 		
 		
         	

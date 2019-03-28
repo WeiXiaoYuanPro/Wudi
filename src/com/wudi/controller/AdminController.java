@@ -469,6 +469,15 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
+	public void getMajors() {
+		// 获取需要修改的学校信息
+		// 根据条件查询数据库的数据
+		List<DepartmentModel> shool = DepartmentModel.getListAll();
+		// 放到编辑页面上
+		setAttr("d", shool);
+		// 以Json格式返回
+		renderJson();
+	}
 /***************************************************************/
 	/**
 	 *  功能：打开专业信息列表
