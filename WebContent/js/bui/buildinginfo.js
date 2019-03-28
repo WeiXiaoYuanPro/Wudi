@@ -11,7 +11,7 @@ layui.config({//框架的固定，配置的使用
 	  table.render({
 	    elem: '#demo',//渲染对象
 	    height: 'full-88',//表格高度
-	    url: 'queryClass', //数据接口
+	    url: 'queryBuilding', //数据接口
 	    where: {key: ''},//给后台传的参数
 	    page: true, //开启分页
 	    limit: 10,//每页显示信息条数
