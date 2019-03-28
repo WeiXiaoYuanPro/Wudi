@@ -7,11 +7,55 @@ layui.config({
 		laypage = layui.laypage;
 		$ = layui.jquery;
 	//===========================================
-		
+		//班主任的下拉框
+		$.get("getHeadmasters",
+				function(data){
+					var list=data.d;
+					var arr=new Array();
+					for(var j=0;j<list.length;j++){
+						arr.push("<option value='"+list[j].id+"'>"+list[j].username+"</option>")
+					}
+					var select = arr.join('')
+					$("#user_no").append(select);
+					form.render();//必须要再次渲染，要不然option显示不出来
+				}
+			);
+		//学校的下拉框
+		$.get("getDepartments",
+				function(data){
+					var list=data.d;
+					var arr=new Array();
+					for(var j=0;j<list.length;j++){
+						arr.push("<option value='"+list[j].id+"'>"+list[j].name+"</option>")
+					}
+					var select = arr.join('')
+					$("#dep_no").append(select);
+					form.render();//必须要再次渲染，要不然option显示不出来
+				}
+			);
+	//选择的时候的事件
+	 form.on("select(dep_no)",function(data){
+		 $("#major_no").empty();
+		//学校的下拉框
+			$.get("getMajorsByDepID?dep_id="+data.value,
+					function(da){
+						var list=da.d;
+						var arr=new Array();
+						for(var j=0;j<list.length;j++){
+							arr.push("<option value='"+list[j].id+"'>"+list[j].name+"</option>")
+						}
+						var select = arr.join('')
+						$("#major_no").append(select);
+						form.render();//必须要再次渲染，要不然option显示不出来
+					}
+				);
+	 })	
+ 	
+
  	form.on("submit(add)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
-	    	  url:'saveMajor',
+	    	  url:'saveClass',
 	    	  type:'POST',
 	    	  data:data.field,
 	    	  dataType:'json',

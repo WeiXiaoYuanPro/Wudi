@@ -6,6 +6,7 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
+		
 	//加载页面选择框数据
 	$.get("getSchoolModels", function(data){
 			var ml=data.ml;
@@ -15,7 +16,23 @@ layui.config({
 			form.render();//必须要再次渲染，要不然option显示不出来
 	});
 	//===========================================
+
+	var temp=1;
+	//获取经纬度
+	$("#getlocation").click(function(){
+		$("#container").slideToggle("slow");
+		if(temp==1){
+			temp=2;
+		$("#getlocation").val("关闭地图")
+		}else{
+			temp=1;
+			$("#getlocation").val("获取经纬度")
+		}
 		
+		
+	})
+
+	
  	form.on("submit(add)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台

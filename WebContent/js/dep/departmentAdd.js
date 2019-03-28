@@ -7,7 +7,19 @@ layui.config({
 		laypage = layui.laypage;
 		$ = layui.jquery;
 	//===========================================
-		
+		//学校的下拉框
+		$.get("getSchoolModels",
+				function(data){
+					var list=data.ml;
+					var arr=new Array();
+					for(var j=0;j<list.length;j++){
+						arr.push("<option value='"+list[j].id+"'>"+list[j].schoolname+"</option>")
+					}
+					var select = arr.join('')
+					$("#school_id").append(select);
+					form.render();//必须要再次渲染，要不然option显示不出来
+				}
+			);	
  	form.on("submit(add)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台

@@ -20,6 +20,7 @@ layui.config({
 	      {field: 'id', title: 'ID', sort: true, fixed: 'left'}
 	      ,{field: 'no', title: '部门编号', align:'center'}
 	      ,{field: 'name', title: '部门名称', align:'center'} 
+	      ,{field: 'schoolname', title: '所属学校', align:'center'} 
 	      ,{field: 'remark', title: '备注',align:'center' }
 	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
 	    ]]

@@ -11,12 +11,32 @@ layui.config({
 		$.get("getbuilding?id="+id, function(data){
 			var d=data.m;
 			var sl=data.sl;
-			var szl=data.szl;
+		
+			//var szl=data.szl;
 	        	//执行加载数据的方法
 	        	$("input[name='name']").val(d.name);
-	        	$("input[name='addr']").val(d.addr);
+	        	$("input[name='longitude']").val(d.longitude);
+	        	$("input[name='latitude']").val(d.latitude);
 	        	$("textarea[name='remark']").val(d.remark);
+	        	$("#default").val(d.school_id);
 	        	
+	    
+	        	
+	        	
+	        	//下拉学校-----
+	        	for(var i=0;i<sl.length;i++){
+	        		if(d.school_id==sl[i].id){
+	        			$("#default").text(sl[i].schoolname);
+	        		}else{
+	        			$("#selectId").append("<option value='"+sl[i].id+"'>"+sl[i].schoolname+"</option>");
+	        		}
+				}
+	        	
+	        	
+	        	
+	        	
+	        	
+	        	/*
 	        	var school_id=szl[0].school_id;
 	        	//联动下拉学校分校
 	        	for(var i=0;i<szl.length;i++){
@@ -35,9 +55,25 @@ layui.config({
 	        			$("#selectId").append("<option value='"+sl[i].id+"'>"+sl[i].schoolname+"</option>");
 	        		}
 	        		
-				}
+				}*/
 	        	form.render();//必须要再次渲染，要不然option显示不出来
 		})
+		
+		
+		var temp=1;
+	//获取经纬度
+	$("#getlocation").click(function(){
+		$("#container").slideToggle("slow");
+		if(temp==1){
+			temp=2;
+		$("#getlocation").val("关闭地图")
+		}else{
+			temp=1;
+			$("#getlocation").val("获取经纬度")
+		}
+		
+		
+	})
 
  	form.on("submit(update)",function(data){
  		var index;
