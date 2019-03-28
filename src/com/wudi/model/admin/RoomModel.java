@@ -59,22 +59,6 @@ public class RoomModel extends Model<RoomModel> {
 		set("status",status);
 	}
 	
-	public BigDecimal getLatitudes(){
-		return get("latitude");
-	}
-	public void setLatitude(BigDecimal latitude)
-	{
-		set("latitude",latitude);
-	}
-	public BigDecimal getLongitude(){
-		return get("longitude");
-	}
-	
-	public void setLongitude(BigDecimal longitude)
-	{
-		set("longitude",longitude);
-	}
-	
 	//因为经常用他，所以干脆给他一个静态的，让他一直存在，免得我们每次new
 			public static final RoomModel dao = new RoomModel();
 			
@@ -114,7 +98,7 @@ public class RoomModel extends Model<RoomModel> {
 		* @return boolean    返回类型
 		* @throws
 		 */
-			public static boolean save(String id,String name,String building_id,int capacity,int type,int status,BigDecimal latitude,BigDecimal longitude) {
+			public static boolean save(String id,String name,String building_id,int capacity,int type,int status) {
 				RoomModel s=new RoomModel();
 				s.setId(StringUtil.getId());
 				s.setName(name);
@@ -122,8 +106,6 @@ public class RoomModel extends Model<RoomModel> {
 				s.setCapacity(capacity);
 				s.setType(type);
 				s.setStatus(status);
-				s.setLatitude(latitude);
-				s.setLongitude(longitude);
 				return s.save();
 			}
 			
@@ -148,7 +130,7 @@ public class RoomModel extends Model<RoomModel> {
 			/**
 			 * 更新
 			 */
-			public static boolean update(String id,String name,String building_id,int capacity,int type,int status,BigDecimal latitude,BigDecimal longitude){
+			public static boolean update(String id,String name,String building_id,int capacity,int type,int status){
 				RoomModel model=RoomModel.getById(id);
 				if(model==null){
 					return false;
@@ -159,8 +141,6 @@ public class RoomModel extends Model<RoomModel> {
 				model.setCapacity(capacity);
 				model.setType(type);
 				model.setStatus(status);
-				model.setLatitude(latitude);
-				model.setLongitude(longitude);
 				try {
 					model.update();
 				} catch (Exception e) {

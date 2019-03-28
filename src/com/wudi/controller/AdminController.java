@@ -753,15 +753,9 @@ public class AdminController extends Controller {
 		int capacity = getParaToInt("capacity");
 		int type = getParaToInt("type");
 		int status = getParaToInt("status");
-		String latitud = getPara("latitude");
-		BigDecimal latitude = new BigDecimal(latitud);
-		latitude = latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
-		String longitud = getPara("longitude");
-		BigDecimal longitude = new BigDecimal(longitud);
-		longitude = longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
 
 		// 保存数据
-		boolean result = RoomModel.save(id, name, building_id, capacity, type, status, latitude, longitude);
+		boolean result = RoomModel.save(id, name, building_id, capacity, type, status);
 
 		setAttr("result", result);
 		renderJson();
@@ -780,13 +774,8 @@ public class AdminController extends Controller {
 		int type = getParaToInt("type");
 		int status = getParaToInt("status");
 		String latitud = getPara("latitude");
-		BigDecimal latitude = new BigDecimal(latitud);
-		latitude = latitude.setScale(2, BigDecimal.ROUND_HALF_UP);
-		String longitud = getPara("longitude");
-		BigDecimal longitude = new BigDecimal(longitud);
-		longitude = longitude.setScale(2, BigDecimal.ROUND_HALF_UP);
 
-		boolean result = RoomModel.update(id, name, building_id, capacity, type, status, latitude, longitude);
+		boolean result = RoomModel.update(id, name, building_id, capacity, type, status);
 
 		setAttr("result", result);
 		renderJson();
