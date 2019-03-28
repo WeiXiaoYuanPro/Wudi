@@ -473,14 +473,6 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
-	public void getMajors() {
-		// 获取需要修改的学校信息
-		// 根据条件查询数据库的数据
-		List<DepartmentModel> shool = DepartmentModel.getListAll();
-		// 放到编辑页面上
-		setAttr("d", shool);
-		// 以Json格式返回
-	}
 	/**
 	 *  功能：根据分院（部门id）获取专业列表信息(下拉列表要用)
 	 *  修改时间：2019年3月22日11:05:05
@@ -571,10 +563,11 @@ public class AdminController extends Controller {
 	*/
 	public void saveClass() {
 		String name = getPara("name");
-		String remark = getPara("remark");
-		String no = getPara("no");
+		String user_no = getPara("user_no");
+		String major_no = getPara("major_no");
+		int grade=getParaToInt("grade");
 		// 保存数据
-		boolean result = ClassModel.save(name,remark,no,1);
+		boolean result = ClassModel.save(name,user_no,major_no,grade);
 
 		setAttr("result", result);
 		renderJson();
@@ -585,12 +578,13 @@ public class AdminController extends Controller {
 	 *  作者： xiao
 	*/
 	public void updateClass() {
-		String id = getPara("id");
+		String id=getPara("id");
 		String name = getPara("name");
-		String remark = getPara("remark");
-		String no = getPara("no");
-
-		boolean result = ClassModel.update(id,name,remark,no);
+		String user_no = getPara("user_no");
+		String major_no = getPara("major_no");
+		int grade=getParaToInt("grade");
+		// 保存数据
+		boolean result = ClassModel.update(id,name,user_no,major_no,grade);
 
 		setAttr("result", result);
 		renderJson();
@@ -1301,13 +1295,12 @@ public class AdminController extends Controller {
 	 *  作者： xiao
 	*/
 	public void saveSchool() {
-		String id = getPara("id");
 		String schoolname = getPara("schoolname");
 		String no = getPara("no");
 		String addr = getPara("addr");
 		String img = getPara("img");
 		String remark = getPara("remark");
-		boolean result = SchoolModel.save(id, schoolname, no, addr, img, remark);
+		boolean result = SchoolModel.save(schoolname, no, addr, img, remark);
 		setAttr("result", result);
 		renderJson();
 	}

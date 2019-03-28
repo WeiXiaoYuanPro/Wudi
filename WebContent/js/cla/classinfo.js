@@ -11,7 +11,7 @@ layui.config({//框架的固定，配置的使用
 	  table.render({
 	    elem: '#demo',//渲染对象
 	    height: 'full-88',//表格高度
-	    url: 'queryclass', //数据接口
+	    url: 'queryClass', //数据接口
 	    where: {key: ''},//给后台传的参数
 	    page: true, //开启分页
 	    limit: 10,//每页显示信息条数
@@ -19,9 +19,9 @@ layui.config({//框架的固定，配置的使用
 	    cols: [[ //表头
 	      {field: 'id', title: 'ID', sort: true, fixed: 'left'}
 	      ,{field: 'name', title: '班级名称',lign:'center'}
-	      ,{field: 'user_no', title: '班主任', lign:'center'}
-	      ,{field: 'major_no', title: '专业', lign:'center'} 
-	      ,{field: 'grade', title: '年纪', lign:'center'} 
+	      ,{field: 'teacher', title: '班主任', lign:'center'}
+	      ,{field: 'depname', title: '专业', lign:'center'} 
+	      ,{field: 'grade', title: '年级', lign:'center'} 
 	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
 	    ]]
 	  });

@@ -56,12 +56,11 @@ public class ClassModel extends Model<ClassModel> {
 		 * @return
 		 */
 		public static Page<ClassModel> getList(int pageNumber, int pageSize,String key) {
-			String sele_sql="select a.*,d.username AS teacher,c.`name` AS depname ";
+			String sele_sql="select a.*,d.username AS teacher,b.`name` AS depname ";
 			StringBuffer from_sql=new StringBuffer();
 			from_sql.append("FROM ").append(tableName).append(" AS a LEFT JOIN ");
-			from_sql.append(MajorModel.tableName).append(" AS b ON a.major_no = b.`name` ");
-			from_sql.append(" LEFT JOIN ").append(UserInfoModel.tableName).append(" as d").append(" ON a.user_no = d.username ");
-			from_sql.append(" LEFT JOIN ").append(DepmanModel.tableName).append(" as c").append(" ON b.dep_no = c.id ");
+			from_sql.append(MajorModel.tableName).append(" AS b ON a.major_no = b.id ");
+			from_sql.append(" LEFT JOIN ").append(UserInfoModel.tableName).append(" as d").append(" ON a.user_no = d.id ");
 			if(!StringUtil.isBlankOrEmpty(key)) {
 				from_sql.append(" where a.name like '%"+key+"%'");
 			}
@@ -75,11 +74,12 @@ public class ClassModel extends Model<ClassModel> {
 		public static ClassModel getById(Object id){
 			return dao.findFirst("select *  from " + tableName + " where id = ? " , id);
 		}
-		public static boolean save(String name,String Remark,String no,int grade) {
+		public static boolean save(String name,String user_no,String major_no,int grade) {
 			ClassModel s=new ClassModel();
 			s.setId(StringUtil.getId());
 			s.setName(name);
-			s.setUser_no(no);
+			s.setUser_no(user_no);
+			s.setmajor_no(major_no);
 			s.setgrade(grade);
 			return s.save();
 		}
@@ -105,15 +105,15 @@ public class ClassModel extends Model<ClassModel> {
 		/**
 		 * 更新
 		 */
-		public static boolean update(String id,String name,String Remark,String no){
+		public static boolean update(String id,String name,String user_no,String major_no,int grade){
 			ClassModel model=ClassModel.getById(id);
 			if(model==null){
 				return false;
 			}
-			model.setId(id);
 			model.setName(name);
-			model.setUser_no(no);
-//			model.setRemark(Remark);
+			model.setUser_no(user_no);
+			model.setmajor_no(major_no);
+			model.setgrade(grade);;
 			try {
 				model.update();
 			} catch (Exception e) {

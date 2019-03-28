@@ -104,9 +104,9 @@ public class SchoolModel extends Model<SchoolModel> {
 * @return boolean    返回类型
 * @throws
  */
-	public static boolean save(String id,String schoolname,String no,String addr,String img,String remark) {
+	public static boolean save(String schoolname,String no,String addr,String img,String remark) {
 	SchoolModel s=new SchoolModel();
-	s.setId(id);
+	s.setId(StringUtil.getId());
 	s.setSchoolname(schoolname);
 	s.setNo(no);
 	s.setAddr(addr);

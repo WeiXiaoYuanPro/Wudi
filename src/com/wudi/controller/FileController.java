@@ -1,5 +1,11 @@
 package com.wudi.controller;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.jfinal.core.Controller;
+import com.jfinal.upload.UploadFile;
+import com.wudi.util.StringUtil;
 /**
 * TODO:肖，文件上传下载控制类
 * @Description: ???
@@ -20,6 +26,14 @@ public class FileController extends Controller {
 	* @throws
 	 */
 	public void uploadImg() {
+		UploadFile upFile = getFile();//单个上传文件一句搞定  默认路径是 upload
+		File file = upFile.getFile();
+        String extName = StringUtil.getFileExt(file.getName());
+        String filePath = upFile.getUploadPath();
+        String fileName = System.currentTimeMillis() + extName;
+        file.renameTo(new File(filePath+"\\"+fileName));
+        setAttr("src", fileName);
+		setAttr("code", 0);
 		renderJson();
 	}
 
