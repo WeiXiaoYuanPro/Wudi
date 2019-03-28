@@ -86,6 +86,15 @@ public class RoomModel extends Model<RoomModel> {
 			public static RoomModel getById(Object id){
 				return dao.findFirst("select *  from " + tableName + " where id = ? " , id);
 			}
+			/***
+			 * 
+			 * @param id
+			 * 根据ID来更改status
+			 */
+			public static RoomModel getByIdForSS(String id){
+				return dao.findFirst("select *  from " + tableName + " where id = ? " , id);
+			}
+			
 		/**
 		 * 
 		* @Title: save

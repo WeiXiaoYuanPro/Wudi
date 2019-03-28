@@ -32,7 +32,11 @@ layui.config({
 	      }
 	      ,{field:'status', title:'是否锁定', width:110,unresize: true, 
 	    	  templet:function(d){
-	    		  return "<input type='checkbox' name='lock' value="+d.status+" title='锁定'  lay-filter='lockDemo' {{ d.id == 1 ? 'checked' : '' }}>"
+	    		  if(d.status==1){
+	    		  return  '<span class="layui-badge layui-bg-red">已锁定</span>';
+	    		  }else{
+	    			 return '<span class="layui-badge layui-bg-green">未锁定</span>';
+	    		  }
 	    	  }
 	      }
 	      ,{fixed: 'right',  align:'center', toolbar: '#barDemo',width:'300'}//这里的toolbar值是模板元素的选择器
@@ -81,21 +85,56 @@ layui.config({
 				layui.layer.full(index);
 			})
 		}).resize();
+		//=======================锁定复选框按钮====================================  
+		//给点击成交动作，直接应用layui
+
+			
 //=======================监听工具条====================================
 		table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
 		  var data = obj.data; //获得当前行数据
 		  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 		  var tr = obj.tr; //获得当前行 tr 的DOM对象
 		 
-		  if(layEvent === 'detail'){ //查看
-		    //do somehing
+		  if(layEvent === 'lock'){ //锁定
+				  layer.confirm('确定锁定？',{icon:3, title:'提示信息'},function(index){
+						var msgid;
+						//向服务端发送指令
+				 		 $.ajax({//异步请求返回给后台
+					    	  url:'lockStatus',
+					    	  type:'POST',
+					    	  data:{"id":data.id},
+					    	  dataType:'json',
+					    	  beforeSend: function(re){
+					    		  msgid = top.layer.msg('数据处理中，请稍候',{icon: 16,time:false,shade:0.8});
+					          },
+					    	  success:function(d){
+					    		  top.layer.close(msgid);
+					    		  if(d.result){
+					    			  actives.reload();
+					    		  }else{
+					    			  top.layer.msg("操作失败！，数据库操作有问题！！");
+					    		  }
+						    		
+					    	  },
+					    	  error:function(XMLHttpRequest, textStatus, errorThrown){
+					    		  top.layer.msg('操作失败！！！服务器有问题！！！！<br>请检测服务器是否启动？', {
+					    		        time: 20000, //20s后自动关闭
+					    		        btn: ['知道了']
+					    		      });
+					           }
+					      });
+				 //关闭当前提示	
+			      layer.close(index);
+			    });
+
+			  
 			  
 		  } else if(layEvent === 'del'){
 			  layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 					var msgid;
 					//向服务端发送删除指令
 			 		 $.ajax({//异步请求返回给后台
-				    	  url:'repairRoom',
+				    	  url:'deleteRoom',
 				    	  type:'POST',
 				    	  data:{"id":data.id},
 				    	  dataType:'json',

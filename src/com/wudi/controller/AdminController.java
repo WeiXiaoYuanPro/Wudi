@@ -809,7 +809,33 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
+	/**
+	 * @TODO:锁定之后,更改status
+	 * 时间：2019.3.28 20.30
+	 * 作者：ljp
+	 */
+	public void lockStatus() {
+		String id = getPara("id");
+		RoomModel s =RoomModel.getByIdForSS(id);
+		s.setStatus(1);
+		boolean result= s.update();
+		setAttr("result", result);
+		renderJson();
+		
+	}
 
+	/**
+	 *  功能：删除
+	 *  修改时间：2019.3.28
+	 *  作者：ljp
+	*/
+	
+	public void deleteRoom() {
+		String id=getPara("id");
+		boolean result = RoomModel.delClassroomByID(id);
+		setAttr("result", result);
+		renderJson();
+	}
 	/**
 	 *  功能：更新房间信息
 	 *  修改时间：2019年3月22日11:05:05
