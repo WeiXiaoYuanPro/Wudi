@@ -110,7 +110,7 @@ layui.config({
 					    	  success:function(d){
 					    		  top.layer.close(msgid);
 					    		  if(d.result){
-					    			  actives.reload();
+					    			  active.reload();
 					    		  }else{
 					    			  top.layer.msg("操作失败！，数据库操作有问题！！");
 					    		  }
