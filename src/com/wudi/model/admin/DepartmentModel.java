@@ -144,6 +144,9 @@ public class DepartmentModel extends Model<DepartmentModel> {
 				return false;
 			}
 		}
+		/*
+		 * 李颖鹏
+		 */
 		public static List<DepartmentModel> getListAll() {
 			StringBuffer sql=new StringBuffer();
 			sql.append("select *  from ").append(tableName);
