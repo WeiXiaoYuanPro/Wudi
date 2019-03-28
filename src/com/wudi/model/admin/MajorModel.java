@@ -1,4 +1,4 @@
-package com.wudi.model.admin;
+  package com.wudi.model.admin;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -49,11 +49,15 @@ public class MajorModel extends Model<MajorModel> {
 		 * @param pageSize
 		 * @param key
 		 * @return
+		 * 
+		 * select * from t1ii
+		 * ji where tiao
 		 */
 		public static Page<MajorModel> getList(int pageNumber, int pageSize,String key) {
-			String sele_sql="select * ";
+			String sele_sql="select a.*,b.name as dep_name ";
 			StringBuffer from_sql=new StringBuffer();
-			from_sql.append("from ").append(tableName);
+			from_sql.append("from ").append(tableName).append(" as a left join ").append(DepartmentModel.tableName).append(" as b ");
+			from_sql.append(" on a.dep_no=b.id ");
 			if(!StringUtil.isBlankOrEmpty(key)) {
 				from_sql.append(" where name like '%"+key+"%'");
 			}

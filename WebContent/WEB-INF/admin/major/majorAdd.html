@@ -17,15 +17,17 @@
 <body class="childrenBody">
 	<form class="layui-form layui-form-pane" name="addform">
 		<div class="layui-form-item">
-			<label class="layui-form-label">部门号</label>
+			<label class="layui-form-label">专业名称</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="dep_no" id="ids" lay-verify="required" placeholder="请输入部门号"  autocomplete="off">
+				<input type="text" class="layui-input" name="name" lay-verify="required" placeholder="请输入专业名称"  autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">名称</label>
+			<label class="layui-form-label">部门号</label>
 			<div class="layui-input-inline">
-				<input type="text" class="layui-input" name="name" lay-verify="required" placeholder="请输入名称"  autocomplete="off">
+			    <select name="dep_no"  id="selectId" lay-filter="state">
+			      	<option value="-1">请选择部门号</option>
+      			</select>
 			</div>
 		</div>
 		<div class="layui-form-item layui-form-text">

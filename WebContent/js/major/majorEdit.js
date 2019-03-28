@@ -11,9 +11,21 @@ layui.config({
 		$.get("getMajor?id="+id, function(data){
 			var d=data.m;
 			//执行加载数据的方法
-        	$("input[name='dep_no']").val(d.dep_no);
         	$("input[name='name']").val(d.name);
+        	$("input[name='dep_no']").val(d.dep_no);
 	        $("textarea[name='remark']").val(d.remark);
+	        $.get("getDepartmentse", function(data){
+				var dp=data.dp;
+				var id=dp[0].id;
+	    		for(var i=0;i<dp.length;i++){
+	    			if(dp[i].id==d.dep_no){
+	    				$("#selectId").append("<option selected='true' value='"+dp[i].no+"'>"+dp[i].no+"</option>");
+	    			}else{
+	    				$("#selectId").append("<option value='"+dp[i].no+"'>"+dp[i].no+"</option>");
+	    			}
+	    			}
+	    			form.render();//必须要再次渲染，要不然option显示不出来
+	        });
 		})
 
  	form.on("submit(update)",function(data){

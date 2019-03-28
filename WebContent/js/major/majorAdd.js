@@ -6,6 +6,15 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage;
 		$ = layui.jquery;
+		
+		//加载页面选择框数据
+		$.get("getDepartmentse", function(data){
+				var dp=data.dp;
+				for(var i=0;i<dp.length;i++){
+	        		$("#selectId").append("<option value='"+dp[i].no+"'>"+dp[i].no+"</option>");
+				}
+				form.render();//必须要再次渲染，要不然option显示不出来
+		});
 	//===========================================
 		
  	form.on("submit(add)",function(data){
