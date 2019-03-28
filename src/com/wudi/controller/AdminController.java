@@ -52,6 +52,7 @@ public class AdminController extends Controller {
 		// 如果正确，就正常显示系统页面
 		UserInfoModel m = UserInfoModel.getByID(username);
 		int status=1;
+		String un="";
 		// 判断用户名和密码是否正确
 		if (m != null) {
 			if (m.getPassword().equals(password)) {
@@ -59,13 +60,14 @@ public class AdminController extends Controller {
 				setCookie("cname",m.getUsername(), 36000);
 				setSessionAttr("user", m);
 				status=0;
+				un=m.getUsername();
 			} else {
 				setAttr("result", 1);// 密码错误
 			}
 		} else {
 			setAttr("result", 2);// 用户名不存在
 		}
-		LogModel.saveLog(m.getUsername(), status,"PC端",getRequest());
+		LogModel.saveLog(un, status,"PC端",getRequest());
 		renderJson();
 	}
 
@@ -304,8 +306,9 @@ public class AdminController extends Controller {
 		String name = getPara("name");
 		String remark = getPara("remark");
 		String no = getPara("no");
+		String school_id=getPara("schoolId");
 		// 保存数据
-		boolean result = DepartmentModel.save(name,remark,no);
+		boolean result = DepartmentModel.save(name,remark,no,school_id);
 
 		setAttr("result", result);
 		renderJson();
@@ -320,8 +323,8 @@ public class AdminController extends Controller {
 		String name = getPara("name");
 		String remark = getPara("remark");
 		String no = getPara("no");
-
-		boolean result = DepartmentModel.update(id,name,remark,no);
+		String school_id=getPara("schoolId");
+		boolean result = DepartmentModel.update(id,name,remark,no,school_id);
 
 		setAttr("result", result);
 		renderJson();
@@ -355,6 +358,7 @@ public class AdminController extends Controller {
 		// 以Json格式返回
 		renderJson();
 	}
+
 /***************************************************************/
 	/**
 	 *  功能：打开专业信息列表
@@ -469,6 +473,7 @@ public class AdminController extends Controller {
 		setAttr("result", result);
 		renderJson();
 	}
+<<<<<<< HEAD
 	public void getMajors() {
 		// 获取需要修改的学校信息
 		// 根据条件查询数据库的数据
@@ -476,6 +481,21 @@ public class AdminController extends Controller {
 		// 放到编辑页面上
 		setAttr("d", shool);
 		// 以Json格式返回
+=======
+	/**
+	 *  功能：根据分院（部门id）获取专业列表信息(下拉列表要用)
+	 *  修改时间：2019年3月22日11:05:05
+	 *  作者： xiao
+	*/
+	public void getMajorsByDepID() {
+		// 接收页面数据
+		String dep_id = getPara("dep_id");
+		// 根据条件查询数据库的数据
+		 List<MajorModel> Majors = MajorModel.getMajorsByDepID(dep_id);
+		// 放到编辑页面上去
+		setAttr("d", Majors);
+		// 返回格式是json
+>>>>>>> refs/remotes/origin/master
 		renderJson();
 	}
 /***************************************************************/
@@ -648,10 +668,11 @@ public class AdminController extends Controller {
 		String id = getPara("id");
 		// 根据条件查询数据库的数据
 		BuildingModel Building = BuildingModel.getById(id);
-		// 放到编辑页面上去
-		setAttr("m", Building);
+		
 		// 联动下拉框学校
 		List<SchoolModel> school_list = SchoolModel.getListAll();
+		// 放到编辑页面上去
+		setAttr("m", Building);
 		setAttr("sl", school_list);
 		// 返回格式是json
 		renderJson();
@@ -676,14 +697,24 @@ public class AdminController extends Controller {
 	public void saveBuilding() {
 		String name = getPara("name");
 		String school_id = getPara("school_id");
-		String addr = getPara("addr");
+		String longitude = getPara("longitude");
+		String latitude = getPara("latitude");
 		String remark = getPara("remark");
 		// 保存数据
-		boolean result = BuildingModel.save(name, addr, remark, school_id);
+		boolean result = BuildingModel.save(name, longitude,latitude, remark, school_id);
 		setAttr("result", result);
 		renderJson();
 	}
 
+	/*
+	 * 打开地图
+	 */
+	public void openMap() {
+		render("bui/map.html");
+	}
+	
+	
+	
 	/**
 	 *  功能：更新楼房信息
 	 *  修改时间：2019年3月22日11:05:05
@@ -693,10 +724,11 @@ public class AdminController extends Controller {
 		String id = getPara("id");
 		String name = getPara("name");
 		String school_id = getPara("school_id");
-		String addr = getPara("addr");
+		String longitude = getPara("longitude");
+		String latitude = getPara("latitude");
 		String remark = getPara("remark");
 
-		boolean result = BuildingModel.update(id, name, addr, remark, school_id);
+		boolean result = BuildingModel.update(id, name, longitude,latitude, remark, school_id);
 
 		setAttr("result", result);
 		renderJson();

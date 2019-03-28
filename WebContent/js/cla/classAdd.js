@@ -49,6 +49,24 @@ layui.config({
 		
 		
         	
+	//选择的时候的事件
+	 form.on("select(dep_no)",function(data){
+		//学校的下拉框
+			$.get("getMajorsByDepID?dep_id="+data.value,
+					function(da){
+						var list=da.d;
+						var arr=new Array();
+						for(var j=0;j<list.length;j++){
+							arr.push("<option value='"+list[j].id+"'>"+list[j].name+"</option>")
+						}
+						var select = arr.join('')
+						$("#major_no").append(select);
+						form.render();//必须要再次渲染，要不然option显示不出来
+					}
+				);
+	 })	
+      //添加 	
+>>>>>>> refs/remotes/origin/master
  	form.on("submit(add)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
