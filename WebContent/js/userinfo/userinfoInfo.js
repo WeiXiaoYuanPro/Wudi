@@ -107,10 +107,10 @@ layui.config({//框架的固定，配置的使用
 	  if(layEvent === 'detail'){ //查看
 		  //编辑
 		  var index = layui.layer.open({
-              title : "【修改信息】",
+              title : "【查看信息】",
               type : 2,
               area: ['800px', '600px'],
-              content : "openUserInfoEdit?id="+data.id,
+              content : "openUserInfoDetail?id="+data.id,
               success : function(layero, index){
                   setTimeout(function(){
                       layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {

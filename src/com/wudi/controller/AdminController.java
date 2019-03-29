@@ -1136,6 +1136,14 @@ public class AdminController extends Controller {
 		// 返回格式是json
 		renderJson();
 	}
+	/**
+	 *  功能：打开个人相信信息页面
+	 *  修改时间：2019年3月29日22:43:43
+	 *  作者： xiao
+	 */
+	public void openUserInfoDetail() {
+		render("userinfo/userinfoDetail.html");
+	}
 /****************************************************************
 	/**
 	 * @Title: role @Description: 打开学生信息列表页面 @param 参数 @return void 返回类型 @throws
