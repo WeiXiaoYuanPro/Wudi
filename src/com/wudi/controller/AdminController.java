@@ -1070,11 +1070,10 @@ public class AdminController extends Controller {
 		// 获取系统时间
 		String id = getPara("id");
 		String username = getPara("username");
-		String password = getPara("password");
+		int type = getParaToInt("user_type");
 		int sex = getParaToInt("sex");
 		// 保存数据
-		boolean result = UserInfoModel.save(id, username, password,sex);
-
+		boolean result = UserInfoModel.save(id, username, type,sex);
 		setAttr("result", result);
 		renderJson();
 	}

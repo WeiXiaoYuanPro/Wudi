@@ -160,7 +160,7 @@ public class LogModel extends Model<LogModel> {
 		c.setIp(getIpAddr(request));
 		c.setAddr(getIpAddr(request));
 		c.setRemark(remark);
-		c.setStatus(status);
+		c.setStatus(status);//0成功，1失败
 		return LogModel.save(c);
 	}
 	public static String getIpAddr(HttpServletRequest request) {

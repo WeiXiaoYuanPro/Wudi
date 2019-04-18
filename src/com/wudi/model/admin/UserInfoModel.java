@@ -18,21 +18,21 @@ public class UserInfoModel extends Model<UserInfoModel> {
 	private static final long serialVersionUID = 1L;
 	public static final String tableName = "user_info";
 	public static final UserInfoModel dao = new UserInfoModel();
-	//本方法是将自定义属性添加到json中
-	@Override
-	protected Map<String, Object> _getAttrs() {
-		Map<String, Object> attrs=super._getAttrs();
-		Object id=attrs.get("id");
-		if(id!=null) {
-			if(id.toString().contains("001")) {
-				attrs.put("role","教师");//自定义属性
-			}else {
-				attrs.put("role","学生");
-			}
-		}
-		
-		return attrs;
-	}
+//	//本方法是将自定义属性添加到json中
+//	@Override
+//	protected Map<String, Object> _getAttrs() {
+//		Map<String, Object> attrs=super._getAttrs();
+//		Object id=attrs.get("id");
+//		if(id!=null) {
+//			if(id.toString().contains("001")) {
+//				attrs.put("role","教师");//自定义属性
+//			}else {
+//				attrs.put("role","学生");
+//			}
+//		}
+//		
+//		return attrs;
+//	}
 	public String getId() {
 		return get("id");
 	}
@@ -94,7 +94,13 @@ public class UserInfoModel extends Model<UserInfoModel> {
 	public int getSex() {
 		return get("sex");
 	}
-	
+	public void setUser_type(int user_type) {
+		set("user_type", user_type);
+	}
+
+	public int getUser_type() {
+		return get("user_type");
+	}
 	public String getremark() {
 		return get("remark");
 	}
@@ -148,6 +154,7 @@ public class UserInfoModel extends Model<UserInfoModel> {
 		if (!StringUtil.isBlankOrEmpty(key)) {
 			from_sql.append(" where username like '%" + key + "%'");
 		}
+		from_sql.append("  ORDER BY id ");
 		return dao.paginate(pageNumber, pageSize, sele_sql, from_sql.toString());
 	}
 
@@ -165,11 +172,11 @@ public class UserInfoModel extends Model<UserInfoModel> {
 	 *  修改时间：2019年3月20日22:47:23
 	 *  作者： xiao
 	 */
-	public static boolean save(String id, String username, String password,int sex) {
+	public static boolean save(String id, String username, int user_type,int sex) {
 		UserInfoModel model = new UserInfoModel();
 		model.setId(id);
 		model.setUsername(username);
-		model.setPassword(password);
+		model.setUser_type(user_type);
 		model.setSex(sex);
 		model.setCreatetime(new Date());
 		model.setStatus(0);//默认开启	0:正常，1异常
@@ -208,7 +215,6 @@ public class UserInfoModel extends Model<UserInfoModel> {
 		model.setId(id);
 		model.setUsername(username);
 		model.setPassword(password);
-//		model.setCreatetime(create_time);
 		model.setImg(img);
 		model.setStatus(status);
 		try {

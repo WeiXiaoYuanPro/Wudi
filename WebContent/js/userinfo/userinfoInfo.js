@@ -20,7 +20,15 @@ layui.config({//框架的固定，配置的使用
 	      {field: 'id', title: '学工号', sort: true, fixed: 'left'}
 	      ,{field: 'username', title: '用户名',align:'center'}
 	      ,{field: 'password', title: '登陆密码', align:'center'}
-	      ,{field: 'role', title: '角色', align:'center'} 
+	      ,{field: 'user_type', title: '用户类型', align:'center',
+	    	  templet: function(d){
+	    		  if(d.user_type==1){
+	    			  return '<span class="layui-badge layui-bg-orange">学生</span>';
+	    		  }else{
+	    			  return '<span class="layui-badge layui-bg-blue">教师</span>';
+	    		  }
+	    	}
+	      } 
 	      ,{field: 'create_time', title: '录入日期', align:'center'} 
 	      ,{field: 'status', title: '状态',align:'center',width:80,
 	    	  templet: function(d){

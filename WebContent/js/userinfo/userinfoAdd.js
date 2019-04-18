@@ -5,18 +5,7 @@ layui.config({
 	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		$ = layui.jquery;
-	/**
-	 * 密码验证
-	 */
-	form.verify({
-		password: [/(.+){6,12}$/, '密码必须6到12位']
-		,repassword: function(value){
-			var passvalue = $('#password').val();
-			if(value != passvalue){
-				return '两次输入的密码不一致!';
-			}
-		}
-	});
+
  	form.on("submit(addUser)",function(data){
  		var index;
  		 $.ajax({//异步请求返回给后台
