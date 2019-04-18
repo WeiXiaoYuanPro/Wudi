@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-18 20:09:32
+Date: 2019-04-18 21:09:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -114,8 +114,8 @@ INSERT INTO `depman` VALUES ('1544148462132', '龙明涛', '1', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462134', '蒋霜', '1', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462135', '陈凤朝', '1', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462136', '肖老师', '0', '2019-03-22');
-INSERT INTO `depman` VALUES ('1544148462137', '梁老师', '1', '2019-03-22');
-INSERT INTO `depman` VALUES ('1544148462138', '李老师', '1', '2019-03-22');
+INSERT INTO `depman` VALUES ('1544148462137', '梁老师', '0', '2019-03-22');
+INSERT INTO `depman` VALUES ('1544148462138', '李老师', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462139', '李颖鹏', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462178', '李金鹏', '0', '2019-03-22');
 INSERT INTO `depman` VALUES ('1544148462188', '李洋', '0', '2019-03-22');
@@ -125,8 +125,8 @@ INSERT INTO `depman` VALUES ('1553247425605', '吴海', '1', '2019-03-22');
 INSERT INTO `depman` VALUES ('1553247484509', '龙本银', '1', '2019-03-22');
 INSERT INTO `depman` VALUES ('1553247511726', '孟凡盛', '1', '2019-03-22');
 INSERT INTO `depman` VALUES ('1553402540994', '张志强', '0', '2019-03-24');
-INSERT INTO `depman` VALUES ('1553506098344', '吴常平', '1', '2019-03-25');
-INSERT INTO `depman` VALUES ('1553506105821', '杨鑫', '1', '2019-03-25');
+INSERT INTO `depman` VALUES ('1553506098344', '吴常平', '0', '2019-03-25');
+INSERT INTO `depman` VALUES ('1553506105821', '杨鑫', '0', '2019-03-25');
 
 -- ----------------------------
 -- Table structure for `login_log`
@@ -417,6 +417,8 @@ INSERT INTO `login_log` VALUES ('1555505418587', '', '2019-04-17 20:50:18.587', 
 INSERT INTO `login_log` VALUES ('1555505424714', '超级管理员', '2019-04-17 20:50:24.714', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', 'PC端', '0');
 INSERT INTO `login_log` VALUES ('1555587954506', '', '2019-04-18 19:45:54.506', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', 'PC端', '1');
 INSERT INTO `login_log` VALUES ('1555587961195', '超级管理员', '2019-04-18 19:46:01.195', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', 'PC端', '0');
+INSERT INTO `login_log` VALUES ('1555591150468', '超级管理员', '2019-04-18 20:39:10.468', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', 'PC端', '0');
+INSERT INTO `login_log` VALUES ('1555591785388', '超级管理员', '2019-04-18 20:49:45.388', '0:0:0:0:0:0:0:1', '0:0:0:0:0:0:0:1', 'PC端', '0');
 
 -- ----------------------------
 -- Table structure for `major`
@@ -646,49 +648,38 @@ DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
   `id` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'id',
   `username` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT '家庭住址',
-  `password` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `password` varchar(100) CHARACTER SET utf8 DEFAULT '123456',
   `create_time` datetime DEFAULT NULL,
   `img` varchar(100) DEFAULT NULL,
   `status` int(1) DEFAULT '1' COMMENT '状态',
   `sex` int(1) DEFAULT '1',
   `birth` date DEFAULT NULL,
   `remark` text,
+  `user_type` int(11) DEFAULT '1' COMMENT '1学生，2老师',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES ('', '1234567890', '000000', null, null, '1', '1', null, null);
-INSERT INTO `user_info` VALUES ('0000000222', '22222222222', '000000', '2019-03-27 20:04:43', null, '0', '0', null, null);
-INSERT INTO `user_info` VALUES ('001', 'xiao', '123456', '2019-03-21 18:49:12', null, '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('0987654321', 'louky', '654321', '2019-03-21 19:50:49', null, '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('111', '战锤2000', '皇帝万岁', '2018-11-16 09:07:44', 'null', '1', '1', null, null);
-INSERT INTO `user_info` VALUES ('1543924712930', '66666', 'yyyy', '2018-12-04 19:58:32', '222', '1', '1', null, null);
-INSERT INTO `user_info` VALUES ('1547181782185', '周杰伦', '123321', '2019-01-11 12:43:02', 'default', '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('1547188014480', '123', '321', '2019-01-11 14:26:54', 'default', '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('1547188168186', '10', '111', '2019-01-11 14:29:28', 'default', '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('1547212717659', '123456', '000000', '2019-01-11 21:18:37', 'default', '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('1547212805195', 'qqqq', 'qqqq', '2019-01-11 21:20:05', 'default', '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('1547213129147', 'eewwe', 'rwerwe', '2019-01-11 21:25:29', 'default', '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('1551425071312', '1', '1', '2019-03-01 15:24:31', 'default', '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('201815555', '大大', '00000000', '2019-03-27 20:04:02', null, '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('3', '888889999', '3', '2019-01-11 21:19:12', 'default', '0', '1', null, null);
-INSERT INTO `user_info` VALUES ('33333', '李颖鹏', 'lyp', '2019-03-20 00:00:00', null, null, '1', null, null);
-INSERT INTO `user_info` VALUES ('admin', '超级管理员', '123456', '2019-03-22 09:12:21', null, '0', '1', null, null);
-
--- ----------------------------
--- Table structure for `usr_type`
--- ----------------------------
-DROP TABLE IF EXISTS `usr_type`;
-CREATE TABLE `usr_type` (
-  `id` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of usr_type
--- ----------------------------
+INSERT INTO `user_info` VALUES ('201801', '1234567890', '000000', '2019-03-27 20:04:43', null, '1', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201802', '22222222222', '000000', '2019-03-27 20:04:43', null, '0', '0', null, null, '2');
+INSERT INTO `user_info` VALUES ('201803', 'xiao', '123456', '2019-03-21 18:49:12', null, '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201804', 'louky', '654321', '2019-03-21 19:50:49', null, '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201805', '战锤2000', '皇帝万岁', '2018-11-16 09:07:44', 'null', '1', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201806', '66666', 'yyyy', '2018-12-04 19:58:32', '222', '1', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201807', '周杰伦', '123321', '2019-01-11 12:43:02', 'default', '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201808', '123', '321', '2019-01-11 14:26:54', 'default', '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201809', '10', '111', '2019-01-11 14:29:28', 'default', '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201810', '123456', '000000', '2019-01-11 21:18:37', 'default', '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201811', 'qqqq', 'qqqq', '2019-01-11 21:20:05', 'default', '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201812', 'eewwe', 'rwerwe', '2019-01-11 21:25:29', 'default', '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201813', '1', '1', '2019-03-01 15:24:31', 'default', '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201814', 'xiao', '123456', '2019-04-18 20:40:38', null, '0', '1', null, null, '2');
+INSERT INTO `user_info` VALUES ('201815', '大大', '00000000', '2019-03-27 20:04:02', null, '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201816', '李颖鹏', 'lyp', '2019-03-20 00:00:00', null, null, '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('201817', '888889999', '3', '2019-01-11 21:19:12', 'default', '0', '1', null, null, '1');
+INSERT INTO `user_info` VALUES ('admin', '超级管理员', '123456', '2019-03-22 09:12:21', null, '0', '1', null, null, '1');
 
 -- ----------------------------
 -- View structure for `dt`
