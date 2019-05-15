@@ -1,7 +1,5 @@
 package com.wudi.controller;
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
